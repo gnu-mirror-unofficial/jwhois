@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ##
 ## This file is part of jwhois
-## Copyright (C) 1999,2007  Free Software Foundation, Inc.
+## Copyright (C) 1999, 2007, 2015  Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -29,9 +29,11 @@ jwhois_CFLAGS = $(OLDCFLAGS) -DSYSCONFDIR="\"$(sysconfdir)\"" \
          -DLOCALSTATEDIR="\"$(localstatedir)\"" \
          -DLOCALEDIR="\"$(localedir)\""
 
-jwhois_LDADD = $(top_srcdir)/gl/libgnu.a
+jwhois_LDADD = $(top_builddir)/lib/libgnu.a
 
 AM_CFLAGS = $(jwhois_CFLAGS)
 
-
-INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/intl -I$(top_srcdir)/gl
+AM_CPPFLAGS =			\
+  -I$(top_srcdir)/include	\
+  -I$(top_srcdir)/lib		\
+  -I$(top_builddir)/lib

@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ##
 ## This file is part of jwhois
-## Copyright (C) 1999-2007  Free Software Foundation, Inc.
+## Copyright (C) 1999-2007, 2015  Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -18,10 +18,15 @@
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
 
-EXTRA_DIST = config.rpath  m4/ChangeLog config.rpath include/*.h example/jwhois.conf m4/*.m4 jwhois.spec.in jwhois.spec
-SUBDIRS = m4 doc gl src example po
+ACLOCAL_AMFLAGS = -I m4
 
-AM_CPPFLAGS = -I$(top_srcdir)/gl
-LDADD = lib/libgnu.a
+SUBDIRS = doc example lib po src
 
-ACLOCAL_AMFLAGS = -I m4 -I gl/m4
+EXTRA_DIST = \
+  example/jwhois.conf \
+  include/*.h \
+  jwhois.spec.in \
+  jwhois.spec \
+  m4/gnulib-cache.m4
+
+AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib

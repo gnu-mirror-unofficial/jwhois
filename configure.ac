@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 ##
 ## This file is part of jwhois
-## Copyright (C) 1999-2005  Free Software Foundation, Inc.
+## Copyright (C) 1999-2005, 2015  Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -17,10 +17,11 @@ dnl Process this file with autoconf to produce a configure script.
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-AC_INIT
+AC_INIT([GNU JWhois], [4.0], [bug-jwhois@gnu.org])
 AC_CONFIG_SRCDIR([src/jconfig.c])
-AM_INIT_AUTOMAKE(jwhois,4.0)
 AM_CONFIG_HEADER(config.h)
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([gnu])
 
 AH_TEMPLATE([PACKAGE], [package name])
 AH_TEMPLATE([VERSION], [package version])
@@ -87,11 +88,13 @@ ALL_LINGUAS="es fr hu id it nl pl pt_BR ro ru rw sv tr vi zh_TW"
 
 AC_PROG_INSTALL
 AC_PROG_CC
+gl_EARLY
 
 GETTEXT_PACKAGE=jwhois
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
 AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.2])
 
 AM_ICONV
 
@@ -99,6 +102,9 @@ AC_PATH_PROG(CHGRP, chgrp, $PATH:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/u
 AC_PATH_PROG(CHMOD, chmod, $PATH:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/libexec)
 
 AC_C_BIGENDIAN
+
+# For gnulib
+gl_INIT
 
 AC_CHECK_FUNC(connect,,
   AC_CHECK_LIB(socket, connect))
@@ -208,12 +214,12 @@ fi
 OLDCFLAGS=$CFLAGS
 AC_SUBST(OLDCFLAGS)
 
-AC_OUTPUT([ po/Makefile.in m4/Makefile 
-Makefile 
-doc/Makefile 
-doc/sv/Makefile 
-src/Makefile 
-example/Makefile 
+AC_OUTPUT([ po/Makefile.in
+Makefile
+lib/Makefile
+doc/Makefile
+doc/sv/Makefile
+src/Makefile
+example/Makefile
 jwhois.spec
 ])
-
