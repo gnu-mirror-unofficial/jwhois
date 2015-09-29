@@ -22,6 +22,7 @@ AC_CONFIG_SRCDIR([src/jconfig.c])
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([gnu])
+AM_SILENT_RULES([yes]) # Enable silent rules by default.
 
 AH_TEMPLATE([PACKAGE], [package name])
 AH_TEMPLATE([VERSION], [package version])
