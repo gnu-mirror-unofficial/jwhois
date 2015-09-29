@@ -21,11 +21,14 @@
 /lib/
 /m4/
 /po/*.gmo
+/po/*.po
 /po/.gitignore
 /po/.reference/
 /po/LINGUAS
 /po/Makevars
 /po/POTFILES
+/po/jwhois.pot
+/po/remove-potcdate.sed
 /po/stamp-po
 /src/jwhois
 /stamp-h1
