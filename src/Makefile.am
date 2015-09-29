@@ -19,9 +19,19 @@
 ##
 
 bin_PROGRAMS = jwhois
-jwhois_SOURCES = dns.c lookup.c init.c utils.c gai_strerror.c regex.c \
-	getopt.c getopt1.c jconfig.c string.c cache.c rwhois.c jwhois.c \
-	whois.c http.c
+
+jwhois_SOURCES = 	\
+  cache.c		\
+  dns.c 		\
+  gai_strerror.c	\
+  http.c		\
+  init.c		\
+  jconfig.c		\
+  jwhois.c		\
+  lookup.c		\
+  rwhois.c		\
+  utils.c		\
+  whois.c
 
 jwhois_LIBS = @LIBINTL@ @LIBICONV@ @LIBS@ 
 
