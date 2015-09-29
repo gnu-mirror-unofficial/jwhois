@@ -84,15 +84,10 @@ AC_ARG_WITH(localedir,
 ,localedir=$withval,localedir='${prefix}/share/locale')
 AC_SUBST(localedir)
 
-ALL_LINGUAS="es fr hu id it nl pl pt_BR ro ru rw sv tr vi zh_TW"
-
 AC_PROG_INSTALL
 AC_PROG_CC
 gl_EARLY
 
-GETTEXT_PACKAGE=jwhois
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.2])
 
@@ -214,12 +209,12 @@ fi
 OLDCFLAGS=$CFLAGS
 AC_SUBST(OLDCFLAGS)
 
-AC_OUTPUT([ po/Makefile.in
-Makefile
-lib/Makefile
-doc/Makefile
-doc/sv/Makefile
-src/Makefile
-example/Makefile
-jwhois.spec
-])
+AC_CONFIG_FILES([Makefile
+                 doc/Makefile
+                 doc/sv/Makefile
+                 example/Makefile
+                 jwhois.spec
+                 lib/Makefile
+                 po/Makefile.in
+                 src/Makefile])
+AC_OUTPUT
