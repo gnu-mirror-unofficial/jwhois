@@ -8,8 +8,6 @@
 /autoscan.log
 /build-aux
 /config.cache
-/config.h
-/config.h.in
 /config.log
 /config.status
 /configure
@@ -30,8 +28,10 @@
 /po/jwhois.pot
 /po/remove-potcdate.sed
 /po/stamp-po
+/src/config.h
+/src/config.h.in
 /src/jwhois
-/stamp-h1
+/src/stamp-h1
 Makefile
 Makefile.in
 TAGS

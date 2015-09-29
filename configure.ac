@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 ##
 AC_INIT([GNU JWhois], [4.0], [bug-jwhois@gnu.org])
 AC_CONFIG_SRCDIR([src/jconfig.c])
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADER([src/config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([gnu])
 AM_SILENT_RULES([yes]) # Enable silent rules by default.
