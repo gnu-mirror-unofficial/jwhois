@@ -28,10 +28,11 @@
 /po/jwhois.pot
 /po/remove-potcdate.sed
 /po/stamp-po
+/src/.dirstamp
 /src/config.h
 /src/config.h.in
-/src/jwhois
 /src/stamp-h1
 Makefile
 Makefile.in
 TAGS
+jwhois

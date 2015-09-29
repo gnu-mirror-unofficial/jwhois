@@ -21,7 +21,7 @@ AC_INIT([GNU JWhois], [4.0], [bug-jwhois@gnu.org])
 AC_CONFIG_SRCDIR([src/jconfig.c])
 AC_CONFIG_HEADER([src/config.h])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([gnu])
+AM_INIT_AUTOMAKE([gnu subdir-objects])
 AM_SILENT_RULES([yes]) # Enable silent rules by default.
 
 AH_TEMPLATE([PACKAGE], [package name])
@@ -211,11 +211,7 @@ OLDCFLAGS=$CFLAGS
 AC_SUBST(OLDCFLAGS)
 
 AC_CONFIG_FILES([Makefile
-                 doc/Makefile
-                 doc/sv/Makefile
-                 example/Makefile
                  jwhois.spec
                  lib/Makefile
-                 po/Makefile.in
-                 src/Makefile])
+                 po/Makefile.in])
 AC_OUTPUT
