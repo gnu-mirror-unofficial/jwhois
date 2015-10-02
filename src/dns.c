@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 
 #include <jwhois.h>
 #include <dns.h>
-#if defined(HAVE_GETADDRINFO) && !defined(HAVE_GAI_STRERROR)
+#ifndef HAVE_GAI_STRERROR
 #include <gai_strerror.h>
 #endif
 
@@ -52,56 +52,6 @@
 # define _(s)  (s)
 #endif
 
-#ifndef HAVE_GETADDRINFO
-/*
- *  This function looks up a hostname or IP number and enters the information
- *  in a sockaddr_in structure.
- *
- *  Returns: -1  Host not found
- *           0   Success
- */
-int
-lookup_host_saddr(struct sockaddr_in *res, const char *host, int port)
-{
-  int ret;
-  struct hostent *hostent;
-  struct servent *sp;
-
-  res->sin_family = AF_INET;
-
-  if (!port) {
-    if ((sp = getservbyname("whois", "tcp")) == NULL)
-      res->sin_port = htons(IPPORT_WHOIS);
-    else
-      res->sin_port = sp->s_port;
-  } else {
-     res->sin_port = htons(port);
-  }
-
-#ifdef HAVE_INET_ATON
-  ret = inet_aton(host, &res->sin_addr.s_addr);
-#else
-  res->sin_addr.s_addr = inet_addr(host);
-  if (res->sin_addr.s_addr == -1)
-    ret = 0;
-#endif
-  if (!ret)
-    {
-      hostent = gethostbyname(host);
-      if (!hostent)
-	{
-	  printf("[%s: %s]\n", host, _("host not found"));
-	  return -1;
-	}
-      memcpy(&res->sin_addr.s_addr, hostent->h_addr_list[0],
-	     sizeof(res->sin_addr.s_addr));
-    }
-  return 0;
-}
-#endif
-
-
-#ifdef HAVE_GETADDRINFO
 /*
  *  This function looks up a hostname or IP number using the newer
  *  getaddrinfo() system call.
@@ -132,4 +82,3 @@ lookup_host_addrinfo(struct addrinfo **res, const char *host, int port)
     }
   return 0;
 }
-#endif

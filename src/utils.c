@@ -192,66 +192,8 @@ make_connect(const char *host, int port)
   int sockfd, error, flags, retval, retlen;
   fd_set fdset;
   struct timeval timeout = { connect_timeout, 0 };
-
-#ifdef HAVE_GETADDRINFO
   struct addrinfo *res;
   struct sockaddr *sa;
-#else
-  struct sockaddr_in remote;
-#endif
-
-#ifndef HAVE_GETADDRINFO
-  error = lookup_host_saddr(&remote, host, port);
-  if (error < 0)
-    return -1;
-
-  sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-  if (!sockfd)
-    {
-      return -1;
-    }
-
-  flags = fcntl(sockfd, F_GETFL, 0);
-  if (fcntl(sockfd, F_SETFL, flags|O_NONBLOCK) == -1)
-    {
-      close (sockfd);
-      return -1;
-    }
-
-  error = connect(sockfd, (struct sockaddr *)&remote, sizeof(struct sockaddr));
-
-  if (error == 0)
-    return sockfd;
-
-  if (error < 0 && errno != EINPROGRESS)
-    {
-      close (sockfd);
-      return -1;
-    }
-
-  FD_ZERO(&fdset);
-  FD_SET(sockfd, &fdset);
-
-  error = select(FD_SETSIZE, NULL, &fdset, NULL, &timeout);
-  if (error == 0)
-    {
-      close (sockfd);
-      return -1;
-    }
-
-  retlen = sizeof(retval);
-  error = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &retval, &retlen);
-  if (error < 0 || retval)
-    {
-      close (sockfd);
-      if (retval == ENETUNREACH)
-        continue;
-      else
-        return -1;
-    }
-
-  return sockfd;
-#else /* HAVE_GETADDRINFO */
 
   error = lookup_host_addrinfo(&res, host, port);
   if (error < 0)
@@ -315,7 +257,6 @@ make_connect(const char *host, int port)
     }
 
   return -1;
-#endif
 }
 
 /*
