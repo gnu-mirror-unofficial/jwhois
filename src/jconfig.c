@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2001-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999, 2001-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -76,15 +76,12 @@ jconfig_getone(const char *domain, const char *key)
 
   while (ptr)
     {
-      if ( (char *)strcasecmp(ptr->domain, domain) == 0)
-	{
-	  if ( (char *)strcasecmp(ptr->key, key) == 0)
-	    {
-	      return ptr;
-	    }
-	}
+      if ((strcasecmp (ptr->domain, domain) == 0)
+	  && (strcasecmp (ptr->key, key) == 0))
+	return ptr;
       ptr = ptr->next;
     }
+
   return NULL;
 }
 
@@ -103,7 +100,7 @@ jconfig_next(const char *domain)
     }
   while (jconfig_tmpptr)
     {
-      if ( (char *)strcasecmp(jconfig_tmpptr->domain, domain) == 0)
+      if (strcasecmp (jconfig_tmpptr->domain, domain) == 0)
 	{
 	  ptr = jconfig_tmpptr;
 	  jconfig_tmpptr = jconfig_tmpptr->next;
@@ -130,7 +127,7 @@ jconfig_next_all(const char *domain)
     }
   while (jconfig_tmpptr)
     {
-      if ( (char *)strncasecmp(jconfig_tmpptr->domain, domain, strlen(domain)) == 0)
+      if (strncasecmp (jconfig_tmpptr->domain, domain, strlen(domain)) == 0)
 	{
 	  ptr = jconfig_tmpptr;
 	  jconfig_tmpptr = jconfig_tmpptr->next;

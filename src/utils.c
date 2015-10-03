@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -137,7 +137,7 @@ get_whois_server_domain_path(const char *hostname)
   while ((j = jconfig_next_all("jwhois|server-options")) != NULL)
     {
       rpb.allocated = 0;
-      rpb.buffer = (unsigned char *)NULL;
+      rpb.buffer = NULL;
       rpb.translate = case_fold;
       rpb.fastmap = (char *)NULL;
       if ((error = (char *)re_compile_pattern(j->domain+22,
