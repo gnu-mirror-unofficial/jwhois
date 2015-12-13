@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -117,7 +117,8 @@ cache_init(void)
   DBM *dbf;
 #endif
 
-  if (!cache) return 0;
+  if (!cache)
+    return 0;
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cachefile");
@@ -126,7 +127,8 @@ cache_init(void)
   else
     cfname = j->value;
 
-  if (verbose>1) printf("[Cache: Cache file name = \"%s\"]\n",cfname);
+  if (verbose>1)
+    printf("[Cache: Cache file name = \"%s\"]\n",cfname);
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cacheexpire");
@@ -146,7 +148,8 @@ cache_init(void)
   cfexpire = atoi(ret2);
 #endif /* HAVE_STRTOL */
 
-  if (verbose>1) printf("[Cache: Expire time = %d]\n", cfexpire);
+  if (verbose>1)
+    printf("[Cache: Expire time = %d]\n", cfexpire);
 
   umask(0);
   dbf = dbm_open(cfname, DBM_COPTIONS, DBM_MODE);

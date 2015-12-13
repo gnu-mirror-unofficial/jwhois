@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999,2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ strncasecmp (const char *s1, const char *s2, size_t i)
     return 0;
   if (i == 0)
     return 0;
-
+  
   do
     {
       c1 = tolower(*p1++);

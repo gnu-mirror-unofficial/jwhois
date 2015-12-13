@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 2001-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 2001-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -83,7 +83,8 @@ struct s_referrals {
 #define REP_CONT     0x04
 #define REP_REFERRAL 0x05
 
-static struct {
+static struct
+{
   char *name;
   int cap;
 } capabilities[] = 
@@ -144,6 +145,7 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
   f = fdopen(sockfd, "r+");
   if (!f)
     return -1;
+
   reply = malloc(MAXBUFSIZE);
   if (!reply)
     return -1;
@@ -184,8 +186,11 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
     {
       if (rwhois_capab & CAP_DISPLAY)
 	{
-	  if (verbose>1) printf("[RWHOIS: Setting display to %s]\n", tmpptr);
+	  if (verbose>1)
+	    printf("[RWHOIS: Setting display to %s]\n", tmpptr);
+
 	  fprintf(f, "-display %s\r\n", tmpptr);
+
 	  do
 	    {
 	      ret = rwhois_read_line(f, reply, text);
@@ -193,8 +198,9 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
 	  while (ret != REP_OK && ret != REP_ERROR);
 	}
       else
-	if (verbose) printf("[RWHOIS: %s]\n",
-			    _("Server does not support display command"));
+	if (verbose)
+	  printf("[RWHOIS: %s]\n",
+		 _("Server does not support display command"));
     }
 
   if (rwhois_limit)
@@ -224,8 +230,11 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
     {
       if (rwhois_capab & CAP_LIMIT)
 	{
-	  if (verbose>1) printf("[RWHOIS: Setting limit to %d]\n", limit);
+	  if (verbose>1)
+	    printf("[RWHOIS: Setting limit to %d]\n", limit);
+
 	  fprintf(f, "-limit %d\r\n", limit);
+
 	  do
 	    {
 	      ret = rwhois_read_line(f, reply, text);
@@ -233,7 +242,10 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
 	  while (ret != REP_OK && ret != REP_ERROR);
 	}
       else
-	if (verbose) printf("[RWHOIS: %s]\n", _("Server does not support limit"));
+	{
+	  if (verbose)
+	    printf("[RWHOIS: %s]\n", _("Server does not support limit"));
+	}
     }
 
   if (verbose>1)
@@ -245,9 +257,7 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
     {
       ret = rwhois_read_line(f, reply, text);
       if (ret == REP_REFERRAL)
-	{
-	  rwhois_insert_referral(reply, referrals);
-	}
+	rwhois_insert_referral(reply, referrals);
     }
   while (ret != REP_OK && ret != REP_ERROR);
 
@@ -275,7 +285,9 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
 
   if (strncasecmp(strchr(reply, ' ')+1, "rwhois://", 9) != 0)
     {
-      if (verbose) printf("[RWHOIS: %s: %s]\n", _("Unknown referral"), strchr(reply, ' ')+1);
+      if (verbose)
+	printf("[RWHOIS: %s: %s]\n", _("Unknown referral"), strchr(reply, ' ')+1);
+
       return -1;
     }
   if (!*referrals)
@@ -320,7 +332,8 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
   tmpptr[len] = '\0';
 
   if (verbose>1)
-    printf("[RWHOIS: Referral to %s:%d (autharea=%s)]\n", s->host, s->port, s->autharea);
+    printf("[RWHOIS: Referral to %s:%d (autharea=%s)]\n",
+	   s->host, s->port, s->autharea);
 
   return 0;
 }
@@ -346,7 +359,7 @@ rwhois_query(struct s_whois_query *wq, char **text)
   if (referrals)
     {
       authareas = NULL;
-
+      
       s = referrals;
       while (s)
 	{
@@ -399,7 +412,7 @@ rwhois_read_line(FILE *f, char *ptr, char **text)
       printf(_("[Host terminated connection prematurely]\n"));
       exit(1);
     }
-
+  
   if (!fgets(ptr, MAXBUFSIZE-1, f))
       return REP_ERROR;
 
@@ -441,8 +454,10 @@ rwhois_parse_line(const char *reply, char **text)
       sscanf(capab, "%x", &rwhois_capab);
       return REP_INIT;
     }
+
   if (strncasecmp(reply, "%ok", 3) == 0)
     return REP_OK;
+
   if (strncasecmp(reply, "%error", 6) == 0)
     {
       tmpptr = (char *)strchr(reply, ' ');
@@ -451,31 +466,37 @@ rwhois_parse_line(const char *reply, char **text)
       add_text_to_buffer(text, create_string("%s\n", tmpptr+1));
       return REP_ERROR;
     }
+
   if (strncasecmp(reply, "%referral", 9) == 0)
     {
       return REP_REFERRAL;
     }
+
   if (strncasecmp(reply, "%info on", 8) == 0)
     {
       info_on = 1;
       return REP_CONT;
     }
+
   if (strncasecmp(reply, "%info off", 9) == 0)
     {
       info_on = 0;
       return REP_CONT;
     }
+
   if (strncasecmp(reply, "%", 1) == 0)
     {
       tmpptr = (char *)strchr(reply, ' ');
       if (!tmpptr)
 	return REP_ERROR;
       *tmpptr = '\0';
-      if (verbose) printf("[RWHOIS: %s: %s]\n",
-			  _("Unhandled reply"),
-			  reply+1);
+      if (verbose)
+	printf("[RWHOIS: %s: %s]\n", _("Unhandled reply"),
+	       reply+1);
+
       return REP_CONT;
     }
+
   add_text_to_buffer(text, create_string("%s\n", reply));
   return REP_CONT;
 }

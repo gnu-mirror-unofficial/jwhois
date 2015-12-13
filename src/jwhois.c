@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2001-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999,2001-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -132,13 +132,16 @@ main(int argc, char **argv)
 
   if (ghost)
     {
-      if (verbose>1) printf("[Calling %s:%d directly]\n", ghost, gport);
+      if (verbose>1)
+	printf("[Calling %s:%d directly]\n", ghost, gport);
+
       wq.host = ghost;
       wq.port = gport;
     }
   else if (split_host_from_query(&wq))
     {
-      if (verbose>1) printf("[Calling %s directly]\n", wq.host);
+      if (verbose>1)
+	printf("[Calling %s directly]\n", wq.host);
     }
   else
     {
@@ -163,7 +166,9 @@ main(int argc, char **argv)
            wq.host, wq.query);
 
   if (!forcelookup && cache) {
-    if (verbose>1) printf("[Looking up entry in cache]\n");
+    if (verbose>1)
+      printf("[Looking up entry in cache]\n");
+
     ret = cache_read(cachestr, &text);
     if (ret < 0)
       {
@@ -182,12 +187,12 @@ main(int argc, char **argv)
 
 #ifndef NOCACHE
   if (cache) {
-    if (verbose>1) printf("[Storing in cache]\n");
+    if (verbose>1)
+      printf("[Storing in cache]\n");
+
     ret = cache_store(cachestr, text);
     if (ret < 0)
-      {
-	printf("[%s]\n", _("Error writing to cache"));
-      }
+      printf("[%s]\n", _("Error writing to cache"));
   }
 #endif
 
@@ -290,13 +295,10 @@ jwhois_query(struct s_whois_query *wq, char **text)
   else
     {
       if (tmp2 && 0 == strcasecmp(tmp2, "true"))
-	{
-	  ret = http_query(wq, &curdata);
-	}
+	ret = http_query(wq, &curdata);
       else
-	{
-	  ret = whois_query(wq, &curdata);
-	}
+	ret = whois_query(wq, &curdata);
+      
     }
 
   if (!raw_query)
@@ -306,9 +308,8 @@ jwhois_query(struct s_whois_query *wq, char **text)
     }
 
   if (ret < 0)
-    {
-      exit(1);
-    }
+    exit(1);
+    
   if (curdata != NULL)
     {
       curdata = convert_charset(wq, curdata);
@@ -319,14 +320,13 @@ jwhois_query(struct s_whois_query *wq, char **text)
 	  *text = realloc(*text, strlen (*text) + strlen (curdata) + 1);
 	  if (*text == NULL)
 	    exit(1);
+
 	  strcat(*text, curdata);
 	  free(curdata);
 	}
     }
   if (ret > 0)
-    {
-      return jwhois_query(wq, text);
-    }
+    return jwhois_query(wq, text);
   else
     return 0;
 }

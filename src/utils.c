@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,22 +69,26 @@ create_string(const char *fmt, ...)
   char *p;
   va_list ap;
 
-  if ((p = malloc(size)) == NULL)
+  p = malloc(size);
+  if (!p)
     return NULL;
 
-  while (1) {
-    va_start(ap, fmt);
-    n = vsprintf(p, fmt, ap);
-    va_end(ap);
-    if (n > -1 && n < size)
-      return p;
-    if (n > -1)
-      size = n+1;
-    else
-      size *= 2;
-    if ((p = realloc(p, size)) == NULL)
-      return NULL;
-  }
+  while (1)
+    {
+      va_start(ap, fmt);
+      n = vsprintf(p, fmt, ap);
+      va_end(ap);
+      if (n > -1 && n < size)
+	return p;
+      if (n > -1)
+	size = n+1;
+      else
+	size *= 2;
+
+      p = realloc(p, size);
+      if (!p)
+	return NULL;
+    }
 }
 
 /*
@@ -140,20 +144,18 @@ get_whois_server_domain_path(const char *hostname)
       rpb.buffer = (unsigned char *)NULL;
       rpb.translate = case_fold;
       rpb.fastmap = (char *)NULL;
-      if ((error = (char *)re_compile_pattern(j->domain+22,
-					     strlen(j->domain+22), &rpb)) != 0)
-	{
-	  return NULL;
-	}
+
+      error = (char *)re_compile_pattern(j->domain+22,
+					 strlen(j->domain+22), &rpb);
+      if (error != 0)
+	return NULL;
+	
       ind = re_search(&rpb, hostname, strlen(hostname), 0, 0, NULL);
       if (ind == 0)
-	{
-	  return j->domain;
-	}
+	return j->domain;
       else if (ind == -2)
-	{
-	  return NULL;
-	}
+	return NULL;
+      
     }
   return NULL;
   jconfig_end();
@@ -170,7 +172,7 @@ get_whois_server_option(const char *hostname, const char *key)
   char *base;
 
   base = get_whois_server_domain_path(hostname);
-
+  
   if (!base)
     return NULL;
   
@@ -219,7 +221,6 @@ make_connect(const char *host, int port)
     }
 
   error = connect(sockfd, (struct sockaddr *)&remote, sizeof(struct sockaddr));
-
   if (error == 0)
     return sockfd;
 
@@ -263,16 +264,15 @@ make_connect(const char *host, int port)
       sa = res->ai_addr;
       sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
       if (sockfd == -1 && res->ai_family == PF_INET6 && res->ai_next)
-        {
-          /* Operating system seems to lack IPv6 support, try next entry */
-          continue;
-        }
+	/* Operating system seems to lack IPv6 support, try next entry */
+	continue;
+
       if (sockfd == -1)
 	{
 	  printf("[%s]\n", _("Error creating socket"));
 	  return -1;
 	}
-
+      
       flags = fcntl(sockfd, F_GETFL, 0);
       if (fcntl(sockfd, F_SETFL, flags|O_NONBLOCK) == -1)
 	{
@@ -282,12 +282,9 @@ make_connect(const char *host, int port)
 
 
       error = connect(sockfd, res->ai_addr, res->ai_addrlen);
-
       if (error == 0)
-	{
-	  return sockfd;
-	}
-
+	return sockfd;
+      
       if (error < 0 && errno != EINPROGRESS)
 	{
 	  close (sockfd);
@@ -307,10 +304,8 @@ make_connect(const char *host, int port)
       retlen = sizeof(retval);
       error = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &retval, &retlen);
       if (error == 0 && retval == 0)
-	{
-	  return sockfd;
-	}
-
+	return sockfd;
+      
       close (sockfd);
     }
 
@@ -329,13 +324,14 @@ split_host_from_query(struct s_whois_query *wq)
 {
   char *tmpptr;
 
-  tmpptr = (char *)strchr(wq->query, '@');
+  tmpptr = strchr(wq->query, '@');
   if (!tmpptr)
     return 0;
 
   tmpptr--;
   if (*tmpptr == '\\')
     return 0;
+
   tmpptr++;
   *tmpptr = '\0';
   tmpptr++;
@@ -364,6 +360,7 @@ timeout_init()
     {
       if (verbose)
         printf("[%s: %s]\n", _("Invalid connect timeout value"), ret);
+
       connect_timeout = 75;
     }
 #else

@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,14 +69,18 @@ lookup_host_saddr(struct sockaddr_in *res, const char *host, int port)
 
   res->sin_family = AF_INET;
 
-  if (!port) {
-    if ((sp = getservbyname("whois", "tcp")) == NULL)
+  if (!port)
+    {
+    sp = getservbyname("whois", "tcp");
+    if (!sp)
       res->sin_port = htons(IPPORT_WHOIS);
     else
       res->sin_port = sp->s_port;
-  } else {
-     res->sin_port = htons(port);
-  }
+    }
+  else
+    {
+      res->sin_port = htons(port);
+    }
 
 #ifdef HAVE_INET_ATON
   ret = inet_aton(host, &res->sin_addr.s_addr);

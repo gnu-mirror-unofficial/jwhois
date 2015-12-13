@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2001-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999,2001-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -68,21 +68,17 @@ jconfig_getone(const char *domain, const char *key)
   struct jconfig *ptr;
 
   if (!jconfig_ptr)
-    {
-      return NULL;
-    }
+    return NULL;
+  
 
   ptr = jconfig_ptr;
 
   while (ptr)
     {
       if ( (char *)strcasecmp(ptr->domain, domain) == 0)
-	{
-	  if ( (char *)strcasecmp(ptr->key, key) == 0)
-	    {
-	      return ptr;
-	    }
-	}
+	if ( (char *)strcasecmp(ptr->key, key) == 0)
+	  return ptr;
+      
       ptr = ptr->next;
     }
   return NULL;
@@ -98,9 +94,8 @@ jconfig_next(const char *domain)
   struct jconfig *ptr;
   
   if (!jconfig_tmpptr)
-    {
-      return NULL;
-    }
+    return NULL;
+  
   while (jconfig_tmpptr)
     {
       if ( (char *)strcasecmp(jconfig_tmpptr->domain, domain) == 0)
@@ -125,9 +120,8 @@ jconfig_next_all(const char *domain)
   struct jconfig *ptr;
   
   if (!jconfig_tmpptr)
-    {
-      return NULL;
-    }
+    return NULL;
+    
   while (jconfig_tmpptr)
     {
       if ( (char *)strncasecmp(jconfig_tmpptr->domain, domain, strlen(domain)) == 0)
@@ -163,9 +157,8 @@ jconfig_add(const char *domain, const char *key, const char *value, int line)
 
   ptr = malloc(sizeof(struct jconfig));
   if (!ptr)
-    {
-      return 0;
-    }
+    return 0;
+    
   ptr->key = malloc(strlen(key)+1);
   if (!ptr->key)
     {
@@ -237,7 +230,8 @@ jconfig_safe_strcat(char *s1, const char *s2)
 {
   char *s3;
 
-  if (!s1 || !s2) return NULL;
+  if (!s1 || !s2)
+    return NULL;
 
   s3 = realloc(s1, strlen(s1)+strlen(s2)+1);
   if (!s3)

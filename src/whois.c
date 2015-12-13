@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 2001-2002,2007  Free Software Foundation, Inc.
+    Copyright (C) 2001-2002, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,12 +70,14 @@ whois_query(struct s_whois_query *wq, char **text)
 	  printf(_("[Unable to connect to remote host]\n"));
 	  return -1;
 	}
+
       tmpqstring = malloc(strlen(wq->query)+3);
       if (!tmpqstring)
         {
           printf("[%s]\n", _("Error allocating memory"));
           exit(1);
         }
+
       strncpy(tmpqstring, wq->query, strlen(wq->query)+1);
       strcat(tmpqstring, "\r\n");
 
@@ -85,15 +87,17 @@ whois_query(struct s_whois_query *wq, char **text)
 
       if (ret < 0)
 	{
-	  printf("[%s %s:%d]\n", _("Error reading data from"), wq->host,
-		 wq->port);
+	  printf("[%s %s:%d]\n", _("Error reading data from"),
+		 wq->host, wq->port);
 	  exit(1);
 	}
       if (redirect)
         {
           ret = lookup_redirect(wq, *text);
-          if ((ret < 0) || (ret == 0)) break;
-          return 1;
+          if ((ret < 0) || (ret == 0))
+	    break;
+
+	  return 1;
 	  break;
         }
       else

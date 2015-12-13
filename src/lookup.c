@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2001-2003,2007  Free Software Foundation, Inc.
+    Copyright (C) 1999,2001-2003, 2007, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -105,10 +105,8 @@ find_cidr(struct s_whois_query *wq, const char *block)
 			 &bits);
 	    if (res != 5 || bits > 32)
 	      {
-		printf("[%s: %s %d]\n",
-		       config,
-		       _("Invalid netmask on line"),
-		       j->line);
+		printf("[%s: %s %d]\n", config,
+		       _("Invalid netmask on line"), j->line);
 		return NULL;
 	      }
 #ifdef WORDS_BIGENDIAN
@@ -151,6 +149,7 @@ static int ipv6_address_is_in_network(const struct in6_addr *addr,
   if (bits % 8 != 0
       && (addr->s6_addr[i] & (0xFFu << (8 - (bits % 8)))) != net->s6_addr[i])
     return 0;
+
   return 1;
 }
 #endif
