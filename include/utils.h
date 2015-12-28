@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 2001-2002  Free Software Foundation, Inc.
+    Copyright (C) 2001-2002, 2015  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,6 +28,6 @@ char *create_string(const char *fmt, ...);
 int split_host_from_query(struct s_whois_query *wq);
 int make_connect(const char *, int);
 int add_text_to_buffer(char **, const char *);
-
+void timeout_init (void);
 
 #endif

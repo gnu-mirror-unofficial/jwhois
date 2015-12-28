@@ -39,7 +39,7 @@
 
 #include <jwhois.h>
 #include <dns.h>
-#if defined(HAVE_GETADDRINFO) && !defined(HAVE_GAI_STRERROR)
+#ifndef HAVE_GAI_STRERROR
 #include <gai_strerror.h>
 #endif
 
@@ -52,6 +52,7 @@
 # define _(s)  (s)
 #endif
 
+<<<<<<< HEAD
 #ifndef HAVE_GETADDRINFO
 /*
  *  This function looks up a hostname or IP number and enters the information
@@ -106,6 +107,8 @@ lookup_host_saddr(struct sockaddr_in *res, const char *host, int port)
 
 
 #ifdef HAVE_GETADDRINFO
+=======
+>>>>>>> FETCH_HEAD
 /*
  *  This function looks up a hostname or IP number using the newer
  *  getaddrinfo() system call.
@@ -136,4 +139,3 @@ lookup_host_addrinfo(struct addrinfo **res, const char *host, int port)
     }
   return 0;
 }
-#endif

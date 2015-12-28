@@ -304,7 +304,7 @@ find_regex(struct s_whois_query *wq, const char *block)
 	      }
 	  }
 	  rpb.allocated = 0;
-	  rpb.buffer = (unsigned char *)NULL;
+	  rpb.buffer = NULL;
 	  rpb.translate = case_fold;
 	  rpb.fastmap = (char *)NULL;
 
@@ -511,7 +511,7 @@ lookup_redirect(struct s_whois_query *wq, const char *text)
 	  while (strptr)
 	    {
 	      rpb.allocated = 0;
-	      rpb.buffer = (unsigned char *)NULL;
+	      rpb.buffer = NULL;
 	      rpb.translate = rpb.fastmap = (char *)NULL;
 	      if (re_compile_pattern(j->value, strlen(j->value), &rpb))
 		return -1;

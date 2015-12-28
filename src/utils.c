@@ -141,7 +141,7 @@ get_whois_server_domain_path(const char *hostname)
   while ((j = jconfig_next_all("jwhois|server-options")) != NULL)
     {
       rpb.allocated = 0;
-      rpb.buffer = (unsigned char *)NULL;
+      rpb.buffer = NULL;
       rpb.translate = case_fold;
       rpb.fastmap = (char *)NULL;
 
@@ -194,10 +194,9 @@ make_connect(const char *host, int port)
   int sockfd, error, flags, retval, retlen;
   fd_set fdset;
   struct timeval timeout = { connect_timeout, 0 };
-
-#ifdef HAVE_GETADDRINFO
   struct addrinfo *res;
   struct sockaddr *sa;
+<<<<<<< HEAD
 #else
   struct sockaddr_in remote;
 #endif
@@ -253,6 +252,8 @@ make_connect(const char *host, int port)
 
   return sockfd;
 #else /* HAVE_GETADDRINFO */
+=======
+>>>>>>> FETCH_HEAD
 
   error = lookup_host_addrinfo(&res, host, port);
   if (error < 0)
@@ -310,7 +311,6 @@ make_connect(const char *host, int port)
     }
 
   return -1;
-#endif
 }
 
 /*
