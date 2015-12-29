@@ -1,10 +1,6 @@
 /*
     This file is part of jwhois
-<<<<<<< HEAD
-    Copyright (C) 1999,2001-2002, 2007, 2015  Free Software Foundation, Inc.
-=======
     Copyright (C) 1999, 2001-2002, 2007, 2015  Free Software Foundation, Inc.
->>>>>>> FETCH_HEAD
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -79,16 +75,9 @@ jconfig_getone(const char *domain, const char *key)
 
   while (ptr)
     {
-<<<<<<< HEAD
-      if ( (char *)strcasecmp(ptr->domain, domain) == 0)
-	if ( (char *)strcasecmp(ptr->key, key) == 0)
-	  return ptr;
-      
-=======
       if ((strcasecmp (ptr->domain, domain) == 0)
 	  && (strcasecmp (ptr->key, key) == 0))
 	return ptr;
->>>>>>> FETCH_HEAD
       ptr = ptr->next;
     }
 
