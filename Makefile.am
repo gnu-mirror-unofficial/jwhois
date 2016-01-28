@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ##
 ## This file is part of jwhois
-## Copyright (C) 1999-2007, 2015  Free Software Foundation, Inc.
+## Copyright (C) 1999-2007, 2015, 2016  Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ AM_CFLAGS = $(jwhois_CFLAGS)
 
 info_TEXINFOS = doc/jwhois.texi
 man1dir = $(mandir)/sv/man1
-man_MANS = doc/jwhois.1 doc/sv/jwhois.1
+man_MANS = doc/jwhois.1
 
 EXTRA_DIST = \
   example/jwhois.conf \
