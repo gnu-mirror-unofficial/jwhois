@@ -51,16 +51,14 @@ AM_CPPFLAGS = \
 AM_CFLAGS = $(jwhois_CFLAGS)
 
 info_TEXINFOS = doc/jwhois.texi
-man1dir = $(mandir)/sv/man1
-man_MANS = doc/jwhois.1
+dist_man_MANS = doc/jwhois.1
 
 EXTRA_DIST = \
   example/jwhois.conf \
   include/*.h \
   jwhois.spec.in \
   jwhois.spec \
-  m4/gnulib-cache.m4 \
-  $(man_MANS)
+  m4/gnulib-cache.m4
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(sysconfdir)
