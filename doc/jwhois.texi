@@ -27,7 +27,7 @@
 @ifinfo
 This file documents @sc{jwhois}, a Whois client.
 
-Copyright (C) 1999-2005  Free Software Foundation, Inc.
+Copyright (C) 1999-2005, 2016  Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -70,7 +70,8 @@ Software Foundation raise funds for GNU development.''
 @end titlepage
 @page
 
-@node Top, Introduction, (dir), (dir)
+@node Top
+@top GNU Jwhois
 
 This file documents the GNU jwhois package, an extended Whois client.
 This is edition 3.2.1, for jwhois version 3.2.3, last updated 30 June 2002.
@@ -79,14 +80,22 @@ This is edition 3.2.1, for jwhois version 3.2.3, last updated 30 June 2002.
 * Introduction::                Introduction
 * Invocation::                  How to invoke jwhois
 * Site Configuration::          Syntax of the configuration file
+* RIPE Extensions::             Extensions for RIPE databases
+* Reporting bugs::              Reporting bugs
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Site Configuration
+
 * Global options::              Global configuration options
 * Whois servers::               Syntax for selecting whois servers
 * Server options::              Syntax for server options
-* RIPE Extensions::             Extensions for RIPE databases
-* Reporting bugs::              Reporting bugs
+
+@end detailmenu
 @end menu
 
-@node Introduction, Invocation, Top, Top
+@node Introduction
 @chapter Introduction
 
 @sc{jwhois} is an Internet Whois client that contains an extensible
@@ -101,7 +110,7 @@ reply from that whois server, @sc{jwhois} can assume the query was
 successful and display the result to the user, or optionally redirect
 the query to another server to find more specific information.
 
-@node Invocation, Site Configuration, Introduction, Top
+@node Invocation
 @chapter Invocation
 
 @sc{jwhois} uses the following command-line options:
@@ -178,7 +187,7 @@ The query can optionally contain the character @samp{@@} followed by
 a host name to direct the search to that host. This works exactly like
 specifying the host with @samp{--host} or @samp{-h}.
 
-@node Site Configuration, Global options, Invocation, Top
+@node Site Configuration
 @chapter Site Configuration
 
 @sc{jwhois} is configurable via its configuration file, normally
@@ -205,8 +214,8 @@ at the example configuration file included in the distribution.
 * Server options::              Syntax for server options
 @end menu
 
-@node Global options, Whois servers, Site Configuration, Top
-@chapter Global options
+@node Global options
+@section Global options
 
 The global options of @sc{jwhois} configure some basic facilities
 that are to be used for all hosts and queries made.
@@ -291,8 +300,8 @@ browser-postarg = "-post_data";
 connect-timeout = 3;
 @end example
 
-@node Whois servers, Server options, Global options, Top
-@chapter Whois servers
+@node Whois servers
+@section Whois servers
 
 When making a query, @sc{jwhois} looks at the @option{whois-servers}
 block to determine which host to send the query to. This block
@@ -361,8 +370,8 @@ cidr @{
 
 @end example
 
-@node Server options, RIPE Extensions, Whois servers, Top
-@chapter Server options
+@node Server options
+@section Server options
 
 The @option{server-options} block defines a number of parameters
 that are specific to each host.
@@ -496,7 +505,7 @@ server-options @{
 @}
 @end example
 
-@node RIPE Extensions, Reporting bugs, Server options, Top
+@node RIPE Extensions
 @chapter RIPE Extensions
 
 RIPE (Réseaux IP Européens) has defined a number of options that can be
@@ -518,7 +527,7 @@ $ jwhois -h whois.ripe.net -- -i admin-c,tech-c,zone-c CO19-RIPE
 
 @samp{--} is used to separate the RIPE options from the jwhois options.
 
-@node Reporting bugs,  , RIPE Extensions, Top
+@node Reporting bugs
 @chapter Reporting bugs
 
 Email bug reports to @code{bug-jwhois@@gnu.org}.
