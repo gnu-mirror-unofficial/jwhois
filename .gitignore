@@ -12,6 +12,7 @@
 /config.status
 /configure
 /configure.scan
+/doc/jwhois.1
 /doc/jwhois.info
 /jwhois-*.tar.gz
 /jwhois-*.tar.gz.sig

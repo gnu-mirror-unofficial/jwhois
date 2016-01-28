@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 ##
 ## This file is part of jwhois
-## Copyright (C) 1999-2005, 2015  Free Software Foundation, Inc.
+## Copyright (C) 1999-2005, 2015, 2016  Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -209,6 +209,13 @@ if test "$ac_cv_lib_intl_bindtextdomain" = "yes" -o "$ac_cv_lib_intl_gettext" = 
 fi
 OLDCFLAGS=$CFLAGS
 AC_SUBST(OLDCFLAGS)
+
+## Are we building from git checked-out sources, or a tarball ?  This allows
+## specifying some rules used only when bootstrapping.
+AM_CONDITIONAL([BUILD_FROM_GIT], [test -d "$srcdir/.git"])
+
+## GNU help2man creates man pages from --help output.
+AM_MISSING_PROG([HELP2MAN], [help2man])
 
 AC_CONFIG_FILES([Makefile
                  jwhois.spec

@@ -53,6 +53,13 @@ AM_CFLAGS = $(jwhois_CFLAGS)
 info_TEXINFOS = doc/jwhois.texi
 dist_man_MANS = doc/jwhois.1
 
+# Avoid re-generating the man pages when building from tarballs.
+if BUILD_FROM_GIT
+doc/jwhois.1: jwhois
+	$(AM_V_GEN)$(MKDIR_P) `dirname "$@"`; \
+	LANGUAGE= $(HELP2MAN) --output="$@" "$(top_builddir)/$<"
+endif
+
 EXTRA_DIST = \
   example/jwhois.conf \
   include/*.h \
