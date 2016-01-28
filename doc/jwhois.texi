@@ -1,29 +1,15 @@
 \input texinfo  @c -*-texinfo-*-
 @c %**start of header
 @setfilename jwhois.info
-@settitle jwhois, Whois client
-@c %**end of header
-
-@direntry
-* jwhois: (jwhois).     Whois client.
-@end direntry
-
-@c This file has the new style title page commands.
-@c Run `makeinfo' rather than `texinfo-format-buffer'.
-
-@c smallbook
-
-@c tex
-@c \overfullrule=0pt
-@c end tex
-
 @include version.texi
+@settitle GNU Jwhois Reference Manual
 @c Combine indices.
 @synindex cp fn
 @syncodeindex vr fn
 @syncodeindex ky fn
 @syncodeindex pg fn
 @syncodeindex tp fn
+@c %**end of header
 
 @copying
 This manual is for GNU Jwhois (version @value{VERSION}, @value{UPDATED}),
@@ -41,13 +27,15 @@ Texts.  A copy of the license is included in the section entitled
 @end quotation
 @end copying
 
-@setchapternewpage off
+@dircategory Network applications
+@direntry
+* Jwhois: (jwhois).             Whois client.
+@end direntry
 
 @titlepage
-@title jwhois
+@title GNU Jwhois
 @subtitle for version @value{VERSION}, @value{UPDATED}
-@author Jonas Öberg @code{(jonas@@gnu.org)}
-
+@author Jonas Öberg @email{(jonas@@gnu.org)}
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -520,7 +508,7 @@ $ jwhois -h whois.ripe.net -- -i admin-c,tech-c,zone-c CO19-RIPE
 @node Reporting bugs
 @chapter Reporting bugs
 
-Email bug reports to @code{bug-jwhois@@gnu.org}.
+Email bug reports to @email{bug-jwhois@@gnu.org}.
 
 
 @node GNU Free Documentation License
