@@ -51,6 +51,7 @@ AM_CPPFLAGS = \
 AM_CFLAGS = $(jwhois_CFLAGS)
 
 info_TEXINFOS = doc/jwhois.texi
+doc_jwhois_TEXINFOS = doc/fdl-1.3.texi
 dist_man_MANS = doc/jwhois.1
 
 # Avoid re-generating the man pages when building from tarballs.
