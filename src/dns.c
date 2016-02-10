@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015, 2016  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,10 +39,6 @@
 
 #include <jwhois.h>
 #include <dns.h>
-#ifndef HAVE_GAI_STRERROR
-#include <gai_strerror.h>
-#endif
-
 #include <string.h>
 
 #ifdef ENABLE_NLS

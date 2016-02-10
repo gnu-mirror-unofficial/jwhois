@@ -109,8 +109,7 @@ AC_CHECK_FUNC(socket,,
   AC_CHECK_LIB(inet, socket))
 AC_CHECK_FUNCS(getipnodebyname)
 AC_CHECK_FUNC(getaddrinfo,
-  [AC_DEFINE(HAVE_GETADDRINFO,1)
-   AC_CHECK_FUNCS(gai_strerror)],
+  [AC_DEFINE(HAVE_GETADDRINFO,1)],
   [AC_CHECK_FUNC(gethostbyname,,
      AC_CHECK_LIB(nsl, gethostbyname))
    AC_CHECK_FUNC(inet_aton)])
