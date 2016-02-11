@@ -29,7 +29,6 @@ AH_TEMPLATE([VERSION], [package version])
 AH_TEMPLATE([DEFAULTHOST], [Default Whois server])
 AH_TEMPLATE([CACHEFILE], [Default filename for the cache functionality])
 AH_TEMPLATE([CACHEEXPIRE], [Default expire time for the cache functionality])
-AH_TEMPLATE([HAVE_GETADDRINFO], [Define if you have the getaddrinfo function. ])
 AH_TEMPLATE([NOCACHE], [Define if you want to disable cache functionality])
 AH_TEMPLATE([HAVE_DBM_OPEN], [Define if you have the dbm_open function. ])
 AH_TEMPLATE([HAVE_GDBM_OPEN], [Define if you have the gdbm_open function. ])
@@ -108,11 +107,6 @@ AC_CHECK_FUNC(socket,,
   AC_CHECK_LIB(socket, socket)
   AC_CHECK_LIB(inet, socket))
 AC_CHECK_FUNCS(getipnodebyname)
-AC_CHECK_FUNC(getaddrinfo,
-  [AC_DEFINE(HAVE_GETADDRINFO,1)],
-  [AC_CHECK_FUNC(gethostbyname,,
-     AC_CHECK_LIB(nsl, gethostbyname))
-   AC_CHECK_FUNC(inet_aton)])
 
 AC_CHECK_LIB(inet6, main,
   AC_CHECK_LIB(resolv, main))
