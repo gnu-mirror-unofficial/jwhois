@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 2001-2002, 2007, 2015  Free Software Foundation, Inc.
+    Copyright (C) 2001-2002, 2007, 2015, 2016  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,21 +28,11 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
-
 #include <regex.h>
 #include <jwhois.h>
 #include <jconfig.h>
 #include <whois.h>
 #include <utils.h>
-
-
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define _(s)  gettext(s)
-#else
-# define _(s)  (s)
-#endif
-
 
 /* This register holds the capabilities of the server */
 int rwhois_capab;

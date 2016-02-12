@@ -50,4 +50,9 @@ extern char *rwhois_display;
 extern int enable_whoisservers;
 extern int connect_timeout;
 
+/* Internationalization.  */
+# include "gettext.h"
+# define _(str) gettext (str)
+# define N_(str) gettext_noop (str)
+
 #endif /* JWHOIS_H */

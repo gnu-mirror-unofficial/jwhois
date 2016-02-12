@@ -28,7 +28,7 @@
 #include <init.h>
 #include <utils.h>
 #include <jconfig.h>
-
+#include <jwhois.h>
 #include <string.h>
 
 #define DO_HELP    0x01
@@ -54,13 +54,6 @@ static struct option long_options[] =
   {"raw", 0, 0, 'a'},
   {0, 0, 0, 0}
 };
-
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define _(s)  gettext(s)
-#else
-# define _(s)  (s)
-#endif
 
 /* This is set if caching is enabled */
 int cache;

@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2002, 2007, 2015  Free Software Foundation, Inc.
+    Copyright (C) 1999-2002, 2007, 2015, 2016  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -68,15 +68,7 @@
 #include <jconfig.h>
 #include <jwhois.h>
 #include <cache.h>
-
 #include <string.h>
-
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define _(s)  gettext(s)
-#else
-# define _(s)  (s)
-#endif
 
 #define DBM_MODE           S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP
 

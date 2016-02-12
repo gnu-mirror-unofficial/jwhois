@@ -63,13 +63,6 @@
 # include <idna.h>
 #endif
 
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define _(s)  gettext(s)
-#else
-# define _(s)  (s)
-#endif
-
 int jwhois_query(struct s_whois_query *, char **);
 
 int
@@ -80,10 +73,8 @@ main(int argc, char **argv)
   struct s_whois_query wq;
 
   setlocale(LC_ALL, "");
-#ifdef ENABLE_NLS
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
-#endif
 
   re_syntax_options = RE_SYNTAX_EMACS;
   wq.host = NULL;
