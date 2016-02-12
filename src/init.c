@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999-2005, 2007, 2015  Free Software Foundation, Inc.
+    Copyright (C) 1999-2005, 2007, 2015, 2016  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -150,7 +150,7 @@ redistribute it under the terms of the GNU General Public License.");
 }
 
 int
-parse_args(int *argc, char ***argv)
+parse_args (int argc, char *argv[])
 {
   int optch, option_index;
   char *ret;
@@ -173,7 +173,8 @@ parse_args(int *argc, char ***argv)
 
   while (1)
     {
-      optch = getopt_long(*argc, *argv, "rainsvfdc:h:p:", long_options, &option_index);
+      optch = getopt_long (argc, argv, "rainsvfdc:h:p:", long_options,
+                           &option_index);
       if (optch == EOF)
 	break;
       
@@ -255,7 +256,7 @@ parse_args(int *argc, char ***argv)
 	}
     }
 
-  if (optind == *argc)
+  if (optind == argc)
     {
       help_version(0);
       exit(0);

@@ -1,6 +1,6 @@
 /*
     This file is part of jwhois
-    Copyright (C) 1999,2001-2002, 2007, 2015  Free Software Foundation, Inc.
+    Copyright (C) 1999,2001-2002, 2007, 2015, 2016  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ main(int argc, char **argv)
   wq.domain = NULL;
 
   /* Parse command line arguments and initialize the cache */
-  optind = parse_args(&argc, &argv);
+  optind = parse_args (argc, argv);
   cache_init();
   timeout_init();
 
