@@ -77,9 +77,11 @@ Site Configuration
 @chapter Introduction
 
 @sc{jwhois} is an Internet Whois client that contains an extensible
-configuration file which defines its operation. The client supports
-queries to foreign hosts either through the RFC 954 - NICNAME/WHOIS
-protocol, the RFC 2167 - Referral Whois 1.5 protocol, or HTTP using
+configuration file which defines its operation.  The client supports
+queries to foreign hosts either through the WHOIS protocol specified
+by @uref{https://tools.ietf.org/rfc/rfc3912.txt, RFC 3912}, the
+@abbr{RWhois, Referral Whois} protocol specified by
+@uref{https://tools.ietf.org/rfc/rfc3912.txt, RFC 2167}, or HTTP using
 an external browser.
 
 Upon execution, @sc{jwhois} searches through its configuration
