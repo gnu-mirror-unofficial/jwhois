@@ -1,5 +1,4 @@
 src/cache.c
-src/dns.c
 src/http.c
 src/init.c
 src/jconfig.c

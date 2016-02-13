@@ -45,7 +45,6 @@
 #include <jwhois.h>
 #include <jconfig.h>
 #include <whois.h>
-#include <dns.h>
 #include <utils.h>
 #include <string.h>
 #include <ctype.h>
@@ -173,6 +172,28 @@ get_whois_server_option(const char *hostname, const char *key)
     return NULL;
 
   return j->value;
+}
+
+/* Lookup HOST using PORT.  HOST can be either a hostname or an IP address.
+   Set *RES and return 0 if lookup have succeeded.  Otherwise return the
+   corresponding error code which can be interpreted by 'gai_strerror'.  */
+static int
+lookup_host_addrinfo (struct addrinfo **res, const char *host, int port)
+{
+  struct addrinfo hints;
+  char ascport[10] = "whois";
+  int error;
+
+  memset (&hints, 0, sizeof (hints));
+  hints.ai_family = PF_UNSPEC;
+  hints.ai_socktype = SOCK_STREAM;
+  if (port)
+    sprintf(ascport, "%9.9d", port);
+
+  error = getaddrinfo (host, ascport, &hints, res);
+  if (error)
+    printf ("[%s: %s]\n", host, gai_strerror (error));
+  return error;
 }
 
 /*

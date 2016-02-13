@@ -26,7 +26,6 @@ bin_PROGRAMS = jwhois
 
 jwhois_SOURCES = \
   src/cache.c \
-  src/dns.c \
   src/http.c \
   src/init.c \
   src/jconfig.c \
