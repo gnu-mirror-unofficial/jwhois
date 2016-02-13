@@ -23,10 +23,6 @@
 # define memcpy(d, s, n) bcopy ((s), (d), (n))
 #endif
 
-#ifndef IPPORT_WHOIS
-# define IPPORT_WHOIS 43
-#endif
-
 #ifndef MAXBUFSIZE
 # define MAXBUFSIZE 1024
 #endif
