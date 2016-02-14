@@ -19,7 +19,6 @@
 #ifndef INIT_H
 #define INIT_H
 
-void help_version(int onlyversion);
 int parse_args (int argc, char *argv[]);
 
 #endif

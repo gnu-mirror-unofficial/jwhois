@@ -24,36 +24,13 @@
 # include <stdlib.h>
 #endif
 
-#include <getopt.h>
+#include <argp.h>
+#include <argp-version-etc.h>
 #include <init.h>
 #include <utils.h>
 #include <jconfig.h>
 #include <jwhois.h>
 #include <string.h>
-
-#define DO_HELP    0x01
-#define DO_VERSION 0x02
-#define DO_DISPLAY 0x04
-#define DO_LIMIT   0x08
-static struct option long_options[] = 
-{
-  {"version", 0, 0, DO_VERSION},
-  {"help", 0, 0, DO_HELP},
-  {"rwhois", 0, 0, 'r'},
-  {"rwhois-display", 1, 0, DO_DISPLAY},
-  {"rwhois-limit", 1, 0, DO_LIMIT},
-  {"config", 1, 0, 'c'},
-  {"host", 1, 0, 'h'},
-  {"port", 1, 0, 'p'},
-  {"force-lookup", 0, 0, 'f'},
-  {"disable-cache", 0, 0, 'd'},
-  {"no-redirect", 0, 0, 'n'},
-  {"no-whoisservers", 0, 0, 's'},
-  {"verbose", 0, 0, 'v'},
-  {"display-redirections", 0, 0, 'i'},
-  {"raw", 0, 0, 'a'},
-  {0, 0, 0, 0}
-};
 
 /* This is set if caching is enabled */
 int cache;
@@ -107,48 +84,132 @@ int enable_whoisservers;
 /* Timeout value for connect calls in seconds */
 int connect_timeout;
 
-void help_version(int onlyversion)
-{
-  char *COPYRIGHT = _("Copyright (C) 1999-%d  Free Software Foundation, Inc.\n");
-  char *LICENSE =  _("This program is free software with ABSOLUTELY NO WARRANTY; you may\n\
-redistribute it under the terms of the GNU General Public License.");
+const char *argp_program_bug_address = PACKAGE_BUGREPORT;
 
-  printf("%s %s %s, ", PACKAGE, _("version"), VERSION);
-  printf(COPYRIGHT, 2007);
-  printf("%s\n\n", LICENSE);
-  if (!onlyversion)
-    {
-      printf("%s\n", _("Usage: jwhois [OPTIONS] [QUERY]"));
-      
-      printf(_("  --version                  display version number and patch level\n\
-  --help                     display this help\n\
-  -v, --verbose              verbose debug output\n\
-  -c FILE, --config=FILE     use FILE as configuration file\n\
-  -h HOST, --host=HOST       explicitly query HOST\n\
-  -n, --no-redirect          disable content redirection\n\
-  -s, --no-whoisservers      disable whois-servers.net service support\n\
-  -a, --raw                  disable reformatting of the query\n\
-  -i, --display-redirections display all redirects instead of hiding them\n\
-  -p PORT, --port=PORT       use port number PORT (in conjunction with HOST)\n\
-  -r, --rwhois               force an rwhois query to be made\n\
-  --rwhois-display=DISPLAY   sets the display option in rwhois queries\n\
-  --rwhois-limit=LIMIT       sets the maximum number of matches to return\n"));
+static const char *authors[] = { "the JWhois authors", NULL };
 
+static char args_doc[] = N_("QUERY");
+
+static char doc[] = N_("Request information about QUERY.");
+
+/* Keys for options without short-options.  */
+enum
+{ OPT_DISPLAY = CHAR_MAX + 1, OPT_LIMIT };
+
+static struct argp_option options[] = {
+  {"verbose", 'v', 0, 0,
+   N_("verbose debug output")},
+  {"config", 'c', N_("FILE"), 0,
+   N_("use FILE as configuration file")},
+  {"host", 'h', N_("HOST"), 0,
+   N_("explicitly query HOST")},
+  {"no-redirect", 'c', 0, 0,
+   N_("disable content redirection")},
+  {"no-whoisservers", 's', 0, 0,
+   N_("disable whois-servers.net service support")},
+  {"raw", 'a', 0, 0,
+   N_("disable reformatting of the query")},
+  {"display-redirections", 'i', 0, 0,
+   N_("display all redirects instead of hiding them")},
+  {"port", 'p', N_("PORT"), 0,
+   N_("use port number PORT (in conjunction with HOST)")},
+  {"rwhois", 'r', 0, 0,
+   N_("force an rwhois query to be made")},
+  {"rwhois-display", OPT_DISPLAY, N_("DISPLAY"), 0,
+   N_("sets the display option in rwhois queries")},
+  {"rwhois-limit", OPT_LIMIT, N_("LIMIT"), 0,
+   N_("sets the maximum number of matches to return")},
 #ifndef NOCACHE
-   printf(_("  -f, --force-lookup         force lookup even if the entry is cached\n\
-  -d, --disable-cache        disable cache functions\n"));
+  {"force-lookup", 'f', 0, 0,
+   N_("force lookup even if the entry is cached")},
+  {"disable-cache", 'd', 0, 0,
+   N_("disable cache functions")},
 #endif
-   printf("\n\n%s\n", _("Report bugs to bug-jwhois@gnu.org"));
+  {0, 0, 0, 0, 0}
+};
+
+/* Parse a single option.  */
+static error_t
+parse_opt (int key, char *arg, struct argp_state *state)
+{
+  size_t len;
+  char *ret;
+
+  switch (key)
+    {
+    case 'v':
+      verbose += 1;
+      break;
+    case 'f':
+      forcelookup = 1;
+      break;
+    case 'd':
+      cache = 0;
+      break;
+    case 'n':
+      redirect = 0;
+      break;
+    case 'a':
+      raw_query = 1;
+      break;
+    case 'i':
+      display_redirections = 1;
+      break;
+    case 's':
+      enable_whoisservers = 0;
+      break;
+    case 'r':
+      rwhois = 1;
+      break;
+    case 'c':
+      if (config)
+        free (config);
+      len = strlen (arg) + 1;
+      config = malloc (len);
+      strncpy (config, arg, len);
+      break;
+    case 'h':
+      if (ghost)
+        free (ghost);
+      len = strlen (arg) + 1;
+      ghost = malloc (len);
+      strncpy (ghost, arg, len);
+      break;
+    case OPT_DISPLAY:
+      if (rwhois_display)
+        free (rwhois_display);
+      len = strlen (arg) + 1;
+      rwhois_display = malloc (len);
+      strncpy (rwhois_display, arg, len);
+      break;
+    case OPT_LIMIT:
+      rwhois_limit = strtol (arg, &ret, 10);
+      if (*ret != '\0')
+        printf ("[%s (%s)]\n", _("Invalid limit"), arg);
+      break;
+    case 'p':
+      gport = strtol (arg, &ret, 10);
+      if (*ret != '\0')
+        printf ("[%s: %s]\n", _("Invalid port number"), arg);
+      break;
+    case ARGP_KEY_NO_ARGS:
+      argp_usage (state);
+      break;
+    default:
+      return ARGP_ERR_UNKNOWN;
     }
+  return 0;
 }
+
+/* argp parser.  */
+static struct argp argp = { options, parse_opt, args_doc, doc };
 
 int
 parse_args (int argc, char *argv[])
 {
-  int optch, option_index;
-  char *ret;
+  int optind;
   FILE *in;
-  
+
   cache = 1;
   forcelookup = 0;
   verbose = 0;
@@ -164,96 +225,9 @@ parse_args (int argc, char *argv[])
   rwhois_limit = 0;
   enable_whoisservers = 1;
 
-  while (1)
-    {
-      optch = getopt_long (argc, argv, "rainsvfdc:h:p:", long_options,
-                           &option_index);
-      if (optch == EOF)
-	break;
-      
-      switch (optch)
-	{
-	case DO_VERSION:
-	  help_version(1);
-	  exit(0);
-	case DO_HELP:
-	  help_version(0);
-	  exit(0);
-	case 'v':
-	  verbose += 1;
-	  break;
-	case 'f':
-	  forcelookup = 1;
-	  break;
-	case 'd':
-	  cache = 0;
-	  break;
-	case 'n':
-	  redirect = 0;
-	  break;
-	case 'a':
-	  raw_query = 1;
-	  break;
-	case 'i':
-	  display_redirections = 1;
-	  break;
-	case 's':
-	  enable_whoisservers = 0;
-	  break;
-	case 'r':
-	  rwhois = 1;
-	  break;
-	case 'c':
-	  if (config) free(config);
-	  config = malloc(strlen(optarg)+1);
-	  strncpy(config, optarg, strlen(optarg)+1);
-	  break;
-	case 'h':
-	  if (ghost) free(ghost);
-	  ghost = malloc(strlen(optarg)+1);
-	  strncpy(ghost, optarg, strlen(optarg)+1);
-	  break;
-	case DO_DISPLAY:
-	  if (rwhois_display) free(rwhois_display);
-	  rwhois_display = malloc(strlen(optarg)+1);
-	  strncpy(rwhois_display, optarg, strlen(optarg)+1);
-	  break;
-	case DO_LIMIT:
-#ifdef HAVE_STRTOL
-	  rwhois_limit = strtol(optarg, &ret, 10);
-	  if (*ret != '\0')
-	    {
-	      printf("[%s (%s)]\n",
-		      _("Invalid limit"),
-		      optarg);
-	      break;
-	    }
-#else
-	  rwhois_limit = atoi(optarg);
-#endif
-	  break;
-	case 'p':
-#ifdef HAVE_STRTOL
-	  gport = strtol(optarg, &ret, 10);
-	  if (*ret != '\0')
-	    {
-	      printf("[%s: %s]\n",
-		      _("Invalid port number"),
-		      optarg);
-	      break;
-	    }
-#else
-	  gport = atoi(optarg);
-#endif
-	  break;
-	}
-    }
-
-  if (optind == argc)
-    {
-      help_version(0);
-      exit(0);
-    }
+  /* Parse command line arguments.  */
+  argp_version_setup ("jwhois", authors);
+  argp_parse (&argp, argc, argv, 0, &optind, NULL);
 
   if (config)
     {
