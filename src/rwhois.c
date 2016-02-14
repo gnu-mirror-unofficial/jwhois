@@ -200,7 +200,6 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
       tmpptr = (char *)get_whois_server_option(wq->host, "rwhois-limit");
       if (tmpptr)
 	{
-#ifdef HAVE_STRTOL
 	  limit = strtol(tmpptr, &retptr, 10);
 	  if (*retptr != '\0')
 	    {
@@ -208,9 +207,6 @@ rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals 
 		     _("Invalid limit in configuration file"),
 		     tmpptr);
 	    }
-#else
-	  limit = atoi(tmpptr);
-#endif
 	}
       else
 	limit = 0;
@@ -303,16 +299,12 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
   strncpy(tmpptr, strrchr(reply, ':')+1, len);
   tmpptr[len] = '\0';
 
-#ifdef HAVE_STRTOL
   s->port = strtol(tmpptr, &ret, 10);
   if (*ret != '\0')
     {
       *referrals = s->next;
       return -1;
     }
-#else
-  s->port = atoi(tmpptr);
-#endif
 
   len = strlen(reply)-(strrchr(reply, '=')-reply)-1;
 

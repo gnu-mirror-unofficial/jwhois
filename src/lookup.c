@@ -448,15 +448,11 @@ lookup_host(struct s_whois_query *wq, const char *block)
   if (strchr(wq->host, ' '))
     {
       tmphost = (char *)strchr(wq->host, ' ');
-#ifdef HAVE_STRTOL
       wq->port = strtol((char *)(tmphost+1), &ret, 10);
       if (*ret != '\0')
 	{
 	  return -1;
 	}
-#else
-      wq->port = atoi((char *)(tmphost+1));
-#endif
       *tmphost = '\0';
     }
   return 0;
@@ -528,15 +524,11 @@ lookup_redirect(struct s_whois_query *wq, const char *text)
 			      regs.end[2]-regs.start[2]);
 		      ascport[regs.end[2]-regs.start[2]]='\0';
 
-#ifdef HAVE_STRTOL
 		      wq->port = strtol(ascport, &ret, 10);
 		      if (*ret != '\0')
 			{
 			  return -1;
 			}
-#else
-		      wq->port = atoi(ascport);
-#endif
 		    } /* regs.num_regs == 2 */
 		  if (wq->port)
 		    {

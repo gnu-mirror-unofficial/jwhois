@@ -308,7 +308,6 @@ timeout_init()
   j = jconfig_getone("jwhois", "connect-timeout");
   if (j)
     ret = j->value;
-#ifdef HAVE_STRTOL
   connect_timeout = strtol(ret, &ret2, 10);
   if (*ret2 != '\0')
     {
@@ -317,7 +316,4 @@ timeout_init()
 
       connect_timeout = 75;
     }
-#else
-  connect_timeout = atoi(ret2);
-#endif /* HAVE_STRTOL */
 }

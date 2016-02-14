@@ -128,7 +128,6 @@ cache_init(void)
     ret = CACHEEXPIRE;
   else
     ret = j->value;
-#ifdef HAVE_STRTOL
   cfexpire = strtol(ret, &ret2, 10);
   if (*ret2 != '\0')
     {
@@ -136,9 +135,6 @@ cache_init(void)
 	printf("[Cache: %s: %s]\n", _("Invalid expire time"), ret);
       cfexpire = 168;
     }
-#else
-  cfexpire = atoi(ret2);
-#endif /* HAVE_STRTOL */
 
   if (verbose>1)
     printf("[Cache: Expire time = %d]\n", cfexpire);
