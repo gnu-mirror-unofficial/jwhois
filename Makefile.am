@@ -26,14 +26,23 @@ bin_PROGRAMS = jwhois
 
 jwhois_SOURCES = \
   src/cache.c \
+  src/cache.h \
   src/http.c \
+  src/http.h \
   src/init.c \
+  src/init.h \
   src/jconfig.c \
+  src/jconfig.h \
   src/jwhois.c \
+  src/jwhois.h \
   src/lookup.c \
+  src/lookup.h \
   src/rwhois.c \
+  src/rwhois.h \
   src/utils.c \
-  src/whois.c
+  src/utils.h \
+  src/whois.c \
+  src/whois.h
 
 jwhois_CFLAGS = $(OLDCFLAGS) -DSYSCONFDIR="\"$(sysconfdir)\"" \
          -DLOCALSTATEDIR="\"$(localstatedir)\"" \
@@ -42,7 +51,7 @@ jwhois_CFLAGS = $(OLDCFLAGS) -DSYSCONFDIR="\"$(sysconfdir)\"" \
 jwhois_LDADD = @LIBINTL@ @LIBICONV@ @LIBS@ lib/libgnu.a
 
 AM_CPPFLAGS = \
-  -I$(top_srcdir)/include \
+  -I$(top_srcdir)/src \
   -I$(top_srcdir)/lib \
   -I$(top_builddir)/lib
 
@@ -61,7 +70,6 @@ endif
 
 EXTRA_DIST = \
   example/jwhois.conf \
-  include/*.h \
   jwhois.spec.in \
   jwhois.spec \
   m4/gnulib-cache.m4
