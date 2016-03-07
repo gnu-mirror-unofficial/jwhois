@@ -1,4 +1,4 @@
-/*
+/* http.h - declarations for HTTP queries
    Copyright (C) 2001, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

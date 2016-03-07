@@ -1,4 +1,4 @@
-/*
+/* init.h - declarations for parsing command line arguments
    Copyright (C) 2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

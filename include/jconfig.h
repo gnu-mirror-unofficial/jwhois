@@ -1,4 +1,4 @@
-/*
+/* jconfig.h - declarations for configuration file management
    Copyright (C) 1999, 2001-2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

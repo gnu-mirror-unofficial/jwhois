@@ -1,4 +1,4 @@
-/*
+/* init.c - parse command line arguments
    Copyright (C) 1999-2005, 2007, 2015, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

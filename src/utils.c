@@ -1,4 +1,4 @@
-/*
+/* utils.c - various functions
    Copyright (C) 1999-2002, 2007, 2015, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

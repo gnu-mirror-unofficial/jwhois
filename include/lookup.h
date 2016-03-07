@@ -1,4 +1,4 @@
-/*
+/* lookup.h - declarations for domain lookups
    Copyright (C) 2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.

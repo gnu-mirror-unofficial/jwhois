@@ -1,4 +1,4 @@
-/*
+/* whois.h - declarations for WHOIS queries
    Copyright (C) 2001-2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.
