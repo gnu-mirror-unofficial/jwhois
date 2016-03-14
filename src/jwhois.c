@@ -63,7 +63,8 @@
 # include <idna.h>
 #endif
 
-int jwhois_query(struct s_whois_query *, char **);
+/* Forward declarations.  */
+static int jwhois_query (struct s_whois_query *wq, char **text);
 
 int
 main(int argc, char **argv)
@@ -260,8 +261,8 @@ convert_charset(struct s_whois_query *wq, char *curdata)
  *  0, it found a redirect to another server, so jwhois_query() promptly
  *  follows it there. A return value of -1 is always a fatal error.
  */
-int
-jwhois_query(struct s_whois_query *wq, char **text)
+static int
+jwhois_query (struct s_whois_query *wq, char **text)
 {
   char *tmp, *tmp2, *oldquery, *curdata;
   int ret;
