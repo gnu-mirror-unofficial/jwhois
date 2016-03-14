@@ -31,7 +31,6 @@ AH_TEMPLATE([CACHEEXPIRE], [Default expire time for the cache functionality])
 AH_TEMPLATE([NOCACHE], [Define if you want to disable cache functionality])
 AH_TEMPLATE([HAVE_DBM_OPEN], [Define if you have the dbm_open function. ])
 AH_TEMPLATE([HAVE_GDBM_OPEN], [Define if you have the gdbm_open function. ])
-AH_TEMPLATE([WHOISSERVERS], [Default whois-servers.net domain for the whois-servers support])
 
 AC_ARG_ENABLE([default-host],
   [AS_HELP_STRING([--enable-default-host=HOST],
@@ -41,10 +40,13 @@ AC_ARG_ENABLE([default-host],
 AC_DEFINE_UNQUOTED([DEFAULT_HOST], ["$enable_default_host"],
   [Default Whois server.])
 
-AC_ARG_ENABLE(WHOISSERVERS,
-[  --enable-WHOISSERVERS=DOMAIN default whois-servers.net domain (default whois-servers.net)],
-[AC_DEFINE_UNQUOTED(WHOISSERVERS, "$enable_WHOISSERVERS")],
-[AC_DEFINE(WHOISSERVERS, "whois-servers.net")])
+AC_ARG_ENABLE([whois-servers],
+  [AS_HELP_STRING([--enable-whois-servers=DOMAIN],
+     [default whois-servers.net domain (default whois-servers.net)])],
+  [enable_whois_servers="$enableval"],
+  [enable_whois_servers="whois-servers.net"])
+AC_DEFINE_UNQUOTED([WHOIS_SERVERS], ["$enable_whois_servers"],
+  [Default whois-servers.net domain for the whois-servers support])
 
 AC_ARG_ENABLE(CACHEEXPIRE,
 [  --enable-CACHEEXPIRE=HOURS  default expire time in hours for cached objects

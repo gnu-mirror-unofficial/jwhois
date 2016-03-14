@@ -413,7 +413,7 @@ lookup_host(struct s_whois_query *wq, const char *block)
   jconfig_set();
   j = jconfig_getone("jwhois", "whois-servers-domain");
   if (!j)
-    whoisservers = WHOISSERVERS;
+    whoisservers = WHOIS_SERVERS;
   else
     whoisservers = j->value;
 

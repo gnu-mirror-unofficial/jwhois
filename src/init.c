@@ -264,7 +264,8 @@ parse_args (int argc, char *argv[])
       printf("[Debug: Follow redirections = %s]\n", redirect?"Yes":"No");
       printf("[Debug: Display redirections = %s]\n", display_redirections?"Yes":"No");
       printf("[Debug: Whois-servers.net service support = %s]\n", enable_whoisservers?"Yes":"No");
-      printf("[Debug: Whois-servers domain = %s]\n", whoisservers?whoisservers:WHOISSERVERS);
+      printf("[Debug: Whois-servers domain = %s]\n",
+	     whoisservers ? whoisservers : WHOIS_SERVERS);
       printf("[Debug: Raw query = %s]\n", raw_query?"Yes":"No");
       printf("[Debug: Rwhois display = %s]\n", rwhois_display?rwhois_display:"(None)");
       printf("[Debug: Rwhois limit = %s]\n", rwhois_limit?(char *)create_string("%d",rwhois_limit):"(None)");
