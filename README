@@ -36,7 +36,7 @@ configure script.
 
    If jwhois can't find any configuration file, the queries will be
 directed to a default host. The default value is `whois.internic.net',
-but this can be changed by using the --enable-DEFAULTHOST switch to
+but this can be changed by using the --enable-default-host switch to
 the configure script.
 
 2.2. Cache Functionality

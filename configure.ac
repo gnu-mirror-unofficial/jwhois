@@ -26,7 +26,6 @@ AM_SILENT_RULES([yes]) # Enable silent rules by default.
 
 AH_TEMPLATE([PACKAGE], [package name])
 AH_TEMPLATE([VERSION], [package version])
-AH_TEMPLATE([DEFAULTHOST], [Default Whois server])
 AH_TEMPLATE([CACHEFILE], [Default filename for the cache functionality])
 AH_TEMPLATE([CACHEEXPIRE], [Default expire time for the cache functionality])
 AH_TEMPLATE([NOCACHE], [Define if you want to disable cache functionality])
@@ -34,10 +33,13 @@ AH_TEMPLATE([HAVE_DBM_OPEN], [Define if you have the dbm_open function. ])
 AH_TEMPLATE([HAVE_GDBM_OPEN], [Define if you have the gdbm_open function. ])
 AH_TEMPLATE([WHOISSERVERS], [Default whois-servers.net domain for the whois-servers support])
 
-AC_ARG_ENABLE(DEFAULTHOST,
-[  --enable-DEFAULTHOST=HOST   default whois host (default whois.internic.net)],
-[AC_DEFINE_UNQUOTED(DEFAULTHOST, "$enable_DEFAULTHOST")],
-[AC_DEFINE(DEFAULTHOST, "whois.internic.net")])
+AC_ARG_ENABLE([default-host],
+  [AS_HELP_STRING([--enable-default-host=HOST],
+     [default whois host (default whois.internic.net)])],
+  [enable_default_host="$enableval"],
+  [enable_default_host="whois.internic.net"])
+AC_DEFINE_UNQUOTED([DEFAULT_HOST], ["$enable_default_host"],
+  [Default Whois server.])
 
 AC_ARG_ENABLE(WHOISSERVERS,
 [  --enable-WHOISSERVERS=DOMAIN default whois-servers.net domain (default whois-servers.net)],

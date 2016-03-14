@@ -431,7 +431,7 @@ lookup_host(struct s_whois_query *wq, const char *block)
   } else
     wq->host = find_cidr(wq, deepfreeze);
 
-  if (!wq->host) wq->host = DEFAULTHOST;
+  if (!wq->host) wq->host = DEFAULT_HOST;
 
   if (strncasecmp(wq->host, "struct", 6) == 0) {
     tmpdeep = wq->host+7;
