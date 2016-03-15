@@ -83,11 +83,6 @@ AC_ARG_WITH(sgid,
 [sgid=no])
 AC_SUBST(sgid)
 
-AC_ARG_WITH(localedir,
-[  --with-localedir=DIR        locale info in DIR [PREFIX/share/locale]]
-,localedir=$withval,localedir='${prefix}/share/locale')
-AC_SUBST(localedir)
-
 AC_PROG_INSTALL
 AC_PROG_CC
 gl_EARLY
