@@ -24,8 +24,6 @@ AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([gnu subdir-objects])
 AM_SILENT_RULES([yes]) # Enable silent rules by default.
 
-AH_TEMPLATE([PACKAGE], [package name])
-AH_TEMPLATE([VERSION], [package version])
 AH_TEMPLATE([CACHEFILE], [Default filename for the cache functionality])
 AH_TEMPLATE([CACHEEXPIRE], [Default expire time for the cache functionality])
 AH_TEMPLATE([NOCACHE], [Define if you want to disable cache functionality])
