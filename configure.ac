@@ -191,8 +191,6 @@ if test "$ac_cv_lib_intl_bindtextdomain" = "yes" -o "$ac_cv_lib_intl_gettext" = 
   LIBS="-lintl $LIBS"
   AC_CHECK_HEADERS(libintl.h)
 fi
-OLDCFLAGS=$CFLAGS
-AC_SUBST(OLDCFLAGS)
 
 ## Are we building from git checked-out sources, or a tarball ?  This allows
 ## specifying some rules used only when bootstrapping.

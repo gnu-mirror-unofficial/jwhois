@@ -44,9 +44,10 @@ jwhois_SOURCES = \
   src/whois.c \
   src/whois.h
 
-jwhois_CFLAGS = $(OLDCFLAGS) -DSYSCONFDIR="\"$(sysconfdir)\"" \
-         -DLOCALSTATEDIR="\"$(localstatedir)\"" \
-         -DLOCALEDIR="\"$(localedir)\""
+jwhois_CFLAGS = \
+  -DSYSCONFDIR="\"$(sysconfdir)\"" \
+  -DLOCALSTATEDIR="\"$(localstatedir)\"" \
+  -DLOCALEDIR="\"$(localedir)\""
 
 jwhois_LDADD = @LIBINTL@ @LIBICONV@ @LIBS@ lib/libgnu.a
 
