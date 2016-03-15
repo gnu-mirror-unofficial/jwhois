@@ -53,13 +53,6 @@ AC_ARG_ENABLE([cache-expire],
 AC_DEFINE_UNQUOTED([CACHE_EXPIRE], ["$enable_cache_expire"],
   [Default expire time for the cache functionality])
 
-AC_ARG_ENABLE(GROUP,
-[  --enable-GROUP=group        group that owns the cache database
-                                   (default "nogroup")],
-[GROUP="$enable_GROUP"],
-[GROUP="nogroup"])
-AC_SUBST(GROUP)
-
 AC_ARG_WITH(cache,
 [  --without-cache             disable cache manager (see README for more info)],
 [if test x$withval = xno; then
