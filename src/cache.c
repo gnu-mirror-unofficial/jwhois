@@ -125,7 +125,7 @@ cache_init(void)
   jconfig_set();
   j = jconfig_getone("jwhois", "cacheexpire");
   if (!j)
-    ret = CACHEEXPIRE;
+    ret = CACHE_EXPIRE;
   else
     ret = j->value;
   cfexpire = strtol(ret, &ret2, 10);

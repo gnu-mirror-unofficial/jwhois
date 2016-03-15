@@ -25,7 +25,6 @@ AM_INIT_AUTOMAKE([gnu subdir-objects])
 AM_SILENT_RULES([yes]) # Enable silent rules by default.
 
 AH_TEMPLATE([CACHEFILE], [Default filename for the cache functionality])
-AH_TEMPLATE([CACHEEXPIRE], [Default expire time for the cache functionality])
 AH_TEMPLATE([NOCACHE], [Define if you want to disable cache functionality])
 AH_TEMPLATE([HAVE_DBM_OPEN], [Define if you have the dbm_open function. ])
 AH_TEMPLATE([HAVE_GDBM_OPEN], [Define if you have the gdbm_open function. ])
@@ -46,11 +45,13 @@ AC_ARG_ENABLE([whois-servers],
 AC_DEFINE_UNQUOTED([WHOIS_SERVERS], ["$enable_whois_servers"],
   [Default whois-servers.net domain for the whois-servers support])
 
-AC_ARG_ENABLE(CACHEEXPIRE,
-[  --enable-CACHEEXPIRE=HOURS  default expire time in hours for cached objects
-                                   (default 168 hours)],
-[AC_DEFINE_UNQUOTED(CACHEEXPIRE, "$enable_CACHEEXPIRE")],
-[AC_DEFINE(CACHEEXPIRE, "168")])
+AC_ARG_ENABLE([cache-expire],
+  [AS_HELP_STRING([--enable-cache-expire=HOURS],
+     [default expire time in hours for cached objects (default 168 hours)])],
+  [enable_cache_expire="$enableval"],
+  [enable_cache_expire="168"])
+AC_DEFINE_UNQUOTED([CACHE_EXPIRE], ["$enable_cache_expire"],
+  [Default expire time for the cache functionality])
 
 AC_ARG_ENABLE(GROUP,
 [  --enable-GROUP=group        group that owns the cache database
