@@ -24,6 +24,11 @@ SUBDIRS = lib po
 
 bin_PROGRAMS = jwhois
 
+AM_CPPFLAGS = \
+  -I$(top_srcdir)/src \
+  -I$(top_srcdir)/lib \
+  -I$(top_builddir)/lib
+
 jwhois_SOURCES = \
   src/cache.c \
   src/cache.h \
@@ -44,19 +49,7 @@ jwhois_SOURCES = \
   src/whois.c \
   src/whois.h
 
-jwhois_CFLAGS = \
-  -DSYSCONFDIR="\"$(sysconfdir)\"" \
-  -DLOCALSTATEDIR="\"$(localstatedir)\"" \
-  -DLOCALEDIR="\"$(localedir)\""
-
 jwhois_LDADD = @LIBINTL@ @LIBICONV@ @LIBS@ lib/libgnu.a
-
-AM_CPPFLAGS = \
-  -I$(top_srcdir)/src \
-  -I$(top_srcdir)/lib \
-  -I$(top_builddir)/lib
-
-AM_CFLAGS = $(jwhois_CFLAGS)
 
 sysconf_DATA = example/jwhois.conf
 

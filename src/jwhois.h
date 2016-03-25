@@ -46,6 +46,9 @@ extern char *rwhois_display;
 extern int enable_whoisservers;
 extern int connect_timeout;
 
+/* Access from source code to variables set by "configure" or "make".  */
+#include "configmake.h"
+
 /* Internationalization.  */
 # include "gettext.h"
 # define _(str) gettext (str)
