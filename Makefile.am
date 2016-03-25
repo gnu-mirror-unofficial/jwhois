@@ -58,6 +58,8 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = $(jwhois_CFLAGS)
 
+sysconf_DATA = example/jwhois.conf
+
 info_TEXINFOS = doc/jwhois.texi
 doc_jwhois_TEXINFOS = doc/fdl-1.3.texi
 dist_man_MANS = doc/jwhois.1
@@ -75,18 +77,6 @@ EXTRA_DIST = \
   jwhois.spec.in \
   jwhois.spec \
   m4/gnulib-cache.m4
-
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(sysconfdir)
-	@if test ! -f $(DESTDIR)$(sysconfdir)/jwhois.conf; then \
-		echo "$(INSTALL_DATA) $(top_srcdir)/example/jwhois.conf $(DESTDIR)$(sysconfdir)/jwhois.conf"; \
-		$(INSTALL_DATA) $(top_srcdir)/example/jwhois.conf $(DESTDIR)$(sysconfdir)/jwhois.conf; \
-	else \
-		echo "## ";\
-		echo "## Not installing jwhois.conf because you already have a previous version";\
-		echo "## installed. You should manually take care of updating your jwhois.conf.";\
-		echo "##";\
-	fi
 
 dist-hook: gen-ChangeLog
 
