@@ -3,6 +3,7 @@
 */.deps/
 .dirstamp
 /ABOUT-NLS
+/ChangeLog
 /INSTALL
 /aclocal.m4
 /autom4te.cache/

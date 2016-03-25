@@ -70,6 +70,7 @@ doc/jwhois.1: jwhois
 endif
 
 EXTRA_DIST = \
+  ChangeLog.old \
   example/jwhois.conf \
   jwhois.spec.in \
   jwhois.spec \
@@ -85,4 +86,20 @@ install-data-local:
 		echo "## Not installing jwhois.conf because you already have a previous version";\
 		echo "## installed. You should manually take care of updating your jwhois.conf.";\
 		echo "##";\
+	fi
+
+dist-hook: gen-ChangeLog
+
+gen_start_date = 2015-11-29
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
+	  log_fix="$(srcdir)/build-aux/git-log-fix";			\
+	  test -e "$$log_fix"						\
+	    && amend_git_log="--amend=$$log_fix"			\
+	    || amend_git_log=;						\
+	  $(top_srcdir)/build-aux/gitlog-to-changelog			\
+	    $$amend_git_log --since=$(gen_start_date) > $(distdir)/cl-t && \
+	    { rm -f $(distdir)/ChangeLog &&				\
+	      mv $(distdir)/cl-t $(distdir)/ChangeLog; }		\
 	fi
