@@ -84,9 +84,6 @@ AM_GNU_GETTEXT_VERSION([0.19.2])
 
 AM_ICONV
 
-AC_PATH_PROG(CHGRP, chgrp, $PATH:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/libexec)
-AC_PATH_PROG(CHMOD, chmod, $PATH:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/libexec)
-
 AC_C_BIGENDIAN
 
 # For gnulib
