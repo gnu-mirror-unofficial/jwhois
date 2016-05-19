@@ -91,7 +91,7 @@ AC_CHECK_LIB(inet6, main,
 AC_CHECK_FUNCS(memcpy strtol)
 AC_CHECK_FUNCS(strcasecmp strncasecmp getopt_long)
 AC_HEADER_STDC([])
-AC_CHECK_HEADERS(sys/types.h sys/socket.h netinet/in.h netdb.h sys/time.h sys/stat.h sys/fcntl.h malloc.h locale.h stdint.h inttypes.h idna.h)
+AC_CHECK_HEADERS([sys/fcntl.h malloc.h stdint.h inttypes.h idna.h])
 AC_HEADER_TIME
 
 
@@ -102,15 +102,9 @@ if test "$ac_cv_func_inet_pton" = "yes" ; then
 AC_MSG_CHECKING(if inet_pton supports IPv6)
 AC_TRY_RUN(
   [
-#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
-#endif
-#ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
-#endif
 int main()
   {
     struct in6_addr addr6;
