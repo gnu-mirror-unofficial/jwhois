@@ -17,7 +17,9 @@ dnl Process this file with autoconf to produce a configure script.
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-AC_INIT([GNU JWhois], [4.0], [bug-jwhois@gnu.org])
+AC_INIT([GNU JWhois],
+        m4_esyscmd([build-aux/git-version-gen .tarball-version]),
+        [bug-jwhois@gnu.org])
 AC_CONFIG_SRCDIR([src/jconfig.c])
 AC_CONFIG_HEADER([src/config.h])
 AC_CONFIG_AUX_DIR([build-aux])

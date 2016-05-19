@@ -65,13 +65,19 @@ doc/jwhois.1: jwhois
 endif
 
 EXTRA_DIST = \
+  .version \
   ChangeLog.old \
   example/jwhois.conf \
   jwhois.spec.in \
   jwhois.spec \
   m4/gnulib-cache.m4
 
+BUILT_SOURCES = .version
+.version:
+	$(AM_V_GEN)echo $(VERSION) > $@-t && mv $@-t $@
+
 dist-hook: gen-ChangeLog
+	$(AM_V_GEN)echo $(VERSION) > $(distdir)/.tarball-version
 
 gen_start_date = 2015-11-29
 .PHONY: gen-ChangeLog
