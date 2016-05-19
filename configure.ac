@@ -64,17 +64,6 @@ AC_ARG_WITH([cache],
   [cache=yes])
 AC_SUBST([cache])
 
-AC_ARG_WITH(sgid,
-[ --enable-sgid                enable installation with setgid GROUP]
-,
-[if test x$withval = xno; then
-  sgid=yes
- elif test x$withval = xyes; then
-  sgid=no
- fi],
-[sgid=no])
-AC_SUBST(sgid)
-
 AC_PROG_INSTALL
 AC_PROG_CC
 gl_EARLY
