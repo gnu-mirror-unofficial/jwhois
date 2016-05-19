@@ -121,7 +121,8 @@ int main()
   }
   ], [
        AC_MSG_RESULT(yes)
-       AC_DEFINE_UNQUOTED(HAVE_INET_PTON_IPV6,1,[Define to 1 if inet_pton supports IPv6.])
+       AC_DEFINE([HAVE_INET_PTON_IPV6], [1],
+         [Define to 1 if inet_pton supports IPv6.])
      ], AC_MSG_RESULT(no),AC_MSG_RESULT(no))
 fi
 
