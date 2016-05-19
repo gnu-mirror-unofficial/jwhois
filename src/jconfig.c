@@ -398,8 +398,7 @@ jconfig_parse_file(FILE *in)
 	      }
 	    break;
 	  case '"':
-	    if (token)
-	      free(token);
+	    free(token);
 	    token = jconfig_get_quoted(in, &line);
 	    break;
 	  case '=':
@@ -425,16 +424,12 @@ jconfig_parse_file(FILE *in)
 	    break;
 	  default:
 	    ungetc(ch, in);
-	    if (token)
-	      free(token);
+	    free(token);
 	    token = jconfig_get_unquoted(in, &line);
 	    break;
 	  }
     }
-    if (token)
-      free(token);
-    if (key)
-      free(key);
-    free(domain);
-    
+  free(token);
+  free(key);
+  free(domain);
 }

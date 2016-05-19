@@ -286,8 +286,7 @@ find_regex(struct s_whois_query *wq, const char *block)
 	{
 	  if (rpb.allocated) {
 	    free(rpb.buffer);
-	    if (rpb.fastmap)
-	      free(rpb.fastmap);
+	    free(rpb.fastmap);
 	    if (rpb.regs_allocated != REGS_UNALLOCATED)
 	      {
 		free(regs.start);
@@ -374,8 +373,7 @@ find_regex(struct s_whois_query *wq, const char *block)
   if (rpb.allocated)
     {
       free(rpb.buffer);
-      if (rpb.fastmap)
-        free(rpb.fastmap);
+      free(rpb.fastmap);
       if (rpb.regs_allocated != REGS_UNALLOCATED)
 	{
 	  free(regs.start);

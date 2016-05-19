@@ -162,22 +162,19 @@ parse_opt (int key, char *arg, struct argp_state *state)
       rwhois = 1;
       break;
     case 'c':
-      if (config)
-        free (config);
+      free (config);
       len = strlen (arg) + 1;
       config = malloc (len);
       strncpy (config, arg, len);
       break;
     case 'h':
-      if (ghost)
-        free (ghost);
+      free (ghost);
       len = strlen (arg) + 1;
       ghost = malloc (len);
       strncpy (ghost, arg, len);
       break;
     case OPT_DISPLAY:
-      if (rwhois_display)
-        free (rwhois_display);
+      free (rwhois_display);
       len = strlen (arg) + 1;
       rwhois_display = malloc (len);
       strncpy (rwhois_display, arg, len);
