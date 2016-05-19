@@ -54,16 +54,15 @@ AC_ARG_ENABLE([cache-expire],
 AC_DEFINE_UNQUOTED([CACHE_EXPIRE], ["$enable_cache_expire"],
   [Default expire time for the cache functionality])
 
-AC_ARG_WITH(cache,
-[  --without-cache             disable cache manager (see README for more info)],
-[if test x$withval = xno; then
-  AC_DEFINE(NOCACHE,1)
-  cache=no
- elif test x$withval = xyes; then
-  cache=yes
- fi],
-[cache=yes])
-AC_SUBST(cache)
+AC_ARG_WITH([cache],
+  [AS_HELP_STRING([--without-cache],
+     [disable cache manager (see README for more info)])],
+  [AS_IF([test x$withval = xno],
+     [AC_DEFINE([NOCACHE], [1])
+      cache=no],
+     [cache=yes])],
+  [cache=yes])
+AC_SUBST([cache])
 
 AC_ARG_WITH(sgid,
 [ --enable-sgid                enable installation with setgid GROUP]
