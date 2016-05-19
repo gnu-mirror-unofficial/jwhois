@@ -140,7 +140,8 @@ AC_ARG_WITH(libidn, AC_HELP_STRING([--with-libidn=[DIR]],
      libidn=no)
  fi
  if test "$libidn" != "no" ; then
-  AC_DEFINE(LIBIDN, 1, [Define to 1 if you want IDN support.])
+  AC_DEFINE([LIBIDN], [1],
+    [Define to 1 if you want IDN support.])
  else
   AC_MSG_WARN([Libidn not found])
 fi
@@ -151,23 +152,23 @@ AC_MSG_RESULT($libidn)
 found=no
 if test x$cache = xyes; then
   AC_CHECK_FUNC(dbm_open,
-    [AC_DEFINE(HAVE_DBM_OPEN)
+    [AC_DEFINE([HAVE_DBM_OPEN])
     found=yes])
   if test x$found = xno; then
     AC_CHECK_LIB(gdbm, gdbm_open,
-      [AC_DEFINE(HAVE_GDBM_OPEN)
+      [AC_DEFINE([HAVE_GDBM_OPEN])
       LIBS="-lgdbm $LIBS"
       found=yes])
   fi
   if test x$found = xno; then
     AC_CHECK_LIB(ndbm, dbm_open,
-      [AC_DEFINE(HAVE_DBM_OPEN)
+      [AC_DEFINE([HAVE_DBM_OPEN])
       LIBS="-lndbm $LIBS"
       found=yes])
   fi
   if test x$found = xno; then
     AC_MSG_WARN("You don\'t have any dbm libraries installed -- disabling cache functions")
-    AC_DEFINE(NOCACHE,1)
+    AC_DEFINE([NOCACHE],1)
     cache=no
   else
     AC_CHECK_HEADERS(gdbm.h ndbm.h dbm.h db1/ndbm.h)
