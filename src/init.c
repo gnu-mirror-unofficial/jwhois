@@ -26,6 +26,8 @@
 
 #include <argp.h>
 #include <argp-version-etc.h>
+#include <progname.h>
+
 #include <init.h>
 #include <utils.h>
 #include <jconfig.h>
@@ -223,7 +225,7 @@ parse_args (int argc, char *argv[])
   enable_whoisservers = 1;
 
   /* Parse command line arguments.  */
-  argp_version_setup ("jwhois", authors);
+  argp_version_setup (program_name, authors);
   argp_parse (&argp, argc, argv, 0, &optind, NULL);
 
   if (config)

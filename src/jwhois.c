@@ -52,6 +52,7 @@
 #include <utils.h>
 
 #include <errno.h>
+#include <progname.h>
 #include <string.h>
 
 #ifdef HAVE_ICONV
@@ -73,6 +74,7 @@ main(int argc, char **argv)
   char *qstring = NULL, *text, *cachestr, *idn;
   struct s_whois_query wq;
 
+  set_program_name (argv[0]);
   setlocale(LC_ALL, "");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
