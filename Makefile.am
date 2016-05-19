@@ -47,7 +47,7 @@ jwhois_SOURCES = \
   src/whois.c \
   src/whois.h
 
-jwhois_LDADD = @LIBINTL@ @LIBICONV@ @LIBS@ lib/libgnu.a
+jwhois_LDADD = $(LIBINTL) $(LIBICONV) $(LIBS) lib/libgnu.a
 
 sysconf_DATA = example/jwhois.conf
 
