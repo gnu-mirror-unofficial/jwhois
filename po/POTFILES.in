@@ -1,3 +1,9 @@
+lib/argp-parse.c
+lib/argp.h
+lib/gai_strerror.c
+lib/getopt.c
+lib/regcomp.c
+lib/version-etc.c
 src/cache.c
 src/http.c
 src/init.c
