@@ -5,7 +5,9 @@
 .version
 /ABOUT-NLS
 /ChangeLog
+/GNUmakefile
 /INSTALL
+/README-release
 /aclocal.m4
 /autom4te.cache/
 /autoscan.log
@@ -26,6 +28,7 @@
 /jwhois.spec
 /lib/
 /m4/
+/maint.mk
 /po/*.gmo
 /po/*.po
 /po/.gitignore
