@@ -163,22 +163,13 @@ parse_opt (int key, char *arg, struct argp_state *state)
       rwhois = 1;
       break;
     case 'c':
-      free (config);
-      len = strlen (arg) + 1;
-      config = malloc (len);
-      strncpy (config, arg, len);
+      config = arg;
       break;
     case 'h':
-      free (ghost);
-      len = strlen (arg) + 1;
-      ghost = malloc (len);
-      strncpy (ghost, arg, len);
+      ghost = arg;
       break;
     case OPT_DISPLAY:
-      free (rwhois_display);
-      len = strlen (arg) + 1;
-      rwhois_display = malloc (len);
-      strncpy (rwhois_display, arg, len);
+      rwhois_display = arg;
       break;
     case OPT_LIMIT:
       rwhois_limit = strtol (arg, &ret, 10);
