@@ -88,4 +88,3 @@ if [ -d ${RPM_BUILD_ROOT} ]; then rm -rf ${RPM_BUILD_ROOT}; fi
 %endif
 
 %changelog
-

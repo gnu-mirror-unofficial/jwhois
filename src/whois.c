@@ -143,4 +143,3 @@ whois_read(int fd, char **ptr, const char *host)
 
   return count;
 }
-
