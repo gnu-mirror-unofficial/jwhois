@@ -16,9 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
+
 #ifdef STDC_HEADERS
 #include <stdio.h>
 #include <stdlib.h>
