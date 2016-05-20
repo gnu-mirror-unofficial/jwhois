@@ -1,4 +1,6 @@
 *.[oa]
+*.log
+*.trs
 *.~
 */.deps/
 .dirstamp
@@ -42,6 +44,7 @@
 /src/config.h
 /src/config.h.in
 /src/stamp-h1
+/tests/.gitignore
 Makefile
 Makefile.in
 TAGS

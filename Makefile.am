@@ -62,13 +62,22 @@ doc/jwhois.1: jwhois
 	LANGUAGE= $(HELP2MAN) --output="$@" "$(top_builddir)/$<"
 endif
 
+TEST_EXTENSIONS = .sh
+SH_LOG_COMPILER = $(SHELL)
+AM_TESTS_ENVIRONMENT = \
+  confdir='$(abs_top_srcdir)/example' \
+  PATH="$(abs_top_builddir)$(PATH_SEPARATOR)$$PATH"
+TESTS = tests/config.sh
+
 EXTRA_DIST = \
   .version \
   ChangeLog.old \
   example/jwhois.conf \
   jwhois.spec.in \
   jwhois.spec \
-  m4/gnulib-cache.m4
+  m4/gnulib-cache.m4 \
+  tests/init.sh \
+  $(TESTS)
 
 BUILT_SOURCES = .version
 .version:
