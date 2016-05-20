@@ -71,16 +71,16 @@ int http_query(struct s_whois_query *wq, char **text)
         return -1;
     }
 
-    if (0 == strcmp(method, "POST"))
-    {
+    if (STREQ (method, "POST"))
+      {
         isget = 0;
-    }
-    else if (0 != strcmp(method, "GET"))
-    {
+      }
+    else if (!STREQ (method, "GET"))
+      {
         printf("[HTTP: %s: %s]\n", wq->host,
 	       _("Option http-method must be \"GET\" or \"POST\".\n"));
         return -1;
-    }
+      }
 
     /* Check browser configuration */
     j = jconfig_getone("jwhois", "browser-pathname");

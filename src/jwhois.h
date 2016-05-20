@@ -54,4 +54,6 @@ extern int connect_timeout;
 # define _(str) gettext (str)
 # define N_(str) gettext_noop (str)
 
+#define STREQ(a, b) (strcmp (a, b) == 0)
+
 #endif /* JWHOIS_H */
