@@ -391,7 +391,7 @@ rwhois_read_line(FILE *f, char *ptr, char **text)
   if (feof(f))
     {
       printf(_("[Host terminated connection prematurely]\n"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   
   if (!fgets(ptr, MAXBUFSIZE-1, f))

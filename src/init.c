@@ -234,7 +234,7 @@ parse_args (int argc, char *argv[])
 	{
 	  printf("[%s: %s]\n",
 		  config, _("Unable to open"));
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
     }
   else

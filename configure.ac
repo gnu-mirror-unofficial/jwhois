@@ -102,6 +102,7 @@ if test "$ac_cv_func_inet_pton" = "yes" ; then
 AC_MSG_CHECKING(if inet_pton supports IPv6)
 AC_TRY_RUN(
   [
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -109,9 +110,9 @@ int main()
   {
     struct in6_addr addr6;
     if (inet_pton(AF_INET6, "::1", &addr6) < 1)
-      exit(1);
+      exit (EXIT_FAILURE);
     else
-      exit(0);
+      exit (EXIT_SUCCESS);
   }
   ], [
        AC_MSG_RESULT(yes)

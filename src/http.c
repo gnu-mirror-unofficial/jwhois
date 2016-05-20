@@ -194,7 +194,7 @@ int http_query(struct s_whois_query *wq, char **text)
                 /* Couldn't create temporary file for POST data */
 	      printf("[HTTP: %s: %s]\n", _("Unable to create temporary file"),
 		     strerror(errno));
-	      exit(-1);
+	      exit (EXIT_FAILURE);
             }
 	    
             postdata = fdopen(fd, "w");
@@ -279,7 +279,7 @@ int http_query(struct s_whois_query *wq, char **text)
         }
       close(to_browser[0]);
       close(from_browser[1]);
-      exit(-1);
+      exit (EXIT_FAILURE);
     }
     else
       {

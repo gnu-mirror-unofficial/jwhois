@@ -84,7 +84,7 @@ add_text_to_buffer(char **buffer, const char *text)
       if (!buffer)
 	{
 	  printf("[%s]\n", _("Error allocating memory"));
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
       strncpy(*buffer, text, strlen(text)+1);
     }
@@ -94,7 +94,7 @@ add_text_to_buffer(char **buffer, const char *text)
       if (!*buffer)
 	{
 	  printf("[%s]\n", _("Error allocating memory"));
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
       strncat(*buffer, text, strlen(text)+1);
     }

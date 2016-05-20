@@ -228,7 +228,7 @@ jconfig_safe_strcat(char *s1, const char *s2)
   if (!s3)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   strncat(s3, s2, strlen(s2)+1);
   return s3;
@@ -248,7 +248,7 @@ jconfig_get_quoted(FILE *in, int *line)
   if (!s1)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   
   while (!feof(in))
@@ -257,7 +257,7 @@ jconfig_get_quoted(FILE *in, int *line)
 	{
 	  printf("[%s: %s %d]\n", config, _("String out of bounds on line"),
 		 *line);
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
 
       ch = fgetc(in);
@@ -283,7 +283,7 @@ jconfig_get_quoted(FILE *in, int *line)
     }
   printf("[%s: %s %d]\n", config, _("End of file looking for '\"' on line"),
 	 *line);
-  exit(1);
+  exit (EXIT_FAILURE);
 }
 
 /*
@@ -300,7 +300,7 @@ jconfig_get_unquoted(FILE *in, int *line)
   if (!s1)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   
   while (!feof(in))
@@ -309,7 +309,7 @@ jconfig_get_unquoted(FILE *in, int *line)
 	{
 	  printf("[%s: %s %d]\n", config, _("String out of bounds on line"),
 		 *line);
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
 
       ch = fgetc(in);
@@ -338,7 +338,7 @@ jconfig_get_unquoted(FILE *in, int *line)
     }
   printf("[%s: %s %d]\n", config, _("Unexpected end of file on line"),
 	 *line);
-  exit(1);
+  exit (EXIT_FAILURE);
 }
 
 /*
@@ -356,7 +356,7 @@ jconfig_parse_file(FILE *in)
   if (!domain)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   strncpy(domain, PACKAGE, strlen(PACKAGE)+1);
 
@@ -415,7 +415,7 @@ jconfig_parse_file(FILE *in)
 	      {
 		printf("[%s: %s %d]\n", config,
 		       _("Missing key on line"), line);
-		exit(1);
+		exit (EXIT_FAILURE);
 	      }
 	    jconfig_add(domain, key, token, line);
 	    free(key);

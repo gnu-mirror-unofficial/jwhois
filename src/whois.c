@@ -66,7 +66,7 @@ whois_query(struct s_whois_query *wq, char **text)
       if (!tmpqstring)
         {
           printf("[%s]\n", _("Error allocating memory"));
-          exit(1);
+          exit (EXIT_FAILURE);
         }
 
       strncpy(tmpqstring, wq->query, strlen(wq->query)+1);
@@ -80,7 +80,7 @@ whois_query(struct s_whois_query *wq, char **text)
 	{
 	  printf("[%s %s:%d]\n", _("Error reading data from"),
 		 wq->host, wq->port);
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
       if (redirect)
         {

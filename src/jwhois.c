@@ -91,7 +91,7 @@ main(int argc, char **argv)
       if (!qstring)
         {
           printf("[%s]\n", _("Error allocating memory"));
-          exit(1);
+          exit (EXIT_FAILURE);
         }
       memcpy(qstring+count-strlen(argv[optind])-1,
 	     argv[optind],
@@ -105,7 +105,7 @@ main(int argc, char **argv)
   if (rc != IDNA_SUCCESS)
     {
       printf("[IDN encoding of '%s' failed with error code %d]\n", qstring, rc);
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   wq.query = strdup(idn);
   free(idn);
@@ -132,7 +132,7 @@ main(int argc, char **argv)
       if (ret < 0)
 	{
 	  printf("[%s]\n", _("Fatal error searching for host to query"));
-	  exit(1);
+	  exit (EXIT_FAILURE);
 	}
     }
 
@@ -143,7 +143,7 @@ main(int argc, char **argv)
   if (!cachestr)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   snprintf(cachestr, strlen(wq.query) + strlen(wq.host) + 2, "%s:%s",
            wq.host, wq.query);
@@ -156,12 +156,12 @@ main(int argc, char **argv)
     if (ret < 0)
       {
 	printf("[%s]\n", _("Error reading cache"));
-	exit(1);
+	exit (EXIT_FAILURE);
       }
     else if (ret > 0)
       {
 	printf("[%s]\n%s", _("Cached"), text);
-	exit(0);
+	exit (EXIT_SUCCESS);
       }
   }
 #endif
@@ -180,7 +180,7 @@ main(int argc, char **argv)
 #endif
 
   printf("%s", text);
-  exit(0);
+  exit (EXIT_SUCCESS);
 }
 
 /*
@@ -291,7 +291,7 @@ jwhois_query (struct s_whois_query *wq, char **text)
     }
 
   if (ret < 0)
-    exit(1);
+    exit (EXIT_FAILURE);
     
   if (curdata != NULL)
     {
@@ -302,7 +302,7 @@ jwhois_query (struct s_whois_query *wq, char **text)
 	{
 	  *text = realloc(*text, strlen (*text) + strlen (curdata) + 1);
 	  if (*text == NULL)
-	    exit(1);
+	    exit (EXIT_FAILURE);
 
 	  strcat(*text, curdata);
 	  free(curdata);

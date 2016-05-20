@@ -602,7 +602,7 @@ add_string(char **bufpos, const char *string, size_t stringlen, char **bufstart,
       if (!new)
         {
           printf("[%s]\n", _("Error allocating memory"));
-          exit(1);
+          exit (EXIT_FAILURE);
         }
       *buflen *= 2;
       *bufpos = new + (*bufpos - *bufstart);
@@ -705,7 +705,7 @@ lookup_query_format(struct s_whois_query *wq)
   if (!tmpqstring)
     {
       printf("[%s]\n", _("Error allocating memory"));
-      exit(1);
+      exit (EXIT_FAILURE);
     }
   tmpptr = tmpqstring;
 
