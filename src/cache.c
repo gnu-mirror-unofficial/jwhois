@@ -34,12 +34,12 @@
 # include <sys/fcntl.h>
 #endif
 
-#if !defined(NOCACHE) && defined(HAVE_GDBM_OPEN)
+#if !defined NOCACHE && defined HAVE_GDBM_OPEN
 # ifdef HAVE_GDBM_H
 #  include <gdbm.h>
 # endif
 #else
-# if !defined(NOCACHE) && defined(HAVE_DBM_OPEN)
+# if !defined NOCACHE && defined HAVE_DBM_OPEN
 #  ifdef HAVE_NDBM_H
 #   include <ndbm.h>
 #  else
@@ -61,7 +61,7 @@
 
 #define DBM_MODE           S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP
 
-#if !defined(NOCACHE) && defined(HAVE_GDBM_OPEN)
+#if !defined NOCACHE && defined HAVE_GDBM_OPEN
 # define dbm_open(a,b,c)    gdbm_open(a, 0, b, c, 0)
 # define DBM_COPTIONS       GDBM_WRCREAT
 # define DBM_WOPTIONS       GDBM_WRITER
@@ -71,7 +71,7 @@
 # define dbm_close(a)       gdbm_close(a)
 # define dbm_fetch(a,b)     gdbm_fetch(a,b)
 #else
-# if !defined(NOCACHE) && defined(HAVE_DBM_OPEN)
+# if !defined NOCACHE && defined HAVE_DBM_OPEN
 # define DBM_COPTIONS       O_RDWR|O_CREAT
 # define DBM_WOPTIONS       O_RDWR
 # define DBM_ROPTIONS       O_RDONLY
