@@ -170,7 +170,8 @@ if test x$cache = xyes; then
   fi
 fi
 
-if test "$ac_cv_lib_intl_bindtextdomain" = "yes" -o "$ac_cv_lib_intl_gettext" = "yes"; then
+if test "$ac_cv_lib_intl_bindtextdomain" = "yes" \
+   || test "$ac_cv_lib_intl_gettext" = "yes"; then
   LIBS="-lintl $LIBS"
   AC_CHECK_HEADERS(libintl.h)
 fi
