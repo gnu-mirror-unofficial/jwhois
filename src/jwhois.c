@@ -61,7 +61,7 @@ main(int argc, char **argv)
 {
   int optind, count = 0, ret, rc = 0;
   char *qstring = NULL, *text, *cachestr, *idn;
-  struct s_whois_query wq;
+  whois_query_t wq;
 
   set_program_name (argv[0]);
   setlocale(LC_ALL, "");
@@ -69,10 +69,7 @@ main(int argc, char **argv)
   textdomain(PACKAGE);
 
   re_syntax_options = RE_SYNTAX_EMACS;
-  wq.host = NULL;
-  wq.port = 0;
-  wq.query = NULL;
-  wq.domain = NULL;
+  wq = wq_init ();
 
   /* Parse command line arguments and initialize the cache */
   optind = parse_args (argc, argv);
@@ -107,10 +104,10 @@ main(int argc, char **argv)
       printf("[IDN encoding of '%s' failed with error code %d]\n", qstring, rc);
       exit (EXIT_FAILURE);
     }
-  wq.query = strdup(idn);
+  wq->query = strdup (idn);
   free(idn);
 #else
-  wq.query = qstring;
+  wq->query = qstring;
 #endif
 
   if (ghost)
@@ -118,17 +115,17 @@ main(int argc, char **argv)
       if (verbose>1)
 	printf("[Calling %s:%d directly]\n", ghost, gport);
 
-      wq.host = ghost;
-      wq.port = gport;
+      wq->host = ghost;
+      wq->port = gport;
     }
-  else if (split_host_from_query(&wq))
+  else if (split_host_from_query (wq))
     {
       if (verbose>1)
-	printf("[Calling %s directly]\n", wq.host);
+	printf ("[Calling %s directly]\n", wq->host);
     }
   else
     {
-      ret = lookup_host(&wq, NULL);
+      ret = lookup_host(wq, NULL);
       if (ret < 0)
 	{
 	  printf("[%s]\n", _("Fatal error searching for host to query"));
@@ -139,14 +136,14 @@ main(int argc, char **argv)
   text = NULL;
 
 #ifndef NOCACHE
-  cachestr = malloc(strlen(wq.query) + strlen(wq.host) + 2);
+  cachestr = malloc (strlen (wq->query) + strlen (wq->host) + 2);
   if (!cachestr)
     {
       printf("[%s]\n", _("Error allocating memory"));
       exit (EXIT_FAILURE);
     }
-  snprintf(cachestr, strlen(wq.query) + strlen(wq.host) + 2, "%s:%s",
-           wq.host, wq.query);
+  snprintf (cachestr, strlen (wq->query) + strlen (wq->host) + 2, "%s:%s",
+            wq->host, wq->query);
 
   if (!forcelookup && cache) {
     if (verbose>1)
@@ -166,7 +163,8 @@ main(int argc, char **argv)
   }
 #endif
 
-  jwhois_query(&wq, &text);
+  jwhois_query (wq, &text);
+  wq_free (wq);
 
 #ifndef NOCACHE
   if (cache) {

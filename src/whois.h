@@ -28,6 +28,12 @@ struct s_whois_query {
 
 typedef struct s_whois_query *whois_query_t;
 
+/* Initialize a whois_query_t object.  */
+extern whois_query_t wq_init (void);
+
+/* Deallocate whois_query_t object WQ.  */
+extern void wq_free (whois_query_t wq);
+
 int whois_query (whois_query_t, char **);
 
 #endif /* WHOIS_H */

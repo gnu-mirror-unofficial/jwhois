@@ -37,6 +37,32 @@
 /* Forward declarations.  */
 static int whois_read (int fd, char **ptr, const char *host);
 
+whois_query_t
+wq_init (void)
+{
+  whois_query_t wq = malloc (sizeof (struct s_whois_query));
+  if (wq == NULL)
+    {
+      fprintf (stderr, "[%s]\n", _("Error allocating memory"));
+      exit (EXIT_FAILURE);
+    }
+  wq->host = NULL;
+  wq->port = 0;
+  wq->query = NULL;
+  wq->domain = NULL;
+
+  return wq;
+}
+
+void
+wq_free (whois_query_t wq)
+{
+  /* PORT, DOMAIN struct members are not dynamically allocated. */
+  free (wq->host);
+  free (wq->query);
+  free (wq);
+}
+
 /*
  *  This function takes a filedescriptor as an argument, makes an whois
  *  query to that host:port. If successfull, it returns the result in the block
