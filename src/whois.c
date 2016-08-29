@@ -34,7 +34,8 @@
 #include <unistd.h>
 #include <errno.h>
 
-int whois_read(int, char **, const char *);
+/* Forward declarations.  */
+static int whois_read (int fd, char **ptr, const char *host);
 
 /*
  *  This function takes a filedescriptor as an argument, makes an whois
@@ -104,8 +105,8 @@ whois_query (whois_query_t wq, char **text)
  *  in the indicated pointer. Returns the number of bytes stored in
  *  memory or -1 upon error.
  */
-int
-whois_read(int fd, char **ptr, const char *host)
+static int
+whois_read (int fd, char **ptr, const char *host)
 {
   unsigned int count, start_count;
   int ret;
