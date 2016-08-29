@@ -24,7 +24,7 @@
 char *get_whois_server_domain_path(const char *hostname);
 char *get_whois_server_option(const char *hostname, const char *key);
 char *create_string(const char *fmt, ...);
-int split_host_from_query(struct s_whois_query *wq);
+int split_host_from_query (whois_query_t wq);
 int make_connect(const char *, int);
 int add_text_to_buffer(char **, const char *);
 void timeout_init (void);

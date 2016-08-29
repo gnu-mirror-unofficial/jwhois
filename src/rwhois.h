@@ -19,6 +19,6 @@
 #ifndef RWHOIS_H
 #define RWHOIS_H
 
-int rwhois_query(struct s_whois_query *, char **);
+int rwhois_query (whois_query_t, char **);
 
 #endif

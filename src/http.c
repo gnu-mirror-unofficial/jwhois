@@ -40,7 +40,7 @@
  *
  * Returns -1 on error, 0 on success.
  */
-int http_query(struct s_whois_query *wq, char **text)
+int http_query (whois_query_t wq, char **text)
 {
     const char *method = get_whois_server_option(wq->host, "http-method");
     const char *action = get_whois_server_option(wq->host, "http-action");

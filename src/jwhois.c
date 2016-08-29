@@ -54,7 +54,7 @@
 #endif
 
 /* Forward declarations.  */
-static int jwhois_query (struct s_whois_query *wq, char **text);
+static int jwhois_query (whois_query_t wq, char **text);
 
 int
 main(int argc, char **argv)
@@ -188,7 +188,7 @@ main(int argc, char **argv)
  * file.
  * */
 static char *
-convert_charset(struct s_whois_query *wq, char *curdata)
+convert_charset (whois_query_t wq, char *curdata)
 {
 #ifdef HAVE_ICONV
   const char *charset;
@@ -253,7 +253,7 @@ convert_charset(struct s_whois_query *wq, char *curdata)
  *  follows it there. A return value of -1 is always a fatal error.
  */
 static int
-jwhois_query (struct s_whois_query *wq, char **text)
+jwhois_query (whois_query_t wq, char **text)
 {
   char *tmp, *tmp2, *oldquery, *curdata;
   int ret;

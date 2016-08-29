@@ -26,6 +26,8 @@ struct s_whois_query {
   char *domain;
 };
 
-int whois_query(struct s_whois_query *, char **);
+typedef struct s_whois_query *whois_query_t;
+
+int whois_query (whois_query_t, char **);
 
 #endif /* WHOIS_H */

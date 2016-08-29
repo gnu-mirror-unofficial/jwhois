@@ -43,14 +43,14 @@
 #include <string.h>
 #include <ctype.h>
 
-int lookup_whois_servers(const char *, struct s_whois_query *);
+int lookup_whois_servers (const char *, whois_query_t);
 
 /*
  *  Looks up an IPv4 address `val' against `block' and returns a pointer
  *  if an entry is found, otherwise NULL.
  */
 char *
-find_cidr(struct s_whois_query *wq, const char *block)
+find_cidr (whois_query_t wq, const char *block)
 {
   struct in_addr ip;
   struct in_addr ipmaskip;
@@ -144,7 +144,7 @@ static int ipv6_address_is_in_network(const struct in6_addr *addr,
  */
 #ifdef HAVE_INET_PTON_IPV6
 static char *
-find_cidr6(struct s_whois_query *wq, const char *block)
+find_cidr6 (whois_query_t wq, const char *block)
 {
   struct in6_addr query_ip;
   struct in6_addr entry_ip;
@@ -236,7 +236,7 @@ find_cidr6(struct s_whois_query *wq, const char *block)
  *  be a hostname though, but can be any general string.
  */
 char *
-find_regex(struct s_whois_query *wq, const char *block)
+find_regex (whois_query_t wq, const char *block)
 {
   struct jconfig *j, *j2;
   struct re_pattern_buffer rpb;
@@ -387,7 +387,7 @@ find_regex(struct s_whois_query *wq, const char *block)
  *           0    Success.
  */
 int
-lookup_host(struct s_whois_query *wq, const char *block)
+lookup_host (whois_query_t wq, const char *block)
 {
   char deepfreeze[512];
   char *tmpdeep, *tmphost;
@@ -460,7 +460,7 @@ lookup_host(struct s_whois_query *wq, const char *block)
  *           1    Match found
  */
 int
-lookup_redirect(struct s_whois_query *wq, const char *text)
+lookup_redirect (whois_query_t wq, const char *text)
 {
   int ind;
   char *bptr = NULL, *strptr, *ascport, *ret, *tmphost;
@@ -551,7 +551,7 @@ lookup_redirect(struct s_whois_query *wq, const char *text)
  *           0   Success
  */
 int
-lookup_whois_servers(const char *val, struct s_whois_query *wq)
+lookup_whois_servers (const char *val, whois_query_t wq)
 {
   char *hostname;
   struct hostent *hostent;
@@ -671,7 +671,7 @@ add_part(char **bufpos, const char *string, size_t begin, size_t end, char **buf
  * it simply returns a copy of qstring.
  */
 char *
-lookup_query_format(struct s_whois_query *wq)
+lookup_query_format (whois_query_t wq)
 {
   char *ret = NULL, *tmpqstring, *tmpptr;
   struct jconfig *j = NULL;

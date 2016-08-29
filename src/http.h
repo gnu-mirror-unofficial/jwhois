@@ -19,6 +19,6 @@
 #ifndef HTTP_H
 #define HTTP_H
 
-int http_query(struct s_whois_query *, char **);
+int http_query (whois_query_t, char **);
 
 #endif

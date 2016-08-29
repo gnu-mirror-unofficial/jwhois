@@ -45,7 +45,7 @@ int whois_read(int, char **, const char *);
  *              0 Success
  */
 int
-whois_query(struct s_whois_query *wq, char **text)
+whois_query (whois_query_t wq, char **text)
 {
   int ret, sockfd;
   char *tmpqstring;

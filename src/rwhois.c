@@ -110,7 +110,7 @@ int rwhois_parse_line(const char *, char **);
  *              0 Success
  */
 int
-rwhois_query_internal(struct s_whois_query *wq, char **text, struct s_referrals **referrals)
+rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **referrals)
 {
   int sockfd, ret, limit;
   FILE *f;
@@ -328,7 +328,7 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
  *              0 Success
  */
 int
-rwhois_query(struct s_whois_query *wq, char **text)
+rwhois_query (whois_query_t wq, char **text)
 {
   struct s_referrals *referrals, *s;
   struct s_referrals *authareas, *a;

@@ -265,7 +265,7 @@ make_connect(const char *host, int port)
  *  to hold only the query without hostname.
  */
 int
-split_host_from_query(struct s_whois_query *wq)
+split_host_from_query (whois_query_t wq)
 {
   char *tmpptr;
 
