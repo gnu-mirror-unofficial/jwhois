@@ -21,6 +21,7 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = lib po
 
 bin_PROGRAMS = jwhois
+noinst_LIBRARIES = libjwhois.a
 
 AM_CPPFLAGS = \
   -I$(top_srcdir)/src \
@@ -28,6 +29,10 @@ AM_CPPFLAGS = \
   -I$(top_builddir)/lib
 
 jwhois_SOURCES = \
+  src/jwhois.c \
+  src/jwhois.h
+
+libjwhois_a_SOURCES = \
   src/cache.c \
   src/cache.h \
   src/http.c \
@@ -36,8 +41,6 @@ jwhois_SOURCES = \
   src/init.h \
   src/jconfig.c \
   src/jconfig.h \
-  src/jwhois.c \
-  src/jwhois.h \
   src/lookup.c \
   src/lookup.h \
   src/rwhois.c \
@@ -47,7 +50,7 @@ jwhois_SOURCES = \
   src/whois.c \
   src/whois.h
 
-jwhois_LDADD = $(LIBINTL) $(LIBICONV) $(LIBS) lib/libgnu.a
+jwhois_LDADD = $(LIBINTL) $(LIBICONV) $(LIBS) libjwhois.a lib/libgnu.a
 
 sysconf_DATA = example/jwhois.conf
 
