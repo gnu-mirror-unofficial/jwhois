@@ -29,4 +29,8 @@ int make_connect(const char *, int);
 int add_text_to_buffer(char **, const char *);
 void timeout_init (void);
 
+/* Join STC strings in STRV array with delimiter DELIM.  Return a
+   pointer to the newly allocated result.*/
+extern char *strjoinv (const char *delim, int stc, const char *strv[]);
+
 #endif

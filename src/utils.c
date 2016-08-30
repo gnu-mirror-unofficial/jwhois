@@ -72,6 +72,40 @@ create_string(const char *fmt, ...)
     }
 }
 
+char *
+strjoinv (const char *delim, int strc, const char *strv[])
+{
+  size_t bufsize = 0;
+  /* Add space for STRVs.  */
+  for (int i = 0; i < strc; i++)
+    bufsize += strlen (strv[i]);
+
+  bufsize += (strc - 1) * strlen (delim); /* Add space for DELIMs.  */
+  bufsize += 1;		  /* Add space for '\0' at the end of BUF.  */
+
+  char *buf = malloc (bufsize);
+  if (!buf)
+    {
+      fprintf (stderr, "[%s]\n", _("Error allocating memory"));
+      exit (EXIT_FAILURE);
+    }
+
+  /* Copy strings from STRV to BUF with DELIM between them.  */
+  int idx = 0;
+  size_t delim_len = strlen (delim);
+  for (int i = 0; i < (strc - 1); i++)
+    {
+      size_t len = strlen (strv[i]);
+      strncpy (buf + idx, strv[i], len);
+      idx += len;
+      strncpy (buf + idx, delim, delim_len);
+      idx += delim_len;
+    }
+  strcpy (buf + idx, strv[strc - 1]);
+
+  return buf;
+}
+
 /*
  *  This adds text to a buffer.
  */

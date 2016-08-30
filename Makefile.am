@@ -70,7 +70,17 @@ SH_LOG_COMPILER = $(SHELL)
 AM_TESTS_ENVIRONMENT = \
   confdir='$(abs_top_srcdir)/example' \
   PATH="$(abs_top_builddir)$(PATH_SEPARATOR)$$PATH"
-TESTS = tests/config.sh
+
+TESTS = \
+  tests/config.sh \
+  $(check_PROGRAMS)
+
+check_PROGRAMS = \
+  tests/utils_strjoinv
+
+LDADD = libjwhois.a lib/libgnu.a
+
+noinst_HEADERS = tests/macros.h
 
 EXTRA_DIST = \
   .version \

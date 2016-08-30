@@ -19,6 +19,6 @@
 #ifndef INIT_H
 #define INIT_H
 
-int parse_args (int argc, char *argv[]);
+void parse_args (int argc, char *argv[]);
 
 #endif

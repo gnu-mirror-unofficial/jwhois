@@ -33,6 +33,9 @@
 #include <jwhois.h>
 #include <string.h>
 
+/* Contains the actual query.  */
+char *query_string;
+
 /* This is set if caching is enabled */
 int cache;
 
@@ -133,7 +136,6 @@ static struct argp_option options[] = {
 static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
 {
-  size_t len;
   char *ret;
 
   switch (key)
@@ -184,6 +186,13 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case ARGP_KEY_NO_ARGS:
       argp_usage (state);
       break;
+    case ARGP_KEY_ARGS:
+      query_string =
+        strjoinv (" ", state->argc - state->next,
+                  /* Fix 'incompatible-pointer-types' warning.  */
+                  (const char **) state->argv + state->next);
+      break;
+    case ARGP_KEY_ARG:
     default:
       return ARGP_ERR_UNKNOWN;
     }
@@ -193,10 +202,9 @@ parse_opt (int key, char *arg, struct argp_state *state)
 /* argp parser.  */
 static struct argp argp = { options, parse_opt, args_doc, doc };
 
-int
+void
 parse_args (int argc, char *argv[])
 {
-  int optind;
   FILE *in;
 
   cache = 1;
@@ -216,7 +224,7 @@ parse_args (int argc, char *argv[])
 
   /* Parse command line arguments.  */
   argp_version_setup (program_name, authors);
-  argp_parse (&argp, argc, argv, 0, &optind, NULL);
+  argp_parse (&argp, argc, argv, 0, NULL, NULL);
 
   if (config)
     {
@@ -261,5 +269,4 @@ parse_args (int argc, char *argv[])
 
       printf("[Debug: Force rwhois = %s]\n", rwhois?"Yes":"No");
     }
-  return optind;
 }

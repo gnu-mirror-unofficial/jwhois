@@ -59,8 +59,8 @@ static int jwhois_query (whois_query_t wq, char **text);
 int
 main(int argc, char **argv)
 {
-  int optind, count = 0, ret, rc = 0;
-  char *qstring = NULL, *text, *cachestr, *idn;
+  int ret;
+  char *text, *cachestr;
   whois_query_t wq;
 
   set_program_name (argv[0]);
@@ -72,43 +72,25 @@ main(int argc, char **argv)
   wq = wq_init ();
 
   /* Parse command line arguments and initialize the cache */
-  optind = parse_args (argc, argv);
+  parse_args (argc, argv);
   cache_init();
   timeout_init();
 
-  /* Parse remaining arguments and place them into the wq
-     structure. */
-  while (optind < argc)
-    {
-      count += strlen(argv[optind])+1;
-      if (!qstring)
-	qstring = malloc(count+1);
-      else
-	qstring = realloc(qstring, count+1);
-      if (!qstring)
-        {
-          printf("[%s]\n", _("Error allocating memory"));
-          exit (EXIT_FAILURE);
-        }
-      memcpy(qstring+count-strlen(argv[optind])-1,
-	     argv[optind],
-	     strlen(argv[optind])+1);
-      strcat(qstring, " ");
-      optind++;
-    }
-  qstring[strlen(qstring)-1] = '\0';
 #ifdef LIBIDN
-  rc = idna_to_ascii_lz(qstring, &idn, 0);
+  char *idn;
+  int rc = idna_to_ascii_lz (query_string, &idn, 0);
   if (rc != IDNA_SUCCESS)
     {
-      printf("[IDN encoding of '%s' failed with error code %d]\n", qstring, rc);
+      printf ("[IDN encoding of '%s' failed with error code %d]\n",
+              query_string, rc);
       exit (EXIT_FAILURE);
     }
-  wq->query = strdup (idn);
-  free(idn);
+  wq_set_query (wq, idn);
+  free (idn);
 #else
-  wq->query = qstring;
+  wq_set_query (wq, query_string);
 #endif
+  free (query_string);
 
   if (ghost)
     {

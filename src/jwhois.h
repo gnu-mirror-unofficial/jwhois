@@ -27,6 +27,7 @@
 # define MAXBUFSIZE 1024
 #endif
 
+extern char *query_string;
 extern int cache;
 extern int forcelookup;
 extern int verbose;
