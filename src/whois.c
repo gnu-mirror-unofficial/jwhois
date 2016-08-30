@@ -63,6 +63,19 @@ wq_free (whois_query_t wq)
   free (wq);
 }
 
+char *
+wq_get_query (whois_query_t wq)
+{
+  return strdup (wq->query);
+}
+
+void
+wq_set_query (whois_query_t wq, char *query)
+{
+  free (wq->query);
+  wq->query = strdup (query);
+}
+
 /*
  *  This function takes a filedescriptor as an argument, makes an whois
  *  query to that host:port. If successfull, it returns the result in the block

@@ -34,6 +34,12 @@ extern whois_query_t wq_init (void);
 /* Deallocate whois_query_t object WQ.  */
 extern void wq_free (whois_query_t wq);
 
+/* Return query string from WQ.  */
+extern char *wq_get_query (whois_query_t wq);
+
+/* Set query string in WQ to QUERY.  */
+extern void wq_set_query (whois_query_t wq, char *query);
+
 int whois_query (whois_query_t, char **);
 
 #endif /* WHOIS_H */
