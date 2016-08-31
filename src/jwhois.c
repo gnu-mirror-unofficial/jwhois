@@ -78,39 +78,40 @@ main(int argc, char **argv)
 
 #ifdef LIBIDN
   char *idn;
-  int rc = idna_to_ascii_lz (query_string, &idn, 0);
+  int rc = idna_to_ascii_lz (arguments->query_string, &idn, 0);
   if (rc != IDNA_SUCCESS)
     {
       printf ("[IDN encoding of '%s' failed with error code %d]\n",
-              query_string, rc);
+              arguments->query_string, rc);
       exit (EXIT_FAILURE);
     }
   wq_set_query (wq, idn);
   free (idn);
 #else
-  wq_set_query (wq, query_string);
+  wq_set_query (wq, arguments->query_string);
 #endif
-  free (query_string);
+  free (arguments->query_string);
 
-  if (ghost)
+  if (arguments->ghost)
     {
-      if (verbose>1)
-	printf("[Calling %s:%d directly]\n", ghost, gport);
+      if (arguments->verbose > 1)
+	printf ("[Calling %s:%d directly]\n",
+		arguments->ghost, arguments->gport);
 
-      wq->host = ghost;
-      wq->port = gport;
+      wq->host = arguments->ghost;
+      wq->port = arguments->gport;
     }
   else if (split_host_from_query (wq))
     {
-      if (verbose>1)
-	printf ("[Calling %s directly]\n", wq->host);
+      if (arguments->verbose > 1)
+	printf("[Calling %s directly]\n", wq->host);
     }
   else
     {
       ret = lookup_host(wq, NULL);
       if (ret < 0)
 	{
-	  printf("[%s]\n", _("Fatal error searching for host to query"));
+	  printf ("[%s]\n", _("Fatal error searching for host to query"));
 	  exit (EXIT_FAILURE);
 	}
     }
@@ -127,36 +128,38 @@ main(int argc, char **argv)
   snprintf (cachestr, strlen (wq->query) + strlen (wq->host) + 2, "%s:%s",
             wq->host, wq->query);
 
-  if (!forcelookup && cache) {
-    if (verbose>1)
-      printf("[Looking up entry in cache]\n");
+  if (!arguments->forcelookup && arguments->cache)
+    {
+      if (arguments->verbose > 1)
+        printf ("[Looking up entry in cache]\n");
 
-    ret = cache_read(cachestr, &text);
-    if (ret < 0)
-      {
-	printf("[%s]\n", _("Error reading cache"));
-	exit (EXIT_FAILURE);
-      }
-    else if (ret > 0)
-      {
-	printf("[%s]\n%s", _("Cached"), text);
-	exit (EXIT_SUCCESS);
-      }
-  }
+      ret = cache_read (cachestr, &text);
+      if (ret < 0)
+        {
+          printf ("[%s]\n", _("Error reading cache"));
+          exit (EXIT_FAILURE);
+        }
+      else if (ret > 0)
+        {
+          printf ("[%s]\n%s", _("Cached"), text);
+          exit (EXIT_SUCCESS);
+        }
+    }
 #endif
 
   jwhois_query (wq, &text);
   wq_free (wq);
 
 #ifndef NOCACHE
-  if (cache) {
-    if (verbose>1)
-      printf("[Storing in cache]\n");
+  if (arguments->cache)
+    {
+      if (arguments->verbose > 1)
+        printf ("[Storing in cache]\n");
 
-    ret = cache_store(cachestr, text);
-    if (ret < 0)
-      printf("[%s]\n", _("Error writing to cache"));
-  }
+      ret = cache_store (cachestr, text);
+      if (ret < 0)
+        printf ("[%s]\n", _("Error writing to cache"));
+    }
 #endif
 
   printf("%s", text);
@@ -238,10 +241,10 @@ jwhois_query (whois_query_t wq, char **text)
   char *tmp, *tmp2, *oldquery, *curdata;
   int ret;
 
-  if (!display_redirections)
+  if (!arguments->display_redirections)
     *text = NULL;
   
-  if (!raw_query)
+  if (!arguments->raw_query)
     {
       oldquery = wq->query;
       wq->query = (char *)lookup_query_format(wq);
@@ -251,7 +254,7 @@ jwhois_query (whois_query_t wq, char **text)
   tmp2 = (char *)get_whois_server_option(wq->host, "http");
   curdata = NULL;
 
-  if ( (tmp && 0 == strcasecmp(tmp, "true")) || rwhois )
+  if ((tmp && 0 == strcasecmp(tmp, "true")) || arguments->rwhois)
     {
       ret = rwhois_query(wq, &curdata);
     }
@@ -264,7 +267,7 @@ jwhois_query (whois_query_t wq, char **text)
       
     }
 
-  if (!raw_query)
+  if (!arguments->raw_query)
     {
       free(wq->query);
       wq->query = oldquery;

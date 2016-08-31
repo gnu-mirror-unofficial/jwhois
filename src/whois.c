@@ -122,7 +122,7 @@ whois_query (whois_query_t wq, char **text)
 		 wq->host, wq->port);
 	  exit (EXIT_FAILURE);
 	}
-      if (redirect)
+      if (arguments->redirect)
         {
           ret = lookup_redirect(wq, *text);
           if ((ret < 0) || (ret == 0))

@@ -230,7 +230,7 @@ make_connect(const char *host, int port)
 {
   int sockfd, error, flags, retval, retlen;
   fd_set fdset;
-  struct timeval timeout = { connect_timeout, 0 };
+  struct timeval timeout = { arguments->connect_timeout, 0 };
   struct addrinfo *res;
   struct sockaddr *sa;
 
@@ -333,12 +333,12 @@ timeout_init()
   j = jconfig_getone("jwhois", "connect-timeout");
   if (j)
     ret = j->value;
-  connect_timeout = strtol(ret, &ret2, 10);
+  arguments->connect_timeout = strtol(ret, &ret2, 10);
   if (*ret2 != '\0')
     {
-      if (verbose)
+      if (arguments->verbose)
         printf("[%s: %s]\n", _("Invalid connect timeout value"), ret);
 
-      connect_timeout = 75;
+      arguments->connect_timeout = 75;
     }
 }

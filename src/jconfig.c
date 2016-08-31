@@ -255,8 +255,8 @@ jconfig_get_quoted(FILE *in, int *line)
     {
       if (len >= (MAXBUFSIZE-1))
 	{
-	  printf("[%s: %s %d]\n", config, _("String out of bounds on line"),
-		 *line);
+          printf ("[%s: %s %d]\n", arguments->config,
+                  _("String out of bounds on line"), *line);
 	  exit (EXIT_FAILURE);
 	}
 
@@ -281,8 +281,8 @@ jconfig_get_quoted(FILE *in, int *line)
 	  s1[len++] = ch;
 	}
     }
-  printf("[%s: %s %d]\n", config, _("End of file looking for '\"' on line"),
-	 *line);
+  printf ("[%s: %s %d]\n", arguments->config,
+          _("End of file looking for '\"' on line"), *line);
   exit (EXIT_FAILURE);
 }
 
@@ -307,8 +307,8 @@ jconfig_get_unquoted(FILE *in, int *line)
     {
       if (len >= (MAXBUFSIZE-1))
 	{
-	  printf("[%s: %s %d]\n", config, _("String out of bounds on line"),
-		 *line);
+          printf ("[%s: %s %d]\n", arguments->config,
+                  _("String out of bounds on line"), *line);
 	  exit (EXIT_FAILURE);
 	}
 
@@ -336,8 +336,8 @@ jconfig_get_unquoted(FILE *in, int *line)
 	  s1[len++] = ch;
 	}
     }
-  printf("[%s: %s %d]\n", config, _("Unexpected end of file on line"),
-	 *line);
+  printf ("[%s: %s %d]\n", arguments->config,
+          _("Unexpected end of file on line"), *line);
   exit (EXIT_FAILURE);
 }
 
@@ -401,20 +401,17 @@ jconfig_parse_file(FILE *in)
 	    token = jconfig_get_quoted(in, &line);
 	    break;
 	  case '=':
-	    if (key)
-	      {
-		printf("[%s: %s %d]\n", config,
-		       _("Multiple keys on line"),
-		       line);
-	      }
+            if (key)
+              printf ("[%s: %s %d]\n", arguments->config,
+                      _("Multiple keys on line"), line);
 	    key = malloc(strlen(token)+1);
 	    strcpy(key,token);
 	    break;
 	  case ';':
 	    if (!key)
 	      {
-		printf("[%s: %s %d]\n", config,
-		       _("Missing key on line"), line);
+                printf ("[%s: %s %d]\n", arguments->config,
+                        _("Missing key on line"), line);
 		exit (EXIT_FAILURE);
 	      }
 	    jconfig_add(domain, key, token, line);

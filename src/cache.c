@@ -98,18 +98,18 @@ cache_init(void)
   DBM *dbf;
 #endif
 
-  if (!cache)
+  if (!arguments->cache)
     return 0;
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cachefile");
   if (!j)
-    cfname = LOCALSTATEDIR "/jwhois.db";
+    arguments->cfname = LOCALSTATEDIR "/jwhois.db";
   else
-    cfname = j->value;
+    arguments->cfname = j->value;
 
-  if (verbose>1)
-    printf("[Cache: Cache file name = \"%s\"]\n",cfname);
+  if (arguments->verbose > 1)
+    printf ("[Cache: Cache file name = \"%s\"]\n", arguments->cfname);
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cacheexpire");
@@ -117,32 +117,32 @@ cache_init(void)
     ret = CACHE_EXPIRE;
   else
     ret = j->value;
-  cfexpire = strtol(ret, &ret2, 10);
+  arguments->cfexpire = strtol(ret, &ret2, 10);
   if (*ret2 != '\0')
     {
-      if (verbose)
-	printf("[Cache: %s: %s]\n", _("Invalid expire time"), ret);
-      cfexpire = 168;
+      if (arguments->verbose)
+        printf("[Cache: %s: %s]\n", _("Invalid expire time"), ret);
+      arguments->cfexpire = 168;
     }
 
-  if (verbose>1)
-    printf("[Cache: Expire time = %d]\n", cfexpire);
+  if (arguments->verbose > 1)
+    printf("[Cache: Expire time = %d]\n", arguments->cfexpire);
 
   umask(0);
-  dbf = dbm_open(cfname, DBM_COPTIONS, DBM_MODE);
+  dbf = dbm_open (arguments->cfname, DBM_COPTIONS, DBM_MODE);
   if (!dbf)
     {
-      if (verbose) printf("[Cache: %s %s]\n", _("Unable to open"),
-			  cfname);
-      cache = 0;
+      if (arguments->verbose)
+	printf ("[Cache: %s %s]\n", _("Unable to open"), arguments->cfname);
+      arguments->cache = 0;
       return -1;
     }
   iret = dbm_store(dbf, dbkey, dbstore, DBM_IOPTIONS);
   if (iret < 0)
     {
-      if (verbose) printf("[Cache: %s]\n",
-			  _("Unable to store data in cache\n"));
-      cache = 0;
+      if (arguments->verbose)
+	printf("[Cache: %s]\n", _("Unable to store data in cache\n"));
+      arguments->cache = 0;
     }
   dbm_close(dbf);
 #endif
@@ -168,7 +168,7 @@ cache_store(char *key, const char *text)
   time_t *timeptr;
   char *ptr;
 
-  if (cache)
+  if (arguments->cache)
     {
       dbkey.dptr = key;
       dbkey.dsize = strlen(key);
@@ -184,7 +184,7 @@ cache_store(char *key, const char *text)
       dbstore.dptr = ptr;
       dbstore.dsize = strlen(text)+sizeof(time_t)+1;
       
-      dbf = dbm_open(cfname, DBM_WOPTIONS, DBM_MODE);
+      dbf = dbm_open(arguments->cfname, DBM_WOPTIONS, DBM_MODE);
       if (!dbf)
 	return -1;
       else
@@ -218,14 +218,14 @@ cache_read(char *key, char **text)
 #endif
   time_t time_c;
 
-  if (!cache)
+  if (!arguments->cache)
     return 0;
 
 #ifndef NOCACHE
   dbkey.dptr = key;
   dbkey.dsize = strlen(key);
 
-  dbf = dbm_open(cfname, DBM_ROPTIONS, DBM_MODE);
+  dbf = dbm_open (arguments->cfname, DBM_ROPTIONS, DBM_MODE);
   if (!dbf)
     return -1;
   dbstore = dbm_fetch(dbf, dbkey);
@@ -235,7 +235,7 @@ cache_read(char *key, char **text)
       return 0;
     }
   memcpy(&time_c,dbstore.dptr,sizeof(time_c));	/* ensure suitable alignment */
-  if ((time(NULL)-time_c)/(60*60) > cfexpire)
+  if (((time(NULL) - time_c) / (60 * 60)) > arguments->cfexpire)
     {
       dbm_close(dbf);
       return 0;

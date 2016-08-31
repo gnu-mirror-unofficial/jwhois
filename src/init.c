@@ -33,60 +33,26 @@
 #include <jwhois.h>
 #include <string.h>
 
-/* Contains the actual query.  */
-char *query_string;
+/* Default values.  */
+static struct arguments _arguments = {
+  .query_string = NULL,
+  .cache = 1,
+  .forcelookup = 0,
+  .verbose = 0,
+  .ghost = NULL,
+  .gport = 0,
+  .config = NULL,
+  .redirect = 1,
+  .display_redirections = 0,
+  .whoisservers = NULL,
+  .raw_query = 0,
+  .rwhois = 0,
+  .rwhois_display = NULL,
+  .rwhois_limit = 0,
+  .enable_whoisservers = 1
+};
 
-/* This is set if caching is enabled */
-int cache;
-
-/* Set if checking for a cached copy of a document should be bypassed */
-int forcelookup;
-
-/* Verbose debugging output */
-int verbose;
-
-/* Host specified on the command line */
-char *ghost;
-
-/* Port specified on the command line */
-int gport;
-
-/* Name of the current configuration file */
-char *config;
-
-/* Name of the cache database */
-char *cfname;
-
-/* Default whois-servers.net domain */
-char *whoisservers;
-
-/* Default expire time for cached objects */
-int cfexpire;
-
-/* Whether or not to use lookup_redirect() on whois server output */
-int redirect;
-
-/* Set to 1 to display all redirects, otherwise display only final reply */
-int display_redirections;
-
-/* Set to 1 to send query in raw form to the host instead of mangling it
-   through query-format */
-int raw_query;
-
-/* Set to 1 to force an rwhois query */
-int rwhois;
-
-/* Set to a valid display name for rwhois queries */
-char *rwhois_display;
-
-/* Set to a valid limit for rwhois queries */
-int rwhois_limit;
-
-/* Set to 0 to completely disable whois-servers.net service support */
-int enable_whoisservers;
-
-/* Timeout value for connect calls in seconds */
-int connect_timeout;
+struct arguments *arguments = &_arguments;
 
 const char *argp_program_bug_address = PACKAGE_BUGREPORT;
 
@@ -141,45 +107,45 @@ parse_opt (int key, char *arg, struct argp_state *state)
   switch (key)
     {
     case 'v':
-      verbose += 1;
+      arguments->verbose += 1;
       break;
     case 'f':
-      forcelookup = 1;
+      arguments->forcelookup = 1;
       break;
     case 'd':
-      cache = 0;
+      arguments->cache = 0;
       break;
     case 'n':
-      redirect = 0;
+      arguments->redirect = 0;
       break;
     case 'a':
-      raw_query = 1;
+      arguments->raw_query = 1;
       break;
     case 'i':
-      display_redirections = 1;
+      arguments->display_redirections = 1;
       break;
     case 's':
-      enable_whoisservers = 0;
+      arguments->enable_whoisservers = 0;
       break;
     case 'r':
-      rwhois = 1;
+      arguments->rwhois = 1;
       break;
     case 'c':
-      config = arg;
+      arguments->config = arg;
       break;
     case 'h':
-      ghost = arg;
+      arguments->ghost = arg;
       break;
     case OPT_DISPLAY:
-      rwhois_display = arg;
+      arguments->rwhois_display = arg;
       break;
     case OPT_LIMIT:
-      rwhois_limit = strtol (arg, &ret, 10);
+      arguments->rwhois_limit = strtol (arg, &ret, 10);
       if (*ret != '\0')
         printf ("[%s (%s)]\n", _("Invalid limit"), arg);
       break;
     case 'p':
-      gport = strtol (arg, &ret, 10);
+      arguments->gport = strtol (arg, &ret, 10);
       if (*ret != '\0')
         printf ("[%s: %s]\n", _("Invalid port number"), arg);
       break;
@@ -187,7 +153,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
       argp_usage (state);
       break;
     case ARGP_KEY_ARGS:
-      query_string =
+      arguments->query_string =
         strjoinv (" ", state->argc - state->next,
                   /* Fix 'incompatible-pointer-types' warning.  */
                   (const char **) state->argv + state->next);
@@ -205,45 +171,29 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 void
 parse_args (int argc, char *argv[])
 {
-  FILE *in;
-
-  cache = 1;
-  forcelookup = 0;
-  verbose = 0;
-  ghost = NULL;
-  gport = 0;
-  config = NULL;
-  redirect = 1;
-  display_redirections = 0;
-  whoisservers = NULL;
-  raw_query = 0;
-  rwhois = 0;
-  rwhois_display = NULL;
-  rwhois_limit = 0;
-  enable_whoisservers = 1;
-
   /* Parse command line arguments.  */
   argp_version_setup (program_name, authors);
   argp_parse (&argp, argc, argv, 0, NULL, NULL);
 
-  if (config)
+  FILE *in;
+  if (arguments->config)
     {
-      in = fopen(config, "r");
+      in = fopen(arguments->config, "r");
       if (!in)
 	{
 	  printf("[%s: %s]\n",
-		  config, _("Unable to open"));
-	  exit (EXIT_FAILURE);
+                 arguments->config, _("Unable to open"));
+          exit (EXIT_FAILURE);
 	}
     }
   else
     {
       in = fopen(SYSCONFDIR "/jwhois.conf", "r");
-      if (!in && verbose)
+      if (!in && arguments->verbose)
 	printf("[%s: %s]\n",
 	       SYSCONFDIR "/jwhois.conf", _("Unable to open"));
       else
-	config = SYSCONFDIR "/jwhois.conf";
+	arguments->config = SYSCONFDIR "/jwhois.conf";
     }
   if (in)
     {
@@ -251,22 +201,36 @@ parse_args (int argc, char *argv[])
       fclose(in);
     }
 
-  if (verbose>1)
+  if (arguments->verbose > 1)
     {
-      printf("[Debug: Cache = %s]\n", cache?"On":"Off");
-      printf("[Debug: Force lookup = %s]\n", forcelookup?"Yes":"No");
-      printf("[Debug: Force host = %s]\n", ghost?ghost:"(None)");
-      printf("[Debug: Force port = %s]\n", gport?(char *)create_string("%d",gport):"(None)");
-      printf("[Debug: Config file name = %s]\n", config?config:"(None)");
-      printf("[Debug: Follow redirections = %s]\n", redirect?"Yes":"No");
-      printf("[Debug: Display redirections = %s]\n", display_redirections?"Yes":"No");
-      printf("[Debug: Whois-servers.net service support = %s]\n", enable_whoisservers?"Yes":"No");
-      printf("[Debug: Whois-servers domain = %s]\n",
-	     whoisservers ? whoisservers : WHOIS_SERVERS);
-      printf("[Debug: Raw query = %s]\n", raw_query?"Yes":"No");
-      printf("[Debug: Rwhois display = %s]\n", rwhois_display?rwhois_display:"(None)");
-      printf("[Debug: Rwhois limit = %s]\n", rwhois_limit?(char *)create_string("%d",rwhois_limit):"(None)");
-
-      printf("[Debug: Force rwhois = %s]\n", rwhois?"Yes":"No");
+      printf ("[Debug: Cache = %s]\n", arguments->cache ? "On" : "Off");
+      printf ("[Debug: Force lookup = %s]\n",
+              arguments->forcelookup ? "Yes" : "No");
+      printf ("[Debug: Force host = %s]\n",
+              arguments->ghost? arguments->ghost : "(None)");
+      printf ("[Debug: Force port = %s]\n",
+              arguments->gport ?
+              create_string ("%d", arguments->gport) : "(None)");
+      printf ("[Debug: Config file name = %s]\n",
+              arguments->config ? arguments->config : "(None)");
+      printf ("[Debug: Follow redirections = %s]\n",
+              arguments->redirect ? "Yes" : "No");
+      printf ("[Debug: Display redirections = %s]\n",
+              arguments->display_redirections ? "Yes" : "No");
+      printf ("[Debug: Whois-servers.net service support = %s]\n",
+              arguments->enable_whoisservers ? "Yes" : "No");
+      printf ("[Debug: Whois-servers domain = %s]\n",
+              arguments->whoisservers ?
+              arguments->whoisservers : WHOIS_SERVERS);
+      printf ("[Debug: Raw query = %s]\n",
+              arguments->raw_query ? "Yes" : "No");
+      printf ("[Debug: Rwhois display = %s]\n",
+              arguments->rwhois_display ?
+              arguments->rwhois_display : "(None)");
+      printf ("[Debug: Rwhois limit = %s]\n",
+              arguments->rwhois_limit ?
+              create_string ("%d", arguments->rwhois_limit) : "(None)");
+      printf ("[Debug: Force rwhois = %s]\n",
+              arguments->rwhois ? "Yes" : "No");
     }
 }

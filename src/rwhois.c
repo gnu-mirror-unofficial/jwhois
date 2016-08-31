@@ -149,7 +149,7 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
   if (ret == REP_ERROR)
     printf(_("[RWHOIS: Protocol error while sending -rwhois option]\n"));
 
-  if (verbose>1)
+  if (arguments->verbose > 1)
     {
       printf("[RWHOIS: Server capabilities (%x):", rwhois_capab);
       ret = 0;
@@ -166,16 +166,16 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
       printf("]\n");
     }
 
-  if (rwhois_display)
-    tmpptr = rwhois_display;
+  if (arguments->rwhois_display)
+    tmpptr = arguments->rwhois_display;
   else
-    tmpptr = (char *)get_whois_server_option(wq->host, "rwhois-display");
+    tmpptr = (char *)get_whois_server_option (wq->host, "rwhois-display");
 
   if (tmpptr)
     {
       if (rwhois_capab & CAP_DISPLAY)
 	{
-	  if (verbose>1)
+	  if (arguments->verbose > 1)
 	    printf("[RWHOIS: Setting display to %s]\n", tmpptr);
 
 	  fprintf(f, "-display %s\r\n", tmpptr);
@@ -187,13 +187,13 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
 	  while (ret != REP_OK && ret != REP_ERROR);
 	}
       else
-	if (verbose)
+	if (arguments->verbose)
 	  printf("[RWHOIS: %s]\n",
 		 _("Server does not support display command"));
     }
 
-  if (rwhois_limit)
-    limit = rwhois_limit;
+  if (arguments->rwhois_limit)
+    limit = arguments->rwhois_limit;
   else
     {
       tmpptr = (char *)get_whois_server_option(wq->host, "rwhois-limit");
@@ -215,7 +215,7 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
     {
       if (rwhois_capab & CAP_LIMIT)
 	{
-	  if (verbose>1)
+	  if (arguments->verbose > 1)
 	    printf("[RWHOIS: Setting limit to %d]\n", limit);
 
 	  fprintf(f, "-limit %d\r\n", limit);
@@ -227,13 +227,13 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
 	  while (ret != REP_OK && ret != REP_ERROR);
 	}
       else
-	{
-	  if (verbose)
-	    printf("[RWHOIS: %s]\n", _("Server does not support limit"));
-	}
+        {
+          if (arguments->verbose)
+            printf ("[RWHOIS: %s]\n", _("Server does not support limit"));
+        }
     }
 
-  if (verbose>1)
+  if (arguments->verbose > 1)
     printf("[RWHOIS: Sending query \"%s\"]\n", wq->query);
 
   fprintf(f, "%s\r\n", wq->query);
@@ -270,7 +270,7 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
 
   if (strncasecmp(strchr(reply, ' ')+1, "rwhois://", 9) != 0)
     {
-      if (verbose)
+      if (arguments->verbose)
 	printf("[RWHOIS: %s: %s]\n", _("Unknown referral"), strchr(reply, ' ')+1);
 
       return -1;
@@ -312,7 +312,7 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
   s->autharea = tmpptr;
   tmpptr[len] = '\0';
 
-  if (verbose>1)
+  if (arguments->verbose > 1)
     printf("[RWHOIS: Referral to %s:%d (autharea=%s)]\n",
 	   s->host, s->port, s->autharea);
 
@@ -359,7 +359,7 @@ rwhois_query (whois_query_t wq, char **text)
 	    {
 	      wq->host = referrals->host;
 	      wq->port = referrals->port;
-	      if (verbose)
+              if (arguments->verbose)
 		printf("[RWHOIS: %s %s:%d (autharea=%s)]\n",
 		       _("Following referral to"),
 		       wq->host, wq->port, referrals->autharea);
@@ -467,13 +467,13 @@ rwhois_parse_line(const char *reply, char **text)
 
   if (strncasecmp(reply, "%", 1) == 0)
     {
-      tmpptr = (char *)strchr(reply, ' ');
+      tmpptr = (char *) strchr (reply, ' ');
       if (!tmpptr)
-	return REP_ERROR;
+        return REP_ERROR;
       *tmpptr = '\0';
-      if (verbose)
-	printf("[RWHOIS: %s: %s]\n", _("Unhandled reply"),
-	       reply+1);
+      if (arguments->verbose)
+        printf ("[RWHOIS: %s: %s]\n", _("Unhandled reply"),
+                reply + 1);
 
       return REP_CONT;
     }

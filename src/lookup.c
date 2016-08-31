@@ -89,8 +89,8 @@ find_cidr (whois_query_t wq, const char *block)
 			 &bits);
 	    if (res != 5 || bits > 32)
 	      {
-		printf("[%s: %s %d]\n", config,
-		       _("Invalid netmask on line"), j->line);
+                printf ("[%s: %s %d]\n", arguments->config,
+                        _("Invalid netmask on line"), j->line);
 		return NULL;
 	      }
 #ifdef WORDS_BIGENDIAN
@@ -194,14 +194,14 @@ find_cidr6 (whois_query_t wq, const char *block)
 	  p = strchr(j->key, '/');
 	  if (p == NULL)
 	    {
-	      printf(_("[%s: Missing prefix length on line %d]\n"),
-		     config, j->line);
+              printf (_("[%s: Missing prefix length on line %d]\n"),
+                      arguments->config, j->line);
 	      continue;
 	    }
 	  if (sscanf(p + 1, "%u", &bits) != 1 || bits > 128)
 	    {
-	      printf(_("[%s: Invalid prefix length on line %d]\n"), config,
-		     j->line);
+              printf (_("[%s: Invalid prefix length on line %d]\n"),
+                      arguments->config, j->line);
 	      continue;
 	    }
 	  len = p - j->key;
@@ -210,12 +210,12 @@ find_cidr6 (whois_query_t wq, const char *block)
 	  addr[len] = '\0';
 	  res = inet_pton(AF_INET6, addr, &entry_ip);
 	  free(addr);
-	  if (res != 1)
-	    {
-	      printf(_("[%s: Invalid network address on line %d]\n"), config,
-		     j->line);
-	      continue;
-	    }
+          if (res != 1)
+            {
+              printf (_("[%s: Invalid network address on line %d]\n"),
+                      arguments->config, j->line);
+              continue;
+            }
 	}
       if (ipv6_address_is_in_network(&query_ip, &entry_ip, bits)
 	  && bits <= max_bits && bits >= match_bits)
@@ -403,9 +403,9 @@ lookup_host (whois_query_t wq, const char *block)
   jconfig_set();
   j = jconfig_getone("jwhois", "whois-servers-domain");
   if (!j)
-    whoisservers = WHOIS_SERVERS;
+    arguments->whoisservers = WHOIS_SERVERS;
   else
-    whoisservers = j->value;
+    arguments->whoisservers = j->value;
 
   jconfig_set();
   j = jconfig_getone(deepfreeze, "type");
@@ -428,10 +428,11 @@ lookup_host (whois_query_t wq, const char *block)
     return lookup_host(wq, tmpdeep);
   }
 
-  if (enable_whoisservers)
-    if (strncasecmp(wq->host, "whois-servers", 13) == 0) {
-      printf("[%s %s]\n", _("Querying"), whoisservers);
-      return lookup_whois_servers(wq->query, wq);
+  if (arguments->enable_whoisservers
+      && strncasecmp (wq->host, "whois-servers", 13) == 0)
+    {
+      printf ("[%s %s]\n", _("Querying"), arguments->whoisservers);
+      return lookup_whois_servers (wq->query, wq);
     }
 
   wq->port = 0;
@@ -563,10 +564,11 @@ lookup_whois_servers (const char *val, whois_query_t wq)
   if (!val) return -1;
   if (*val == '\0') return -1;
 
-  hostname = malloc(strlen(val)+strlen(whoisservers)+2);
-  strncpy(hostname, val, strlen(val)+1);
-  strncat(hostname, ".", 1);
-  strncat(hostname, whoisservers, strlen(whoisservers));
+  hostname = malloc (strlen (val) + strlen (arguments->whoisservers) + 2);
+  strncpy (hostname, val, strlen (val) + 1);
+  strncat (hostname, ".", 1);
+  strncat (hostname, arguments->whoisservers,
+           strlen (arguments->whoisservers));
 
 #ifdef HAVE_GETIPNODEBYNAME
   hostent = (struct hostent *)getipnodebyname(hostname, AF_INET, 0, &error_num);

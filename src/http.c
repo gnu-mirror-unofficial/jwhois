@@ -230,7 +230,7 @@ int http_query (whois_query_t wq, char **text)
         url = command[i - 2];
       }
 
-    if (verbose > 1)
+    if (arguments->verbose > 1)
     {
       int i;
       
