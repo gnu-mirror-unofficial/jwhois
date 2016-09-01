@@ -233,7 +233,6 @@ make_connect(const char *host, int port)
   fd_set fdset;
   struct timeval timeout = { arguments->connect_timeout, 0 };
   struct addrinfo *res;
-  struct sockaddr *sa;
 
   error = lookup_host_addrinfo(&res, host, port);
   if (error < 0)
@@ -242,7 +241,6 @@ make_connect(const char *host, int port)
     }
   for (; res; res = res->ai_next)
     {
-      sa = res->ai_addr;
       sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
       if (sockfd == -1 && res->ai_family == PF_INET6 && res->ai_next)
 	/* Operating system seems to lack IPv6 support, try next entry */
