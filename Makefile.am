@@ -28,10 +28,14 @@ AM_CPPFLAGS = \
   -I$(top_srcdir)/lib \
   -I$(top_builddir)/lib
 
+AM_CFLAGS = $(WARN_CFLAGS)
+
+jwhois_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 jwhois_SOURCES = \
   src/jwhois.c \
   src/jwhois.h
 
+libjwhois_a_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 libjwhois_a_SOURCES = \
   src/cache.c \
   src/cache.h \

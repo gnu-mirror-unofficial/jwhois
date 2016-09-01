@@ -78,6 +78,25 @@ AC_C_BIGENDIAN
 # For gnulib
 gl_INIT
 
+AC_ARG_ENABLE([gcc-warnings],
+  [AS_HELP_STRING([--enable-gcc-warnings],
+     [turn on many GCC warnings (for developers; best with GNU make)])],
+  [AS_CASE([$enableval],
+     [yes|no], [],
+     [AC_MSG_ERROR([bad value $enableval for gcc-warnings option])])
+   gl_gcc_warnings=$enableval],
+  [gl_gcc_warnings=no])
+if test "$enable_gcc_warnings" = yes; then
+  warn_common='-Wall -Wno-sign-compare -Wcast-align -Wdocumentation
+  -Wformat -Wpointer-arith -Wwrite-strings -Wbad-function-cast -Wshadow
+  -Wstrict-prototypes'
+  for i in $warn_common;
+  do
+    gl_WARN_ADD([$i], [WARN_CFLAGS])
+  done
+  gl_WARN_ADD([-Werror], [WERROR_CFLAGS])
+fi
+
 AC_CHECK_FUNC(connect,,
   AC_CHECK_LIB(socket, connect))
 AC_CHECK_FUNC(socket,,
