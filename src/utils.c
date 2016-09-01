@@ -146,7 +146,7 @@ get_whois_server_domain_path(const char *hostname)
   struct re_pattern_buffer      rpb;
   char *error;
   int ind, i;
-  char case_fold[256];
+  unsigned char case_fold[256];
 
   for (i = 0; i < 256; i++)
     case_fold[i] = toupper(i);
@@ -228,7 +228,8 @@ lookup_host_addrinfo (struct addrinfo **res, const char *host, int port)
 int
 make_connect(const char *host, int port)
 {
-  int sockfd, error, flags, retval, retlen;
+  int sockfd, error, flags, retval;
+  unsigned int retlen;
   fd_set fdset;
   struct timeval timeout = { arguments->connect_timeout, 0 };
   struct addrinfo *res;

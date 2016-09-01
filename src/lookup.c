@@ -243,7 +243,7 @@ find_regex (whois_query_t wq, const char *block)
   struct re_registers regs;
   char *error, *match = NULL, *pattern;
   int ind, i, best_match;
-  char case_fold[256];
+  unsigned char case_fold[256];
 
   rpb.allocated = 0;
 

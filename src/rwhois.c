@@ -432,7 +432,7 @@ rwhois_parse_line(const char *reply, char **text)
       if (!tmpptr)
 	return REP_ERROR;
       *tmpptr = '\0';
-      sscanf(capab, "%x", &rwhois_capab);
+      sscanf (capab, "%d", &rwhois_capab);
       return REP_INIT;
     }
 
