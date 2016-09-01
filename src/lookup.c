@@ -403,7 +403,7 @@ lookup_host (whois_query_t wq, const char *block)
   jconfig_set();
   j = jconfig_getone("jwhois", "whois-servers-domain");
   if (!j)
-    arguments->whoisservers = WHOIS_SERVERS;
+    arguments->whoisservers = strdup (WHOIS_SERVERS);
   else
     arguments->whoisservers = j->value;
 
@@ -421,7 +421,8 @@ lookup_host (whois_query_t wq, const char *block)
   } else
     wq->host = find_cidr(wq, deepfreeze);
 
-  if (!wq->host) wq->host = DEFAULT_HOST;
+  if (!wq->host)
+    wq->host = strdup (DEFAULT_HOST);
 
   if (strncasecmp(wq->host, "struct", 6) == 0) {
     tmpdeep = wq->host+7;
@@ -491,7 +492,8 @@ lookup_redirect (whois_query_t wq, const char *text)
 	    {
 	      rpb.allocated = 0;
 	      rpb.buffer = NULL;
-	      rpb.translate = rpb.fastmap = (char *)NULL;
+	      rpb.translate = NULL;
+	      rpb.fastmap = NULL;
 	      if (re_compile_pattern(j->value, strlen(j->value), &rpb))
 		return -1;
 	      ind = re_search(&rpb, strptr, strlen(strptr), 0, 0, &regs);

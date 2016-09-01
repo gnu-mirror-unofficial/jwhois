@@ -193,7 +193,7 @@ parse_args (int argc, char *argv[])
 	printf("[%s: %s]\n",
 	       SYSCONFDIR "/jwhois.conf", _("Unable to open"));
       else
-	arguments->config = SYSCONFDIR "/jwhois.conf";
+	arguments->config = strdup (SYSCONFDIR "/jwhois.conf");
     }
   if (in)
     {

@@ -74,7 +74,7 @@ struct s_referrals {
 
 static struct
 {
-  char *name;
+  const char *name;
   int cap;
 } capabilities[] = 
 {
@@ -115,7 +115,7 @@ rwhois_query_internal (whois_query_t wq, char **text, struct s_referrals **refer
   int sockfd, ret, limit;
   FILE *f;
   char *reply, *tmpptr, *retptr;
-  char *presentation = "-rwhois V-1.5 " PACKAGE " " VERSION "\r\n";
+  const char *presentation = "-rwhois V-1.5 " PACKAGE " " VERSION "\r\n";
 
   printf("[%s %s]\n", _("Querying"), wq->host);
 

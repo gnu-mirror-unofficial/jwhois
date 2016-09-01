@@ -87,11 +87,10 @@ int
 cache_init(void)
 {
   int iret;
-  char *ret, *ret2;
   struct jconfig *j;
 #ifndef NOCACHE
-  datum dbkey = {"#jwhois#cacheversion#1", 22};
-  datum dbstore = {"1", 1};
+  datum dbkey = {strdup ("#jwhois#cacheversion#1"), 22};
+  datum dbstore = {strdup ("1"), 1};
 #ifdef HAVE_GDBM_OPEN
   GDBM_FILE dbf;
 #else
@@ -103,22 +102,18 @@ cache_init(void)
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cachefile");
-  if (!j)
-    arguments->cfname = LOCALSTATEDIR "/jwhois.db";
-  else
-    arguments->cfname = j->value;
+  arguments->cfname = j ? j->value : strdup (LOCALSTATEDIR "/jwhois.db");
 
   if (arguments->verbose > 1)
     printf ("[Cache: Cache file name = \"%s\"]\n", arguments->cfname);
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cacheexpire");
-  if (!j)
-    ret = CACHE_EXPIRE;
-  else
-    ret = j->value;
-  arguments->cfexpire = strtol(ret, &ret2, 10);
-  if (*ret2 != '\0')
+
+  char *buf;
+  const char *ret = j ? j->value : CACHE_EXPIRE;
+  arguments->cfexpire = strtol (ret, &buf, 10);
+  if (*buf != '\0')
     {
       if (arguments->verbose)
         printf("[Cache: %s: %s]\n", _("Invalid expire time"), ret);

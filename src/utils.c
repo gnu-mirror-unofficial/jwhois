@@ -318,27 +318,21 @@ split_host_from_query (whois_query_t wq)
   return 1;
 }
 
-/*
- *  This initialises the timeout value from options in the configuration
- *  file.
- */
+/* This initialises the timeout value from options in the configuration
+   file.  */
 void
-timeout_init()
+timeout_init (void)
 {
-  int iret;
-  char *ret = "75", *ret2;
-  struct jconfig *j;
+  jconfig_set ();
+  struct jconfig *j = jconfig_getone ("jwhois", "connect-timeout");
 
-  jconfig_set();
-  j = jconfig_getone("jwhois", "connect-timeout");
-  if (j)
-    ret = j->value;
-  arguments->connect_timeout = strtol(ret, &ret2, 10);
-  if (*ret2 != '\0')
+  char *buf;
+  const char *ret = j ? j->value : "75";
+  arguments->connect_timeout = strtol (ret , &buf, 10);
+  if (*buf != '\0')
     {
       if (arguments->verbose)
-        printf("[%s: %s]\n", _("Invalid connect timeout value"), ret);
-
+        printf ("[%s: %s]\n", _("Invalid connect timeout value"), ret);
       arguments->connect_timeout = 75;
     }
 }
