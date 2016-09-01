@@ -152,7 +152,6 @@ int http_query (whois_query_t wq, char **text)
       }
     else
       {
-        struct jconfig *j;
         int i = 0;
 
         command = (char **) malloc(sizeof (char *) * (6 + post_as_file));
