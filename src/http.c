@@ -51,7 +51,7 @@ int http_query (whois_query_t wq, char **text)
     char *url;
     char *browser;
     char *browser_arg;
-    char *post_file;
+    char *post_file = NULL;
     int isget = 1;
     int post_as_file = 0;
     int to_browser[2];

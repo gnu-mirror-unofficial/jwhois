@@ -238,7 +238,7 @@ convert_charset (whois_query_t wq, char *curdata)
 static int
 jwhois_query (whois_query_t wq, char **text)
 {
-  char *tmp, *tmp2, *oldquery, *curdata;
+  char *tmp, *tmp2, *oldquery = NULL, *curdata;
   int ret;
 
   if (!arguments->display_redirections)
