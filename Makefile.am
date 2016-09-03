@@ -30,7 +30,10 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
+LDADD = libjwhois.a lib/libgnu.a
+
 jwhois_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
+jwhois_LDADD = $(LDADD) $(LIBINTL) $(LIBICONV) $(LIBS)
 jwhois_SOURCES = \
   src/jwhois.c \
   src/jwhois.h
@@ -53,8 +56,6 @@ libjwhois_a_SOURCES = \
   src/utils.h \
   src/whois.c \
   src/whois.h
-
-jwhois_LDADD = $(LIBINTL) $(LIBICONV) $(LIBS) libjwhois.a lib/libgnu.a
 
 sysconf_DATA = example/jwhois.conf
 
@@ -81,8 +82,6 @@ TESTS = \
 
 check_PROGRAMS = \
   tests/utils_strjoinv
-
-LDADD = libjwhois.a lib/libgnu.a
 
 noinst_HEADERS = tests/macros.h
 
