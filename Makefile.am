@@ -26,11 +26,12 @@ noinst_LIBRARIES = libjwhois.a
 AM_CPPFLAGS = \
   -I$(top_srcdir)/src \
   -I$(top_srcdir)/lib \
-  -I$(top_builddir)/lib
+  -I$(top_builddir)/lib \
+  $(CODE_COVERAGE_CPPFLAGS)
 
-AM_CFLAGS = $(WARN_CFLAGS)
+AM_CFLAGS = $(WARN_CFLAGS) $(CODE_COVERAGE_CFLAGS)
 
-LDADD = libjwhois.a lib/libgnu.a
+LDADD = libjwhois.a lib/libgnu.a $(CODE_COVERAGE_LIBS)
 
 jwhois_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 jwhois_LDADD = $(LDADD) $(LIBINTL) $(LIBICONV) $(LIBS)
@@ -82,6 +83,10 @@ TESTS = \
 
 check_PROGRAMS = \
   tests/utils_strjoinv
+
+@CODE_COVERAGE_RULES@
+CODE_COVERAGE_BRANCH_COVERAGE = 1
+CODE_COVERAGE_DIRECTORY = src
 
 noinst_HEADERS = tests/macros.h
 

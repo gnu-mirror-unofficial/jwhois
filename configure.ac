@@ -202,6 +202,8 @@ AM_CONDITIONAL([BUILD_FROM_GIT], [test -d "$srcdir/.git"])
 ## GNU help2man creates man pages from --help output.
 AM_MISSING_PROG([HELP2MAN], [help2man])
 
+AX_CODE_COVERAGE
+
 AC_CONFIG_FILES([Makefile
                  jwhois.spec
                  lib/Makefile
