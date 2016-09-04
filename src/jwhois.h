@@ -98,5 +98,6 @@ extern struct arguments *arguments;
 # define N_(str) gettext_noop (str)
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
+#define STRCASEEQ(s1, s2) (strcasecmp (s1, s2) == 0)
 
 #endif /* JWHOIS_H */

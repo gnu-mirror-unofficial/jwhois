@@ -102,7 +102,7 @@ int http_query (whois_query_t wq, char **text)
     browser_arg = j->value;
 
     j = jconfig_getone("jwhois", "post-as-file");
-    if (j && 0 == strcasecmp(j->value, "true"))
+    if (j && STRCASEEQ (j->value, "true"))
       {
         post_as_file = 1;
       }

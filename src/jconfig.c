@@ -66,8 +66,7 @@ jconfig_getone(const char *domain, const char *key)
 
   while (ptr)
     {
-      if ((strcasecmp (ptr->domain, domain) == 0)
-	  && (strcasecmp (ptr->key, key) == 0))
+      if (STRCASEEQ (ptr->domain, domain) && STRCASEEQ (ptr->key, key))
 	return ptr;
       ptr = ptr->next;
     }
@@ -89,7 +88,7 @@ jconfig_next(const char *domain)
   
   while (jconfig_tmpptr)
     {
-      if (strcasecmp (jconfig_tmpptr->domain, domain) == 0)
+      if (STRCASEEQ (jconfig_tmpptr->domain, domain))
 	{
 	  ptr = jconfig_tmpptr;
 	  jconfig_tmpptr = jconfig_tmpptr->next;

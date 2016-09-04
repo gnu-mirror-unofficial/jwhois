@@ -74,40 +74,37 @@ find_cidr (whois_query_t wq, const char *block)
 #endif
 
   jconfig_set();
-  while ((j = jconfig_next(block)) != NULL)
+  while ((j = jconfig_next (block)) != NULL)
     {
-      if (strcasecmp(j->key, "type") != 0) {
-	if (!strcasecmp(j->key, "default"))
-	  {
-	    ipmaskip.s_addr = 0;
-	    ipmask = 0;
-	    bits = 0;
-	  }
-	else
-	  {
-	    res = sscanf(j->key, "%u.%u.%u.%u/%u", &a0, &a1, &a2, &a3,
-			 &bits);
-	    if (res != 5 || bits > 32)
-	      {
-                printf ("[%s: %s %d]\n", arguments->config,
-                        _("Invalid netmask on line"), j->line);
-		return NULL;
-	      }
+      if (!STRCASEEQ (j->key, "type") && !STRCASEEQ (j->key, "default"))
+        {
+          ipmaskip.s_addr = 0;
+          ipmask = 0;
+          bits = 0;
+        }
+      else
+        {
+          res = sscanf (j->key, "%u.%u.%u.%u/%u", &a0, &a1, &a2, &a3, &bits);
+          if (res != 5 || bits > 32)
+            {
+              printf ("[%s: %s %d]\n", arguments->config,
+                      _("Invalid netmask on line"), j->line);
+              return NULL;
+            }
 #ifdef WORDS_BIGENDIAN
-            ipmaskip.s_addr = (a3<<24)+(a2<<16)+(a1<<8)+a0;
-            ipmask = (0xffffffff>>(32-bits));
+          ipmaskip.s_addr = (a3 << 24) + (a2 << 16) + (a1 << 8) + a0;
+          ipmask = (0xffffffff >> (32-bits));
 #else
-            ipmaskip.s_addr = (a0<<24)+(a1<<16)+(a2<<8)+a3;
-            ipmask = (0xffffffff<<(32-bits));
+          ipmaskip.s_addr = (a0 << 24) + (a1 << 16) + (a2 << 8) + a3;
+          ipmask = (0xffffffff << (32-bits));
 #endif
-	  }
-	if (((ip.s_addr & ipmask) == (ipmaskip.s_addr & ipmask))
-            && (bits >= match_bits))
-	  {
-	    host = j->value;
-            match_bits = bits;
-	  }
-      }
+        }
+      if (((ip.s_addr & ipmask) == (ipmaskip.s_addr & ipmask))
+          && (bits >= match_bits))
+        {
+          host = j->value;
+          match_bits = bits;
+        }
     }
   jconfig_end();
 
@@ -180,9 +177,9 @@ find_cidr6 (whois_query_t wq, const char *block)
   jconfig_set();
   while ((j = jconfig_next(block)) != NULL)
     {
-      if (strcasecmp(j->key, "type") == 0)
+      if (STRCASEEQ (j->key, "type"))
 	continue;
-      if (!strcasecmp(j->key, "default"))
+      if (!STRCASEEQ (j->key, "default"))
 	{
 	  memset(entry_ip.s6_addr, 0, sizeof(entry_ip.s6_addr));
 	  bits = 0;
@@ -255,9 +252,10 @@ find_regex (whois_query_t wq, const char *block)
   jconfig_set();
   while ((j = jconfig_next_all(block)) != NULL)
     {
-      if ((strcasecmp(j->key, "default") == 0
-           || ((strlen(j->domain) > strlen(block)+1) && (strcasecmp(j->domain+strlen(block)+1, ".*") == 0
-           || strcasecmp(j->domain+strlen(block)+1, "default") == 0)))
+      if ((STRCASEEQ (j->key, "default")
+           || ((strlen (j->domain) > strlen (block) + 1)
+               && (STRCASEEQ (j->domain + strlen (block) + 1, ".*")
+                   || STRCASEEQ (j->domain + strlen (block) + 1, "default") == 0)))
           && !best_match)
         {
           if (strlen(j->domain) > strlen(block))
@@ -274,7 +272,7 @@ find_regex (whois_query_t wq, const char *block)
               match = j->value;
             }
         }
-      else if (strcasecmp(j->key, "type") != 0)
+      else if (!STRCASEEQ (j->key, "type"))
 	{
 	  if (rpb.allocated) {
 	    free(rpb.buffer);

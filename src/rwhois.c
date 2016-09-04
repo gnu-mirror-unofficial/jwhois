@@ -350,7 +350,7 @@ rwhois_query (whois_query_t wq, char **text)
 	      a = authareas;
 	      while (a)
 		{
-		  if (strcasecmp(s->autharea, a->autharea) == 0)
+                  if (STRCASEEQ (s->autharea, a->autharea))
 		    followed = 1;
 		  a = a->next;
 		}

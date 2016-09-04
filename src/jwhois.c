@@ -254,13 +254,13 @@ jwhois_query (whois_query_t wq, char **text)
   tmp2 = (char *)get_whois_server_option(wq->host, "http");
   curdata = NULL;
 
-  if ((tmp && 0 == strcasecmp(tmp, "true")) || arguments->rwhois)
+  if ((tmp && STRCASEEQ (tmp, "true")) || arguments->rwhois)
     {
       ret = rwhois_query(wq, &curdata);
     }
   else
     {
-      if (tmp2 && 0 == strcasecmp(tmp2, "true"))
+      if (tmp2 && STRCASEEQ (tmp2, "true"))
 	ret = http_query(wq, &curdata);
       else
 	ret = whois_query(wq, &curdata);
