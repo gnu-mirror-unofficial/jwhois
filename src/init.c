@@ -103,6 +103,7 @@ static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
 {
   char *ret;
+  FILE *in;
 
   switch (key)
     {
@@ -158,6 +159,33 @@ parse_opt (int key, char *arg, struct argp_state *state)
                   /* Fix 'incompatible-pointer-types' warning.  */
                   (const char **) state->argv + state->next);
       break;
+    case ARGP_KEY_FINI:
+      if (arguments->config)
+        {
+          in = fopen (arguments->config, "r");
+          if (!in)
+            {
+              printf ("[%s: %s]\n", arguments->config, _("Unable to open"));
+              exit (EXIT_FAILURE);
+            }
+        }
+      else
+        {
+          in = fopen (SYSCONFDIR "/jwhois.conf", "r");
+          if (!in && arguments->verbose)
+            printf ("[%s: %s]\n",
+                    SYSCONFDIR "/jwhois.conf", _("Unable to open"));
+          else
+            arguments->config = xstrdup (SYSCONFDIR "/jwhois.conf");
+        }
+      if (in)
+        {
+          jconfig_parse_file (in);
+          fclose (in);
+        }
+      if (arguments->verbose > 1)
+        dump_arguments (arguments);
+      break;
     case ARGP_KEY_ARG:
     default:
       return ARGP_ERR_UNKNOWN;
@@ -174,33 +202,4 @@ parse_args (int argc, char *argv[])
   /* Parse command line arguments.  */
   argp_version_setup (program_name, authors);
   argp_parse (&argp, argc, argv, 0, NULL, NULL);
-
-  FILE *in;
-  if (arguments->config)
-    {
-      in = fopen(arguments->config, "r");
-      if (!in)
-	{
-	  printf("[%s: %s]\n",
-                 arguments->config, _("Unable to open"));
-          exit (EXIT_FAILURE);
-	}
-    }
-  else
-    {
-      in = fopen(SYSCONFDIR "/jwhois.conf", "r");
-      if (!in && arguments->verbose)
-	printf("[%s: %s]\n",
-	       SYSCONFDIR "/jwhois.conf", _("Unable to open"));
-      else
-	arguments->config = xstrdup (SYSCONFDIR "/jwhois.conf");
-    }
-  if (in)
-    {
-      jconfig_parse_file(in);
-      fclose(in);
-    }
-
-  if (arguments->verbose > 1)
-    dump_arguments (arguments);
 }
