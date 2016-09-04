@@ -1,9 +1,11 @@
 lib/argp-parse.c
 lib/argp.h
+lib/error.c
 lib/gai_strerror.c
 lib/getopt.c
 lib/regcomp.c
 lib/version-etc.c
+lib/xalloc-die.c
 src/cache.c
 src/http.c
 src/init.c

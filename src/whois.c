@@ -40,12 +40,7 @@ static int whois_read (int fd, char **ptr, const char *host);
 whois_query_t
 wq_init (void)
 {
-  whois_query_t wq = malloc (sizeof (struct s_whois_query));
-  if (wq == NULL)
-    {
-      fprintf (stderr, "[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  whois_query_t wq = xmalloc (sizeof (struct s_whois_query));
   wq->host = NULL;
   wq->port = 0;
   wq->query = NULL;
@@ -66,14 +61,14 @@ wq_free (whois_query_t wq)
 char *
 wq_get_query (whois_query_t wq)
 {
-  return strdup (wq->query);
+  return xstrdup (wq->query);
 }
 
 void
 wq_set_query (whois_query_t wq, char *query)
 {
   free (wq->query);
-  wq->query = strdup (query);
+  wq->query = xstrdup (query);
 }
 
 /*
@@ -102,13 +97,7 @@ whois_query (whois_query_t wq, char **text)
 	  return -1;
 	}
 
-      tmpqstring = malloc(strlen(wq->query)+3);
-      if (!tmpqstring)
-        {
-          printf("[%s]\n", _("Error allocating memory"));
-          exit (EXIT_FAILURE);
-        }
-
+      tmpqstring = xmalloc (strlen (wq->query) + 3);
       strncpy(tmpqstring, wq->query, strlen(wq->query)+1);
       strcat(tmpqstring, "\r\n");
 

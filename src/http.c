@@ -213,7 +213,7 @@ int http_query (whois_query_t wq, char **text)
             fclose(postdata);
 
             /* Remember file name so we can clean it up later. */
-            command[i ++] = post_file = strdup(tmpfilename);
+            command[i ++] = post_file = xstrdup(tmpfilename);
 	  }
 
         command[i] = (char *) malloc(strlen("http://") + strlen(wq->host) +

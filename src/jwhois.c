@@ -119,14 +119,9 @@ main(int argc, char **argv)
   text = NULL;
 
 #ifndef NOCACHE
-  cachestr = malloc (strlen (wq->query) + strlen (wq->host) + 2);
-  if (!cachestr)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
-  snprintf (cachestr, strlen (wq->query) + strlen (wq->host) + 2, "%s:%s",
-            wq->host, wq->query);
+  cachestr = xmalloc (strlen (wq->query) + strlen (wq->host) + 2);
+  snprintf(cachestr, strlen (wq->query) + strlen (wq->host) + 2, "%s:%s",
+           wq->host, wq->query);
 
   if (!arguments->forcelookup && arguments->cache)
     {
@@ -283,10 +278,7 @@ jwhois_query (whois_query_t wq, char **text)
 	*text = curdata;
       else
 	{
-	  *text = realloc(*text, strlen (*text) + strlen (curdata) + 1);
-	  if (*text == NULL)
-	    exit (EXIT_FAILURE);
-
+	  *text = xrealloc (*text, strlen (*text) + strlen (curdata) + 1);
 	  strcat(*text, curdata);
 	  free(curdata);
 	}

@@ -153,7 +153,7 @@ find_cidr6 (whois_query_t wq, const char *block)
   p = strchr(wq->query, '/');
   if (p == NULL)
     {
-      addr = strdup(wq->query);
+      addr = xstrdup(wq->query);
       max_bits = 128;
     }
   else
@@ -163,7 +163,7 @@ find_cidr6 (whois_query_t wq, const char *block)
       if (sscanf(p + 1, "%u", &max_bits) != 1)
 	return NULL;
       len = p - wq->query;
-      addr = malloc(len + 1);
+      addr = xmalloc (len + 1);
       memcpy(addr, wq->query, len);
       addr[len] = '\0';
     }
@@ -202,7 +202,7 @@ find_cidr6 (whois_query_t wq, const char *block)
 	      continue;
 	    }
 	  len = p - j->key;
-	  addr = malloc(len + 1);
+	  addr = xmalloc (len + 1);
 	  memcpy(addr, j->key, len);
 	  addr[len] = '\0';
 	  res = inet_pton(AF_INET6, addr, &entry_ip);
@@ -291,7 +291,7 @@ find_regex (whois_query_t wq, const char *block)
 
 	  if (strlen(j->domain) > strlen(block))
 	    {
-              pattern = malloc(strlen(j->domain+strlen(block))+6);
+              pattern = xmalloc (strlen (j->domain + strlen (block)) + 6);
               strncpy(pattern, "\\(", 3);
 
               if (STRNCASEEQ (j->domain + strlen (block) + 1, ".*", 2))
@@ -327,7 +327,7 @@ find_regex (whois_query_t wq, const char *block)
 	    }
 	  else
 	    {
-              pattern = malloc(strlen(j->key)+6);
+              pattern = xmalloc (strlen (j->key) + 6);
               strncpy(pattern, "\\(", 3);
               if (STRNCASEEQ (j->key, ".*", 2))
                 strncat(pattern, j->key + 2, strlen(j->key+2)+1);
@@ -401,7 +401,7 @@ lookup_host (whois_query_t wq, const char *block)
   jconfig_set();
   j = jconfig_getone("jwhois", "whois-servers-domain");
   if (!j)
-    arguments->whoisservers = strdup (WHOIS_SERVERS);
+    arguments->whoisservers = xstrdup (WHOIS_SERVERS);
   else
     arguments->whoisservers = j->value;
 
@@ -420,7 +420,7 @@ lookup_host (whois_query_t wq, const char *block)
     wq->host = find_cidr(wq, deepfreeze);
 
   if (!wq->host)
-    wq->host = strdup (DEFAULT_HOST);
+    wq->host = xstrdup (DEFAULT_HOST);
 
   if (STRNCASEEQ (wq->host, "struct", 6)) {
     tmpdeep = wq->host+7;
@@ -564,7 +564,7 @@ lookup_whois_servers (const char *val, whois_query_t wq)
   if (!val) return -1;
   if (*val == '\0') return -1;
 
-  hostname = malloc (strlen (val) + strlen (arguments->whoisservers) + 2);
+  hostname = xmalloc (strlen (val) + strlen (arguments->whoisservers) + 2);
   strncpy (hostname, val, strlen (val) + 1);
   strncat (hostname, ".", 1);
   strncat (hostname, arguments->whoisservers,
@@ -600,12 +600,7 @@ add_string(char **bufpos, const char *string, size_t stringlen, char **bufstart,
   /* Check if string needs to be enlarged */
   if ((*bufpos - *bufstart) + stringlen > *buflen)
     {
-      char *new = realloc(*bufstart, *buflen * 2);
-      if (!new)
-        {
-          printf("[%s]\n", _("Error allocating memory"));
-          exit (EXIT_FAILURE);
-        }
+      char *new = xrealloc (*bufstart, *buflen * 2);
       *buflen *= 2;
       *bufpos = new + (*bufpos - *bufstart);
       *bufstart = new;
@@ -685,7 +680,7 @@ lookup_query_format (whois_query_t wq)
     {
       ret = get_whois_server_option(wq->host, "query-format");
       if (!ret)
-	return strdup(wq->query);
+	return xstrdup(wq->query);
     }
   else 
     {
@@ -703,12 +698,7 @@ lookup_query_format (whois_query_t wq)
 
   /* Allocate a buffer to work in, we grow it when needed */
   buflen = strlen(ret) + strlen(wq->query) * 5;
-  tmpqstring = malloc(buflen);
-  if (!tmpqstring)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  tmpqstring = xmalloc (buflen);
   tmpptr = tmpqstring;
 
   while (*ret)

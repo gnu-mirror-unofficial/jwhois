@@ -223,12 +223,7 @@ jconfig_safe_strcat(char *s1, const char *s2)
   if (!s1 || !s2)
     return NULL;
 
-  s3 = realloc(s1, strlen(s1)+strlen(s2)+1);
-  if (!s3)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  s3 = xrealloc (s1, strlen (s1) + strlen (s2) + 1);
   strncat(s3, s2, strlen(s2)+1);
   return s3;
 }
@@ -240,16 +235,9 @@ jconfig_safe_strcat(char *s1, const char *s2)
 char *
 jconfig_get_quoted(FILE *in, int *line)
 {
-  char *s1 = NULL;
   int ch, nextch, len = 0;
+  char *s1 = xmalloc (MAXBUFSIZE);
 
-  s1 = malloc(MAXBUFSIZE);
-  if (!s1)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
-  
   while (!feof(in))
     {
       if (len >= (MAXBUFSIZE-1))
@@ -292,15 +280,8 @@ jconfig_get_quoted(FILE *in, int *line)
 char *
 jconfig_get_unquoted(FILE *in, int *line)
 {
-  char *s1 = NULL;
   int ch, nextch, len = 0;
-
-  s1 = malloc(MAXBUFSIZE);
-  if (!s1)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  char *s1 = xmalloc (MAXBUFSIZE);
   
   while (!feof(in))
     {
@@ -348,15 +329,10 @@ void
 jconfig_parse_file(FILE *in)
 {
   int ch, line = 1, nextch;
-  char *domain = NULL, *token = NULL, *key = NULL;
+  char *token = NULL, *key = NULL;
   char /* *t1, */ *t2;
 
-  domain = malloc(MAXBUFSIZE);
-  if (!domain)
-    {
-      printf("[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  char *domain = xmalloc (MAXBUFSIZE);
   strncpy(domain, PACKAGE, strlen(PACKAGE)+1);
 
   while (!feof(in))
@@ -403,7 +379,7 @@ jconfig_parse_file(FILE *in)
             if (key)
               printf ("[%s: %s %d]\n", arguments->config,
                       _("Multiple keys on line"), line);
-	    key = malloc(strlen(token)+1);
+	    key = xmalloc (strlen (token) + 1);
 	    strcpy(key,token);
 	    break;
 	  case ';':

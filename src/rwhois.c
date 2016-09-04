@@ -277,24 +277,24 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
     }
   if (!*referrals)
     {
-      *referrals = malloc(sizeof(struct s_referrals));
+      *referrals = xmalloc (sizeof (struct s_referrals));
       (*referrals)->next = NULL;
       s = *referrals;
     }
   else
     {
-      s = malloc(sizeof(struct s_referrals));
+      s = xmalloc (sizeof (struct s_referrals));
       s->next = *referrals;
       *referrals = s;
     }
 
   len = strrchr(reply, ':')-strchr(reply, ' ')-10;
-  s->host = malloc(len+1);
+  s->host = xmalloc (len + 1);
   strncpy(s->host, strchr(reply, ' ')+10, len);
   s->host[len] = '\0';
 
   len = strrchr(reply, '/')-strrchr(reply, ':')-1;
-  tmpptr = malloc(len+1);
+  tmpptr = xmalloc (len + 1);
   strncpy(tmpptr, strrchr(reply, ':')+1, len);
   tmpptr[len] = '\0';
 
@@ -307,7 +307,7 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
 
   len = strlen(reply)-(strrchr(reply, '=')-reply)-1;
 
-  tmpptr = malloc(len+1);
+  tmpptr = xmalloc (len + 1);
   strncpy(tmpptr, strrchr(reply, '=')+1, len);
   s->autharea = tmpptr;
   tmpptr[len] = '\0';
@@ -367,7 +367,7 @@ rwhois_query (whois_query_t wq, char **text)
 	      ret = rwhois_query(wq, text);
 	      if (ret != -1)
 		{
-		  a = malloc(sizeof(struct s_referrals));
+		  a = xmalloc (sizeof (struct s_referrals));
 		  a->autharea = s->autharea;
 		  a->next = NULL;
 		  authareas->next = a;

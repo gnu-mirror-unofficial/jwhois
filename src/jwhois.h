@@ -92,6 +92,9 @@ extern struct arguments *arguments;
 /* Access from source code to variables set by "configure" or "make".  */
 #include "configmake.h"
 
+/* Convenient functions that use 'malloc' with out-of-memory checking.  */
+#include "xalloc.h"
+
 /* Internationalization.  */
 # include "gettext.h"
 # define _(str) gettext (str)

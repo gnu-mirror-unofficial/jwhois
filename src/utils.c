@@ -83,12 +83,7 @@ strjoinv (const char *delim, int strc, const char *strv[])
   bufsize += (strc - 1) * strlen (delim); /* Add space for DELIMs.  */
   bufsize += 1;		  /* Add space for '\0' at the end of BUF.  */
 
-  char *buf = malloc (bufsize);
-  if (!buf)
-    {
-      fprintf (stderr, "[%s]\n", _("Error allocating memory"));
-      exit (EXIT_FAILURE);
-    }
+  char *buf = xmalloc (bufsize);
 
   /* Copy strings from STRV to BUF with DELIM between them.  */
   int idx = 0;
@@ -114,22 +109,12 @@ add_text_to_buffer(char **buffer, const char *text)
 {
   if (!*buffer)
     {
-      *buffer = malloc(strlen(text)+1);
-      if (!buffer)
-	{
-	  printf("[%s]\n", _("Error allocating memory"));
-	  exit (EXIT_FAILURE);
-	}
+      *buffer = xmalloc (strlen (text) + 1);
       strncpy(*buffer, text, strlen(text)+1);
     }
   else
     {
-      *buffer = realloc(*buffer, strlen(*buffer)+strlen(text)+1);
-      if (!*buffer)
-	{
-	  printf("[%s]\n", _("Error allocating memory"));
-	  exit (EXIT_FAILURE);
-	}
+      *buffer = xrealloc (*buffer, strlen (*buffer) + strlen (text) + 1);
       strncat(*buffer, text, strlen(text)+1);
     }
   return 0;

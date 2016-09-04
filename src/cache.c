@@ -89,8 +89,8 @@ cache_init(void)
   int iret;
   struct jconfig *j;
 #ifndef NOCACHE
-  datum dbkey = {strdup ("#jwhois#cacheversion#1"), 22};
-  datum dbstore = {strdup ("1"), 1};
+  datum dbkey = {xstrdup ("#jwhois#cacheversion#1"), 22};
+  datum dbstore = {xstrdup ("1"), 1};
 #ifdef HAVE_GDBM_OPEN
   GDBM_FILE dbf;
 #else
@@ -102,7 +102,7 @@ cache_init(void)
 
   jconfig_set();
   j = jconfig_getone("jwhois", "cachefile");
-  arguments->cfname = j ? j->value : strdup (LOCALSTATEDIR "/jwhois.db");
+  arguments->cfname = j ? j->value : xstrdup (LOCALSTATEDIR "/jwhois.db");
 
   if (arguments->verbose > 1)
     printf ("[Cache: Cache file name = \"%s\"]\n", arguments->cfname);
