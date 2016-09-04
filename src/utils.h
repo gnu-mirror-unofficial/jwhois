@@ -19,6 +19,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include "jwhois.h"
 #include "whois.h"
 
 char *get_whois_server_domain_path(const char *hostname);
@@ -32,5 +33,10 @@ void timeout_init (void);
 /* Join STC strings in STRV array with delimiter DELIM.  Return a
    pointer to the newly allocated result.*/
 extern char *strjoinv (const char *delim, int stc, const char *strv[]);
+
+/* Print every element from ARGS to the standard output.  Return the number of
+   characters printed if no error is encountered.  Return a negative value
+   otherwise.  */
+extern int dump_arguments (struct arguments *args);
 
 #endif

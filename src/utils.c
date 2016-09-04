@@ -320,3 +320,38 @@ timeout_init (void)
       arguments->connect_timeout = 75;
     }
 }
+
+int
+dump_arguments (struct arguments *args)
+{
+  int limit = args->rwhois_limit;
+
+  return printf ("[Debug: args {\n"
+                 "  Cache = %s,\n"
+                 "  Force lookup = %s,\n"
+                 "  Force host = %s,\n"
+                 "  Force port = %s,\n"
+                 "  Config file name = %s,\n"
+                 "  Follow redirections = %s,\n"
+                 "  Display redirections = %s,\n"
+                 "  Whois-servers.net service support = %s,\n"
+                 "  Whois-servers domain = %s,\n"
+                 "  Raw query = %s,\n"
+                 "  Rwhois display = %s,\n"
+                 "  Rwhois limit = %s,\n"
+                 "  Force rwhois = %s,\n"
+                 "}]\n",
+                 args->cache ? "On" : "Off",
+                 args->forcelookup ? "Yes" : "No",
+                 args->ghost? args->ghost : "(None)",
+                 args->gport ? create_string ("%d", args->gport) : "(None)",
+                 args->config ? args->config : "(None)",
+                 args->redirect ? "Yes" : "No",
+                 args->display_redirections ? "Yes" : "No",
+                 args->enable_whoisservers ? "Yes" : "No",
+                 args->whoisservers ? args->whoisservers : WHOIS_SERVERS,
+                 args->raw_query ? "Yes" : "No",
+                 args->rwhois_display ? args->rwhois_display : "(None)",
+                 args->rwhois_limit ? create_string ("%d", limit) : "(None)",
+                 args->rwhois ? "Yes" : "No");
+}

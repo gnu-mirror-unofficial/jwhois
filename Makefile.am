@@ -82,6 +82,7 @@ TESTS = \
   $(check_PROGRAMS)
 
 check_PROGRAMS = \
+  tests/utils_dump_arguments \
   tests/utils_strjoinv
 
 @CODE_COVERAGE_RULES@

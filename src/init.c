@@ -202,35 +202,5 @@ parse_args (int argc, char *argv[])
     }
 
   if (arguments->verbose > 1)
-    {
-      printf ("[Debug: Cache = %s]\n", arguments->cache ? "On" : "Off");
-      printf ("[Debug: Force lookup = %s]\n",
-              arguments->forcelookup ? "Yes" : "No");
-      printf ("[Debug: Force host = %s]\n",
-              arguments->ghost? arguments->ghost : "(None)");
-      printf ("[Debug: Force port = %s]\n",
-              arguments->gport ?
-              create_string ("%d", arguments->gport) : "(None)");
-      printf ("[Debug: Config file name = %s]\n",
-              arguments->config ? arguments->config : "(None)");
-      printf ("[Debug: Follow redirections = %s]\n",
-              arguments->redirect ? "Yes" : "No");
-      printf ("[Debug: Display redirections = %s]\n",
-              arguments->display_redirections ? "Yes" : "No");
-      printf ("[Debug: Whois-servers.net service support = %s]\n",
-              arguments->enable_whoisservers ? "Yes" : "No");
-      printf ("[Debug: Whois-servers domain = %s]\n",
-              arguments->whoisservers ?
-              arguments->whoisservers : WHOIS_SERVERS);
-      printf ("[Debug: Raw query = %s]\n",
-              arguments->raw_query ? "Yes" : "No");
-      printf ("[Debug: Rwhois display = %s]\n",
-              arguments->rwhois_display ?
-              arguments->rwhois_display : "(None)");
-      printf ("[Debug: Rwhois limit = %s]\n",
-              arguments->rwhois_limit ?
-              create_string ("%d", arguments->rwhois_limit) : "(None)");
-      printf ("[Debug: Force rwhois = %s]\n",
-              arguments->rwhois ? "Yes" : "No");
-    }
+    dump_arguments (arguments);
 }

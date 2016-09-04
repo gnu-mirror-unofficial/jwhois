@@ -49,6 +49,7 @@
 /src/config.h.in
 /src/stamp-h1
 /tests/.gitignore
+/tests/utils_dump_arguments
 /tests/utils_strjoinv
 /GNU JWhois-*
 Makefile
