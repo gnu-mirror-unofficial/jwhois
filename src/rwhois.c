@@ -268,7 +268,7 @@ rwhois_insert_referral(const char *reply, struct s_referrals **referrals)
   char *tmpptr, *ret = NULL;
   int len;
 
-  if (strncasecmp(strchr(reply, ' ')+1, "rwhois://", 9) != 0)
+  if (!STRNCASEEQ (strchr (reply, ' ') + 1, "rwhois://", 9))
     {
       if (arguments->verbose)
 	printf("[RWHOIS: %s: %s]\n", _("Unknown referral"), strchr(reply, ' ')+1);
@@ -416,13 +416,13 @@ rwhois_parse_line(const char *reply, char **text)
   if (tmpptr)
     *tmpptr = '\0';
   
-  if (info_on && strncasecmp(reply, "%info", 5) != 0)
+  if (info_on && !STRNCASEEQ (reply, "%info", 5))
     {
       add_text_to_buffer(text, create_string("%s\n", reply));
       return REP_CONT;
     }
 
-  if (strncasecmp(reply, "%rwhois", 7) == 0) 
+  if (STRNCASEEQ (reply, "%rwhois", 7))
     {
       char *capab = (char *)strchr(reply, ':');
       if (!capab)
@@ -436,10 +436,10 @@ rwhois_parse_line(const char *reply, char **text)
       return REP_INIT;
     }
 
-  if (strncasecmp(reply, "%ok", 3) == 0)
+  if (STRNCASEEQ (reply, "%ok", 3))
     return REP_OK;
 
-  if (strncasecmp(reply, "%error", 6) == 0)
+  if (STRNCASEEQ (reply, "%error", 6))
     {
       tmpptr = (char *)strchr(reply, ' ');
       if (!tmpptr)
@@ -448,24 +448,24 @@ rwhois_parse_line(const char *reply, char **text)
       return REP_ERROR;
     }
 
-  if (strncasecmp(reply, "%referral", 9) == 0)
+  if (STRNCASEEQ (reply, "%referral", 9))
     {
       return REP_REFERRAL;
     }
 
-  if (strncasecmp(reply, "%info on", 8) == 0)
+  if (STRNCASEEQ (reply, "%info on", 8))
     {
       info_on = 1;
       return REP_CONT;
     }
 
-  if (strncasecmp(reply, "%info off", 9) == 0)
+  if (STRNCASEEQ (reply, "%info off", 9))
     {
       info_on = 0;
       return REP_CONT;
     }
 
-  if (strncasecmp(reply, "%", 1) == 0)
+  if (STRNCASEEQ (reply, "%", 1))
     {
       tmpptr = (char *) strchr (reply, ' ');
       if (!tmpptr)

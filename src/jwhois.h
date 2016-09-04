@@ -97,7 +97,9 @@ extern struct arguments *arguments;
 # define _(str) gettext (str)
 # define N_(str) gettext_noop (str)
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
+/* Convenient macros for string comparaison to increase readibility.  */
+#define STREQ(s1, s2) (strcmp (s1, s2) == 0)
 #define STRCASEEQ(s1, s2) (strcasecmp (s1, s2) == 0)
+#define STRNCASEEQ(s1, s2, n) (strncasecmp (s1, s2, n) == 0)
 
 #endif /* JWHOIS_H */

@@ -114,7 +114,7 @@ jconfig_next_all(const char *domain)
     
   while (jconfig_tmpptr)
     {
-      if (strncasecmp (jconfig_tmpptr->domain, domain, strlen(domain)) == 0)
+      if (STRNCASEEQ (jconfig_tmpptr->domain, domain, strlen (domain)))
 	{
 	  ptr = jconfig_tmpptr;
 	  jconfig_tmpptr = jconfig_tmpptr->next;

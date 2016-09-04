@@ -294,7 +294,7 @@ find_regex (whois_query_t wq, const char *block)
               pattern = malloc(strlen(j->domain+strlen(block))+6);
               strncpy(pattern, "\\(", 3);
 
-              if (strncasecmp(j->domain+strlen(block)+1, ".*", 2) == 0)
+              if (STRNCASEEQ (j->domain + strlen (block) + 1, ".*", 2))
                 strncat(pattern, j->domain+strlen(block)+3,
                         strlen(j->domain+strlen(block)+3)+1);
               else
@@ -329,7 +329,7 @@ find_regex (whois_query_t wq, const char *block)
 	    {
               pattern = malloc(strlen(j->key)+6);
               strncpy(pattern, "\\(", 3);
-              if (strncasecmp(j->key, ".*", 2) == 0)
+              if (STRNCASEEQ (j->key, ".*", 2))
                 strncat(pattern, j->key + 2, strlen(j->key+2)+1);
               else
                 strncat(pattern, j->key, strlen(j->key)+1);
@@ -407,9 +407,9 @@ lookup_host (whois_query_t wq, const char *block)
 
   jconfig_set();
   j = jconfig_getone(deepfreeze, "type");
-  if (!j || strncasecmp(j->value, "regex", 5) == 0)
+  if (!j || STRNCASEEQ (j->value, "regex", 5))
     wq->host = find_regex(wq, deepfreeze);
-  else if (strncasecmp(j->value, "cidr6", 5) == 0) {
+  else if (STRNCASEEQ (j->value, "cidr6", 5)) {
 #ifdef HAVE_INET_PTON_IPV6
     wq->host = find_cidr6(wq, deepfreeze);
 #else
@@ -422,13 +422,13 @@ lookup_host (whois_query_t wq, const char *block)
   if (!wq->host)
     wq->host = strdup (DEFAULT_HOST);
 
-  if (strncasecmp(wq->host, "struct", 6) == 0) {
+  if (STRNCASEEQ (wq->host, "struct", 6)) {
     tmpdeep = wq->host+7;
     return lookup_host(wq, tmpdeep);
   }
 
   if (arguments->enable_whoisservers
-      && strncasecmp (wq->host, "whois-servers", 13) == 0)
+      && STRNCASEEQ (wq->host, "whois-servers", 13))
     {
       printf ("[%s %s]\n", _("Querying"), arguments->whoisservers);
       return lookup_whois_servers (wq->query, wq);
@@ -481,7 +481,7 @@ lookup_redirect (whois_query_t wq, const char *text)
 
   while ((j = jconfig_next(domain)) != NULL)
     {
-      if (strncasecmp(j->key, "whois-redirect", 14) == 0)
+      if (STRNCASEEQ (j->key, "whois-redirect", 14))
 	{
 	  memcpy(bptr, text, strlen(text)+1);
 
