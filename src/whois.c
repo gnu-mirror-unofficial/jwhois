@@ -25,6 +25,7 @@
 #endif
 
 #include <regex.h>
+#include "init.h"
 #include <jwhois.h>
 #include <jconfig.h>
 #include <whois.h>

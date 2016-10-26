@@ -36,6 +36,7 @@
 #include <regex.h>
 #include <jwhois.h>
 #include <jconfig.h>
+#include "init.h"
 #include <whois.h>
 #include <lookup.h>
 #include <utils.h>

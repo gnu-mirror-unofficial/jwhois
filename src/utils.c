@@ -33,6 +33,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <regex.h>
+#include "init.h"
 #include <jwhois.h>
 #include <jconfig.h>
 #include <whois.h>

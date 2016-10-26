@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #endif
 
+#include "init.h"
 #include <jconfig.h>
 #include <jwhois.h>
 #include <string.h>

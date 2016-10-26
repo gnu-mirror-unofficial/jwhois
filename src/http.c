@@ -27,6 +27,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 
+#include "init.h"
 #include <jwhois.h>
 #include <jconfig.h>
 #include <whois.h>

@@ -54,6 +54,7 @@
 # endif
 #endif
 
+#include "init.h"
 #include <jconfig.h>
 #include <jwhois.h>
 #include <cache.h>

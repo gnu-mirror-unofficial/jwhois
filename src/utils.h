@@ -19,7 +19,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "jwhois.h"
+#include "init.h"
 #include "whois.h"
 
 char *get_whois_server_domain_path(const char *hostname);
