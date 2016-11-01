@@ -16,23 +16,19 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdarg.h>
-#endif
+/* Specification.  */
+#include "whois.h"
 
 #include <errno.h>
 #include <fcntl.h>
-#include <string.h>
 #include <regex.h>
 #include "init.h"
-#include <jwhois.h>
-#include <jconfig.h>
-#include <whois.h>
-#include <utils.h>
+#include "jconfig.h"
+#include "utils.h"
+#include "whois.h"
 
 /* This register holds the capabilities of the server */
 int rwhois_capab;

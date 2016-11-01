@@ -19,6 +19,8 @@
 #ifndef LOOKUP_H
 #define LOOKUP_H
 
+#include "whois.h"
+
 int lookup_host (whois_query_t, const char *);
 int lookup_redirect (whois_query_t, const char *);
 char *lookup_query_format (whois_query_t);

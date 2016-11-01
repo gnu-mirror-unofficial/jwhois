@@ -16,33 +16,8 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
-
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-#endif
-
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <netdb.h>
-# include <locale.h>
-
-#include <jconfig.h>
-#include <jwhois.h>
-#include <regex.h>
-#include <whois.h>
-#include <http.h>
-#include <cache.h>
-#include <init.h>
-#include <lookup.h>
-#include <rwhois.h>
-#include <utils.h>
-
-#include <errno.h>
-#include <progname.h>
-#include <string.h>
+#include <config.h>
+#include "system.h"
 
 #ifdef HAVE_ICONV
 # include <iconv.h>
@@ -52,6 +27,23 @@
 #ifdef LIBIDN
 # include <idna.h>
 #endif
+
+#include <errno.h>
+#include <locale.h>
+#include <progname.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <regex.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include "cache.h"
+#include "http.h"
+#include "init.h"
+#include "jconfig.h"
+#include "lookup.h"
+#include "rwhois.h"
+#include "utils.h"
+#include "whois.h"
 
 /* Forward declarations.  */
 static int jwhois_query (whois_query_t wq, char **text);

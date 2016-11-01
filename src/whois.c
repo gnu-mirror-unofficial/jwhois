@@ -16,24 +16,18 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdarg.h>
-#endif
+/* Specification.  */
+#include "whois.h"
 
+#include <errno.h>
 #include <regex.h>
 #include "init.h"
-#include <jwhois.h>
-#include <jconfig.h>
-#include <whois.h>
-#include <lookup.h>
-#include <utils.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
+#include "jconfig.h"
+#include "lookup.h"
+#include "utils.h"
 
 /* Forward declarations.  */
 static int whois_read (int fd, char **ptr, const char *host);

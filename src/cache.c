@@ -16,24 +16,18 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-#endif
+/* Specification.  */
+#include "cache.h"
 
-# include <sys/time.h>
-#if TIME_WITH_SYS_TIME
-# include <time.h>
-#endif
-
-# include <sys/types.h>
-# include <sys/stat.h>
 #ifdef HAVE_SYS_FCNTL_H
 # include <sys/fcntl.h>
 #endif
-
+#if TIME_WITH_SYS_TIME
+# include <time.h>
+#endif
 #if !defined NOCACHE && defined HAVE_GDBM_OPEN
 # ifdef HAVE_GDBM_H
 #  include <gdbm.h>
@@ -54,11 +48,11 @@
 # endif
 #endif
 
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/time.h>
 #include "init.h"
-#include <jconfig.h>
-#include <jwhois.h>
-#include <cache.h>
-#include <string.h>
+#include "jconfig.h"
 
 #define DBM_MODE           S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP
 

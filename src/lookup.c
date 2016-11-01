@@ -16,33 +16,27 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-#endif
-
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <netdb.h>
+/* Specification.   */
+#include "lookup.h"
 
 #ifdef HAVE_MALLOC_H
 # include <malloc.h>
 #endif
 
 #include <arpa/inet.h>
-#include <regex.h>
-#include <jwhois.h>
-#include <jconfig.h>
-#include "init.h"
-#include <whois.h>
-#include <lookup.h>
-#include <utils.h>
-#include <jconfig.h>
-#include <string.h>
 #include <ctype.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <regex.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include "init.h"
+#include "jconfig.h"
+#include "utils.h"
+#include "whois.h"
 
 int lookup_whois_servers (const char *, whois_query_t);
 

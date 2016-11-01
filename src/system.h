@@ -1,4 +1,4 @@
-/* jwhois.h - declarations for common macros and program parameters
+/* system.h - system-dependent declarations; include this first.
    Copyright (C) 1999, 2001-2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.
@@ -16,8 +16,19 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef JWHOIS_H
-#define JWHOIS_H
+#ifndef JWHOIS_SYSTEM_H
+#define JWHOIS_SYSTEM_H
+
+#ifdef STDC_HEADERS
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdarg.h>
+#endif
+
+/* Use POSIX headers.  If they are not available, we use the substitute
+   provided by gnulib.  */
+#include <string.h>
+#include <unistd.h>
 
 #ifndef HAVE_MEMCPY
 # define memcpy(d, s, n) bcopy ((s), (d), (n))
@@ -43,4 +54,4 @@
 #define STRCASEEQ(s1, s2) (strcasecmp (s1, s2) == 0)
 #define STRNCASEEQ(s1, s2, n) (strncasecmp (s1, s2, n) == 0)
 
-#endif /* JWHOIS_H */
+#endif /* JWHOIS_SYSTEM_H */

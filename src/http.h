@@ -19,6 +19,8 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+#include "whois.h"
+
 int http_query (whois_query_t, char **);
 
 #endif

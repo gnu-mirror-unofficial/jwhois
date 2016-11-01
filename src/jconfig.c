@@ -17,17 +17,13 @@
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-#include <stdio.h>
-#include <stdlib.h>
-#endif
+/* Specification.  */
+#include "jconfig.h"
 
-#include "init.h"
-#include <jconfig.h>
-#include <jwhois.h>
-#include <string.h>
 #include <ctype.h>
+#include "init.h"
 
 static struct jconfig *jconfig_tmpptr = NULL;
 static struct jconfig *jconfig_ptr = NULL;

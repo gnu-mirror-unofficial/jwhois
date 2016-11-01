@@ -16,22 +16,17 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-#endif
+/* Specification.  */
+#include "init.h"
 
 #include <argp.h>
 #include <argp-version-etc.h>
 #include <progname.h>
-
-#include <init.h>
-#include <utils.h>
-#include <jconfig.h>
-#include <jwhois.h>
-#include <string.h>
+#include "jconfig.h"
+#include "utils.h"
 
 /* Default values.  */
 static struct arguments _arguments = {

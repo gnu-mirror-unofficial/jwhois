@@ -17,23 +17,19 @@
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+#include "system.h"
 
+/* Specification.  */
+#include "http.h"
+
+#include <errno.h>
 #include <signal.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <errno.h>
-
 #include "init.h"
-#include <jwhois.h>
-#include <jconfig.h>
-#include <whois.h>
-#include <http.h>
-#include <utils.h>
-#include <lookup.h>
+#include "jconfig.h"
+#include "lookup.h"
+#include "utils.h"
 
 /*
  * This function performs a HTTP query using an external utility

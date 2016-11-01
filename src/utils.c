@@ -16,30 +16,23 @@
    You should have received a copy of the GNU General Public License
    along with GNU JWhois.  If not, see <http://www.gnu.org/licenses/>.  */
 
-# include <config.h>
+#include <config.h>
+#include "system.h"
 
-#ifdef STDC_HEADERS
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdarg.h>
-#endif
+/* Specification.  */
+#include "utils.h"
 
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <netdb.h>
-
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <regex.h>
-#include "init.h"
-#include <jwhois.h>
-#include <jconfig.h>
-#include <whois.h>
-#include <utils.h>
-#include <string.h>
 #include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <regex.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include "init.h"
+#include "jconfig.h"
+#include "whois.h"
 
 /*
  *  This creates a string.  Text book example :-)

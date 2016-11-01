@@ -35,9 +35,7 @@ LDADD = libjwhois.a lib/libgnu.a $(CODE_COVERAGE_LIBS)
 
 jwhois_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 jwhois_LDADD = $(LDADD) $(LIBINTL) $(LIBICONV) $(LIBS)
-jwhois_SOURCES = \
-  src/jwhois.c \
-  src/jwhois.h
+jwhois_SOURCES = src/jwhois.c
 
 libjwhois_a_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 libjwhois_a_SOURCES = \
@@ -53,6 +51,7 @@ libjwhois_a_SOURCES = \
   src/lookup.h \
   src/rwhois.c \
   src/rwhois.h \
+  src/system.h \
   src/utils.c \
   src/utils.h \
   src/whois.c \
