@@ -20,6 +20,8 @@
 
 . "${srcdir=.}/tests/init.sh"
 
+ping -c 1 gnu.org || skip_ failed to connect to gnu.org
+
 jwhois --config=${confdir}/jwhois.conf gnu.org || fail=1
 
 jwhois -c ${confdir}/jwhois.conf gnu.org || fail=1
