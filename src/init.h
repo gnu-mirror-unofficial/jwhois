@@ -19,6 +19,8 @@
 #ifndef INIT_H
 #define INIT_H
 
+#include <stdbool.h>
+
 void parse_args (int argc, char *argv[]);
 
 struct arguments {
@@ -26,10 +28,10 @@ struct arguments {
   char *query_string;
 
   /* This is set if caching is enabled */
-  int cache;
+  bool cache;
 
   /* Set if checking for a cached copy of a document should be bypassed */
-  int forcelookup;
+  bool forcelookup;
 
   /* Verbose debugging output */
   int verbose;
@@ -53,17 +55,17 @@ struct arguments {
   int cfexpire;
 
   /* Whether or not to use lookup_redirect() on whois server output */
-  int redirect;
+  bool redirect;
 
-  /* Set to 1 to display all redirects, otherwise display only final reply */
-  int display_redirections;
+  /* Set to TRUE to display all redirects, otherwise display only final reply */
+  bool display_redirections;
 
-  /* Set to 1 to send query in raw form to the host instead of mangling it
+  /* Set to TRUE to send query in raw form to the host instead of mangling it
      through query-format */
-  int raw_query;
+  bool raw_query;
 
-  /* Set to 1 to force an rwhois query */
-  int rwhois;
+  /* Set to TRUE to force an rwhois query */
+  bool rwhois;
 
   /* Set to a valid display name for rwhois queries */
   char *rwhois_display;
@@ -71,8 +73,8 @@ struct arguments {
   /* Set to a valid limit for rwhois queries */
   int rwhois_limit;
 
-  /* Set to 0 to completely disable whois-servers.net service support */
-  int enable_whoisservers;
+  /* Set to FALSE to completely disable whois-servers.net service support */
+  bool enable_whoisservers;
 
   /* Timeout value for connect calls in seconds */
   int connect_timeout;

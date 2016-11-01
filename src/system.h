@@ -27,6 +27,7 @@
 
 /* Use POSIX headers.  If they are not available, we use the substitute
    provided by gnulib.  */
+#include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
 

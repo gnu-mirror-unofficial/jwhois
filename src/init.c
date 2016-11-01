@@ -31,20 +31,20 @@
 /* Default values.  */
 static struct arguments _arguments = {
   .query_string = NULL,
-  .cache = 1,
-  .forcelookup = 0,
+  .cache = true,
+  .forcelookup = false,
   .verbose = 0,
   .ghost = NULL,
   .gport = 0,
   .config = NULL,
-  .redirect = 1,
-  .display_redirections = 0,
+  .redirect = true,
+  .display_redirections = false,
   .whoisservers = NULL,
-  .raw_query = 0,
-  .rwhois = 0,
+  .raw_query = false,
+  .rwhois = false,
   .rwhois_display = NULL,
   .rwhois_limit = 0,
-  .enable_whoisservers = 1
+  .enable_whoisservers = true
 };
 
 struct arguments *arguments = &_arguments;
