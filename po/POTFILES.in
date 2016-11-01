@@ -8,7 +8,6 @@ lib/version-etc.c
 lib/xalloc-die.c
 src/cache.c
 src/http.c
-src/init.c
 src/jconfig.c
 src/jwhois.c
 src/lookup.c

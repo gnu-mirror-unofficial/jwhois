@@ -1,4 +1,4 @@
-/* init.h - declarations for parsing command line arguments
+/* init.h - declarations for initializing global parameters
    Copyright (C) 2002, 2016 Free Software Foundation, Inc.
 
    This file is part of GNU JWhois.
@@ -20,8 +20,6 @@
 #define INIT_H
 
 #include <stdbool.h>
-
-void parse_args (int argc, char *argv[]);
 
 struct arguments {
   /* Contains the actual query.  */
