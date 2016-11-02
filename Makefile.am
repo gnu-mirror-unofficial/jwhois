@@ -95,8 +95,6 @@ EXTRA_DIST = \
   .version \
   ChangeLog.old \
   example/jwhois.conf \
-  jwhois.spec.in \
-  jwhois.spec \
   m4/gnulib-cache.m4 \
   README-hacking \
   tests/init.sh \

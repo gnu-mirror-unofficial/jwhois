@@ -205,7 +205,6 @@ AM_MISSING_PROG([HELP2MAN], [help2man])
 AX_CODE_COVERAGE
 
 AC_CONFIG_FILES([Makefile
-                 jwhois.spec
                  lib/Makefile
                  po/Makefile.in])
 AC_OUTPUT

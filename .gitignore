@@ -30,7 +30,6 @@
 /doc/version.texi
 /jwhois-*.tar.gz
 /jwhois-*.tar.gz.sig
-/jwhois.spec
 /lib/
 /m4/.gitignore
 /m4/gnulib-cache.m4
