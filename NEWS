@@ -1,5 +1,62 @@
 GNU JWhois NEWS                                    -*- outline -*-
 
+* Noteworthy changes in release ?.? (????-??-??) [?]
+
+** Bug fixes
+
+   When no valid config file is set or found, 'jwhois' don't try to close an
+   invalid file descriptor anymore.
+
+** Improvements
+
+   'jwhois.conf' has been updated.
+
+   'jwhois' uses Argp for handling command line arguments, so the formatting
+   of "--help" output may be controlled by setting the ARGP_HELP_FMT
+   environment variable to a comma-separated list of tokens. For more details
+   see:
+   https://www.gnu.org/s/libc/manual/html_node/Argp-User-Customization.html#Argp-User-Customization
+
+   Portability of 'getaddrinfo', 'gai_strerror', 'strcasecmp', 'strncasecmp',
+   'gettext', 'gettext_noop' functions is now handled by Gnulib.
+
+** Documentation
+
+   License has been upgraded to version GNU FDL version 1.3.
+
+   Upgrade WHOIS Protocol documentation to RFC 3912 which is included in the
+   distribution.
+
+** Build related
+
+   'jwhois.conf' is now installed unconditionally in SYSCONFDIR (Generally
+   "/etc") without verifying if one is already present.  Users are now
+   responsible for making backups.
+
+   The build system is more modern in order to adapt to new Autoconf and
+   Automake features.  The Makefile doesn't use recursion anymore (except for
+   Gettext and Gnulib support) and is silent by default.  Use
+   "--disable-silent-rules" configure option or 'make V=1' for a more verbose
+   build output.
+
+   The 'ChangeLog' file is now generated from VCS Commit logs, previous logs
+   are kept in the 'ChangeLog.old' file.
+
+   Add "--enable-gcc-warnings" configure option to leverage static analysis
+   provided by GCC.
+
+   Remove "--enable-sgid", "--with-localedir", "--enable-GROUP" configure
+   options which had no effect.
+
+   Rename "--enable-DEFAULTHOST", "--enable-WHOISSERVERS", and
+   "--enable-CACHEEXPIRE" configure options respectively to
+   "--enable-default-host", "--enable-whois-servers", and
+   "--enable-cache-expire".
+
+   A basic test suite is provided.  Code coverage reports are available with
+   'make check-coverage' when "--enable-code-coverage" option is passed to
+   './configure'.
+
 Changes in jwhois 4.0
 
  * New feature: Configurable timeout on connects
