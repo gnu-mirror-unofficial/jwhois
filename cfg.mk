@@ -20,7 +20,7 @@ manual_title = GNU JWhois
 gnulib_dir = .gnulib
 
 # Tools used to bootstrap this package, used for "announcement".
-bootstrap-tools = autoconf,automake,gnulib,bison
+bootstrap-tools = autoconf,automake,gnulib
 
 # 'sc_makefile_at_at_check' fails for @CODE_COVERAGE_RULES@.
 local-checks-to-skip = \
