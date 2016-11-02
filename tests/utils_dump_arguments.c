@@ -15,15 +15,22 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+#include "system.h"
 
 /* Declaration.  */
 #include "utils.h"
 
+#include <progname.h>
 #include "macros.h"
 
 int
 main (void)
 {
+  set_program_name ("dump_arguments");
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+
   /* ARGUMENTS is a global variable containing the default values.  */
   int ret = dump_arguments (arguments);
   return (ret < 0) ? EXIT_FAILURE : EXIT_SUCCESS;

@@ -15,16 +15,22 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+#include "system.h"
 
 /* Declaration.  */
 #include "utils.h"
 
-#include <string.h>
+#include <progname.h>
 #include "macros.h"
 
 int
 main (void)
 {
+  set_program_name ("strjoinv");
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+
   const char *strv[] = { "foo", "bar", "baz" };
   const char *delim = " ";
   const char *expected_res = "foo bar baz";

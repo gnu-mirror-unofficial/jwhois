@@ -58,5 +58,3 @@
    *not* work for function parameters of array type, because they are actually
    parameters of pointer type.  */
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-
-#define STREQ(a, b) (strcmp (a, b) == 0)
