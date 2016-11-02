@@ -84,7 +84,7 @@ configuration file which defines its operation.  The client supports
 queries to foreign hosts either through the WHOIS protocol specified
 by @uref{https://tools.ietf.org/rfc/rfc3912.txt, RFC 3912}, the
 @abbr{RWhois, Referral Whois} protocol specified by
-@uref{https://tools.ietf.org/rfc/rfc3912.txt, RFC 2167}, or HTTP using
+@uref{https://tools.ietf.org/rfc/rfc2167.txt, RFC 2167}, or HTTP using
 an external browser.
 
 Upon execution, @sc{jwhois} searches through its configuration
