@@ -29,4 +29,4 @@ local-checks-to-skip = \
   sc_prohibit_strncpy \
   sc_trailing_blank
 
-old_NEWS_hash = d41d8cd98f00b204e9800998ecf8427e
+old_NEWS_hash = f850f73b8fc429fa4cc4fbd10a4adcce

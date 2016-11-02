@@ -91,6 +91,7 @@ CODE_COVERAGE_DIRECTORY = src
 noinst_HEADERS = tests/macros.h
 
 EXTRA_DIST = \
+  .prev-version \
   .version \
   ChangeLog.old \
   example/jwhois.conf \
