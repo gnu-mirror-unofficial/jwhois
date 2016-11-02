@@ -57,108 +57,135 @@ GNU JWhois NEWS                                    -*- outline -*-
    'make check-coverage' when "--enable-code-coverage" option is passed to
    './configure'.
 
-Changes in jwhois 4.0
+* Noteworthy changes in release 4.0 (2007-07-01) [stable]
 
- * New feature: Configurable timeout on connects
- * New feature: Lookup of CIDR6 blocks
- * New feature: Added support for Libidn
- * New feature: Conversion of whois server output to local charset
- * GPLv3
- * Updates of jwhois.conf
- * Various bugfixes
+** New features
 
-Changes in jwhois 3.2.3
+   - Configurable timeout on connects
+   - Lookup of CIDR6 blocks
+   - Added support for Libidn
+   - Conversion of whois server output to local charset
 
- * Updated jwhois.conf
- * Include host name in cache key
- * Various bugfixes
+** Improvements
 
-Changes in jwhois 3.2.2
+   - GPLv3
+   - Updates of jwhois.conf
 
- * Updated jwhois.conf
- * Fixed redirection problem for .org
+** Bug fixes
 
-Changes in jwhois 3.2.1
+   Various
 
- * Updated jwhois.conf
+* Noteworthy changes in release 3.2.3 (2005-07-09) [stable]
 
-Changes in jwhois 3.2.0
+** Improvements
 
- * Various bugfixes
- * Added advanced rewrite of queries
- * Various changes to jwhois.conf
+   - Updated jwhois.conf
+   - Include host name in cache key
 
-Changes in jwhois 3.1.0
+** Bug fixes
 
- * Various bugfixes
- * Added keyword "default" to configuration file format
- * Various changes to jwhois.conf
+   Various
 
-Changes in jwhois 3.0.2
+* Noteworthy changes in release 3.2.2 (2003-06-30) [stable]
 
- * Various bugfixes
+** Improvements
 
-Changes in jwhois 3.0
+   - Updated jwhois.conf
+   - Fixed redirection problem for .org
 
- * Command line option to disable content redirection
- * Lots of information added to the example configuration file
- * IPv6 failover to IPv4
- * Option to display redirections instead of hiding them
- * Case insensitive hostname matching
- * Introduced new host-specific configuration
- * Limited support for rwhois
- * Support for sending queries through a web interface via external browser
- * Ability to rewrite queries before sending to whois server
- * Support for whois-servers.net
+* Noteworthy changes in release 3.2.1 (2003-02-01) [stable]
 
-Changes in jwhois 2.4
+** Improvements
 
- * Made it possible to use queries of the type foo@HOST
- * Lots of information added to the example configuration file
+   - Updated jwhois.conf
 
-Changes in jwhois 2.3.1
+* Noteworthy changes in release 3.2 (2002-05-02) [stable]
 
- * Fixed a nasty bug that sometimes caused two extra bytes of output
+** Improvements
+
+   - Added advanced rewrite of queries
+   - Various changes to jwhois.conf
+
+** Bug fixes
+
+   Various
+
+* Noteworthy changes in release 3.1 (2002-01-09) [stable]
+
+** Improvements
+
+   - Added keyword "default" to configuration file format
+   - Various changes to jwhois.conf
+
+** Bug fixes
+
+   Various
+
+* Noteworthy changes in release 3.0.2 (2001-12-01) [stable]
+
+** Bug fixes
+
+   Various
+
+* Noteworthy changes in release 3.0 (2001-09-25) [stable]
+
+** Command line option to disable content redirection
+** Lots of information added to the example configuration file
+** IPv6 failover to IPv4
+** Option to display redirections instead of hiding them
+** Case insensitive hostname matching
+** Introduced new host-specific configuration
+** Limited support for rwhois
+** Support for sending queries through a web interface via external browser
+** Ability to rewrite queries before sending to whois server
+** Support for whois-servers.net
+
+* Noteworthy changes in release 2.4 (2000-01-19) [stable]
+
+** Made it possible to use queries of the type foo@HOST
+** Lots of information added to the example configuration file
+
+* Noteworthy changes in release 2.3.1 (1999-12-01) [stable]
+
+** Fixed a nasty bug that sometimes caused two extra bytes of output
    to be appended
- * Fixed the sample jwhois.conf
- * Added distribution of debian/ and macros/
+** Fixed the sample jwhois.conf
+** Added distribution of debian/ and macros/
 
-Changes in jwhois 2.3
+* Noteworthy changes in release 2.3 (1999-11-28) [stable]
 
- * Support for redirection of a query to another server based on
+** Support for redirection of a query to another server based on
    returned content from another
- * Support for cache functionality
- * Bugfixes for little-endian machines
- * Configuration parser rewritten -- you must now use \\ to get a
-   single \.
- * ${datadir} no longer searched for global configuration file
- * i18n support added
- * Must enclose struct foo in "
+** Support for cache functionality
+** Bugfixes for little-endian machines
+** Configuration parser rewritten -- you must now use \\ to get a single \.
+** ${datadir} no longer searched for global configuration file
+** i18n support added Must enclose struct foo in "
 
-Changes in jwhois 2.2
+* Noteworthy changes in release 2.2 (1999-10-23) [stable]
 
- * Support for specifying CIDR blocks in the configuration file.
- * More advanced features added to the configuration file.
- * Port number separated from host names and IP numbers with space
+** Support for specifying CIDR blocks in the configuration file.
+** More advanced features added to the configuration file.
+** Port number separated from host names and IP numbers with space
    instead of colon in configuration file.
- * Support for IPv6 hosts
+** Support for IPv6 hosts
 
-Changes in jwhois 2.1
+* Noteworthy changes in release 2.1 (1999-09-26) [stable]
 
- * Default configuration file location changed from DATADIR to SYSCONFDIR
+** Default configuration file location changed from DATADIR to SYSCONFDIR
    (normally /usr/local/etc/ or /etc/). jwhois will still search in DATADIR
    if it can't find a configuration file for backwards compatibility.
- * Added more information to the texinfo manual about RIPE extensions to
+** Added more information to the texinfo manual about RIPE extensions to
    the WHOIS protocol.
- * Added RIPE/APNIC and ARIN handles to the example configuration file.
- * Added support for specifying port numbers, both on command line and
+** Added RIPE/APNIC and ARIN handles to the example configuration file.
+** Added support for specifying port numbers, both on command line and
    in configuration file.
 
-Changes in jwhois 2.0
+* Noteworthy changes in release 2.0 (1999-07-28) [stable]
 
- * jwhois-server is dropped from the packag
- * jwhois is now written in C code.
- * configuration file format has changed.
+** jwhois-server is dropped from the packag
+** jwhois is now written in C code.
+** configuration file format has changed.
 
 ========================================================================
 Copyright (C) 1999-2016 Free Software Foundation, Inc.
