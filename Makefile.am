@@ -21,7 +21,7 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = lib po
 
 bin_PROGRAMS = jwhois
-noinst_LIBRARIES = libjwhois.a
+noinst_LIBRARIES = src/libjwhois.a
 
 AM_CPPFLAGS = \
   -I$(top_srcdir)/src \
@@ -31,14 +31,14 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = $(WARN_CFLAGS) $(CODE_COVERAGE_CFLAGS)
 
-LDADD = libjwhois.a lib/libgnu.a $(CODE_COVERAGE_LIBS)
+LDADD = $(noinst_LIBRARIES) lib/libgnu.a $(CODE_COVERAGE_LIBS)
 
 jwhois_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
 jwhois_LDADD = $(LDADD) $(LIBINTL) $(LIBICONV) $(LIBS)
 jwhois_SOURCES = src/jwhois.c
 
-libjwhois_a_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
-libjwhois_a_SOURCES = \
+src_libjwhois_a_CFLAGS = $(AM_CFLAGS) $(WERROR_CFLAGS)
+src_libjwhois_a_SOURCES = \
   src/cache.c \
   src/cache.h \
   src/http.c \
