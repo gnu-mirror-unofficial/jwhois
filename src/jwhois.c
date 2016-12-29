@@ -63,7 +63,7 @@ static struct argp_option options[] = {
    N_("use FILE as configuration file")},
   {"host", 'h', N_("HOST"), 0,
    N_("explicitly query HOST")},
-  {"no-redirect", 'c', 0, 0,
+  {"no-redirect", 'n', 0, 0,
    N_("disable content redirection")},
   {"no-whoisservers", 's', 0, 0,
    N_("disable whois-servers.net service support")},
