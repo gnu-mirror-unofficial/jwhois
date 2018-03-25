@@ -103,7 +103,7 @@ int
 main (int argc, char *argv[])
 {
   int ret;
-  char *text, *cachestr;
+  char *text;
   whois_query_t wq;
 
   set_program_name (argv[0]);
@@ -163,7 +163,7 @@ main (int argc, char *argv[])
   text = NULL;
 
 #ifndef NOCACHE
-  cachestr = xmalloc (strlen (wq->query) + strlen (wq->host) + 2);
+  char *cachestr = xmalloc (strlen (wq->query) + strlen (wq->host) + 2);
   snprintf(cachestr, strlen (wq->query) + strlen (wq->host) + 2, "%s:%s",
            wq->host, wq->query);
 

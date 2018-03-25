@@ -81,8 +81,6 @@
 int
 cache_init(void)
 {
-  int iret;
-  struct jconfig *j;
 #ifndef NOCACHE
   datum dbkey = {xstrdup ("#jwhois#cacheversion#1"), 22};
   datum dbstore = {xstrdup ("1"), 1};
@@ -96,7 +94,7 @@ cache_init(void)
     return 0;
 
   jconfig_set();
-  j = jconfig_getone("jwhois", "cachefile");
+  struct jconfig *j = jconfig_getone("jwhois", "cachefile");
   arguments->cfname = j ? j->value : xstrdup (LOCALSTATEDIR "/jwhois.db");
 
   if (arguments->verbose > 1)
@@ -127,7 +125,8 @@ cache_init(void)
       arguments->cache = 0;
       return -1;
     }
-  iret = dbm_store(dbf, dbkey, dbstore, DBM_IOPTIONS);
+
+  int iret = dbm_store(dbf, dbkey, dbstore, DBM_IOPTIONS);
   if (iret < 0)
     {
       if (arguments->verbose)
@@ -206,8 +205,6 @@ cache_read(char *key, char **text)
   DBM *dbf;
 #endif
 #endif
-  time_t time_c;
-
   if (!arguments->cache)
     return 0;
 
@@ -224,7 +221,10 @@ cache_read(char *key, char **text)
       dbm_close(dbf);
       return 0;
     }
-  memcpy(&time_c,dbstore.dptr,sizeof(time_c));	/* ensure suitable alignment */
+
+  time_t time_c;
+  /* Ensure suitable alignment.  */
+  memcpy (&time_c, dbstore.dptr, sizeof (time_c));
   if (((time(NULL) - time_c) / (60 * 60)) > arguments->cfexpire)
     {
       dbm_close(dbf);
